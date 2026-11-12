@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WorkShopConnect DMS</title>
+<script>try{if(localStorage.getItem('wsc_theme_v1')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
 <style>
 
 /* ── DESIGN TOKENS ─────────────────────────────────────── */
@@ -39,6 +40,9 @@
   --mono:      var(--sans);
   --shadow:    none;
   --shadow-lg: none;
+  --weekend:   rgba(255,255,255,0.015);
+  --nav-active: #ffffff;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; overflow: hidden; background: var(--bg); font-family: var(--sans); color: var(--text); }
@@ -582,7 +586,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); font-family:
 .co-overdue{font-size: 0.75rem;font-weight:700;color:var(--bad);font-family:var(--mono);white-space:nowrap;}
 .co-actions{display:flex;gap:6px;flex:0 0 auto;}
 .co-btn{font-size: 0.75rem;padding:3px 8px;border-radius: 2px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;}
-.co-btn:hover{background:rgba(255,255,255,0.06);}
+.co-btn:hover{background:var(--surface3);}
 .co-btn-close{border-color:rgba(22,163,74,0.4);color:var(--ok);}
 .co-btn-close:hover{background:rgba(22,163,74,0.12);}
 .co-empty{padding:20px 12px;text-align:center;color:var(--text3);font-size: 0.75rem;}
@@ -664,7 +668,7 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
 .nav-item { margin: 0; padding: 6px 14px; gap: 10px; border-left: none; border-radius: 0; transition: none; }
 .nav-item:hover { background: var(--surface); }
 .nav-item.active { background: var(--surface3); border-left: none; }
-.nav-item.active .nav-icon, .nav-item.active .nav-text { color: #fff; }
+.nav-item.active .nav-icon, .nav-item.active .nav-text { color: var(--nav-active); }
 .nav-text { font-size: 0.8125rem; font-weight: 400; color: var(--text2); }
 .nav-icon { display: flex; align-items: center; justify-content: center; width: 16px; color: var(--text3); }
 .nav-icon svg, svg.nav-icon { width: 15px; height: 15px; }
@@ -872,7 +876,7 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
 .cal-cell:hover { background: var(--surface); }
 .cal-cell.other-month { background: none; }
 .cal-cell.other-month .cal-day-num { opacity: 1; color: var(--text3); font-weight: 400; }
-.cal-cell.weekend { background: rgba(255,255,255,0.015); }
+.cal-cell.weekend { background: var(--weekend); }
 .cal-cell.c-full { background: none; }
 .cal-cell.selected { background: var(--surface2); outline: none; }
 .cal-day-num { justify-content: flex-start; width: auto; height: auto; font-size: 0.8125rem; font-weight: 400; color: var(--text); margin-bottom: 1px; }
@@ -1007,6 +1011,64 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
 .dp-wo-card span[style*="#16a34a"] { color: var(--ok) !important; }
 .dp-wo-card span[style*="#dc2626"] { color: var(--bad) !important; }
 .dp-wo-card span[style*="#64748b"] { color: var(--text2) !important; }
+
+
+/* Theme switch: pill toggle */
+.theme-switch { position: relative; flex-shrink: 0; width: 40px; height: 24px; padding: 0; border: none; border-radius: 12px; background: var(--surface3); cursor: pointer; transition: background-color 0.18s ease; }
+.theme-switch[aria-checked="true"] { background: var(--accent); }
+.theme-switch-knob { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.3); transition: transform 0.18s ease; }
+.theme-switch[aria-checked="true"] .theme-switch-knob { transform: translateX(16px); }
+.theme-switch:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .theme-switch, .theme-switch-knob { transition: none; } }
+
+/* Custom work order (Generate Work Order page) */
+.cwo { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); max-width: 1100px; }
+.cwo-title { font-size: 0.9375rem; font-weight: 600; margin-bottom: 12px; }
+.cwo-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 14px; margin-bottom: 18px; }
+.cwo-grid .m-input, .cwo-grid .m-select { width: 100%; }
+.cwo-jobs { margin-bottom: 14px; }
+.cwo-jh, .cwo-line { display: grid; grid-template-columns: 36px minmax(160px, 1.1fr) 70px minmax(200px, 2fr) 60px; gap: 8px; align-items: start; }
+.cwo-jh { font-size: 0.75rem; color: var(--text2); padding-bottom: 5px; border-bottom: 1px solid var(--border2); margin-bottom: 6px; }
+.cwo-line { padding: 4px 0; }
+.cwo-line .n { padding-top: 6px; color: var(--text2); }
+.cwo-line .m-input, .cwo-line .m-textarea { width: 100%; }
+.cwo-line .m-textarea { min-height: 30px; height: 30px; resize: vertical; }
+.cwo-del { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 0.8125rem; padding: 6px 0; text-align: left; }
+.cwo-del:hover { color: var(--bad); text-decoration: underline; }
+#cwo-addline { margin-top: 8px; }
+.cwo-foot { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.cwo-total { margin-right: auto; color: var(--text2); }
+@media (max-width: 900px) { .cwo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ========== LIGHT THEME (Settings > Appearance) ========== */
+:root[data-theme="light"] {
+  --bg:        #ffffff;
+  --sidebar:   #f3f4f6;
+  --surface:   #f4f5f7;
+  --surface2:  #eceef1;
+  --surface3:  #dde0e5;
+  --field:     #ffffff;
+  --line:      #e5e7eb;
+  --border:    #c8ccd2;
+  --border2:   #9ea3ab;
+  --text:      #1b1d20;
+  --text2:     #4b5058;
+  --text3:     #676c75;
+  --accent:    #2f6fb7;
+  --accent-h:  #285f9e;
+  --accent-soft: rgba(47,111,183,0.12);
+  --accent-text: #245d9c;
+  --blue-bg:   rgba(47,111,183,0.12);
+  --red-bg:    rgba(192,57,43,0.10);
+  --ok:        #2b7a43;
+  --warn:      #8f6200;
+  --bad:       #b8332a;
+  --weekend:   #fafafb;
+  --nav-active: var(--text);
+  color-scheme: light;
+}
+:root[data-theme="light"] .modal-overlay { background: rgba(20,22,26,0.35); }
+:root[data-theme="light"] .bk-ch-opt:hover .bk-ch-code, :root[data-theme="light"] .bk-ch-opt.bk-hi .bk-ch-code { color: #fff; }
 </style>
 </head>
 <body>
@@ -1069,7 +1131,7 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
       </div>
       <div class="nav-sub" id="navsub-booking">
         <div class="nav-item nav-sub-item" data-page="planner">
-          <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 11h6M9 15h4"/></svg></div><div class="nav-text">Service Planner</div>
+          <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 11h6M9 15h4"/></svg></div><div class="nav-text">Generate Work Order</div>
         </div>
       </div>
     </div>
@@ -1161,7 +1223,7 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
         <div class="panel">
           <div class="panel-head"><div class="panel-title">Open Work Orders</div><div class="panel-link" onclick="navTo('bookings')">View all</div></div>
           <div class="panel-body">
-            <div class="empty-state" style="padding:32px 16px;text-align:center;color:var(--text3)">No work orders yet — create one from the Service Planner or Calendar.</div>
+            <div class="empty-state" style="padding:32px 16px;text-align:center;color:var(--text3)">No work orders yet — create one from Generate Work Order or the Calendar.</div>
             </div>
         </div>
         <div class="panel">
@@ -1184,7 +1246,7 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
   <div class="page" id="page-planner">
     <div class="page-header">
       <div>
-        <div class="page-title">Booking</div>
+        <div class="page-title">Generate Work Order</div>
         <div class="page-sub"></div>
       </div>
     </div>
@@ -1254,6 +1316,35 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
 
         <!-- Results rendered here -->
         <div id="output"></div>
+
+        <!-- Custom work order -->
+        <div class="cwo" id="cwo">
+          <div class="cwo-title">Custom work order</div>
+          <div class="cwo-grid">
+            <div><label class="m-label" for="cwo-date">Date</label><input type="date" class="m-input" id="cwo-date"></div>
+            <div><label class="m-label" for="cwo-customer">Customer</label><input type="text" class="m-input" id="cwo-customer"></div>
+            <div><label class="m-label" for="cwo-phone">Mobile</label><input type="tel" class="m-input" id="cwo-phone" required></div>
+            <div><label class="m-label" for="cwo-email">Email</label><input type="email" class="m-input" id="cwo-email" required></div>
+            <div><label class="m-label" for="cwo-rego">Rego</label><input type="text" class="m-input" id="cwo-rego" style="text-transform:uppercase"></div>
+            <div><label class="m-label" for="cwo-vehicle">Vehicle (make / model)</label><input type="text" class="m-input" id="cwo-vehicle"></div>
+            <div><label class="m-label" for="cwo-year">Build year</label><input type="number" class="m-input" id="cwo-year" min="1900" max="2100"></div>
+            <div><label class="m-label" for="cwo-chassis">Chassis / VIN</label><input type="text" class="m-input" id="cwo-chassis"></div>
+            <div><label class="m-label" for="cwo-odo">Odometer (km)</label><input type="number" class="m-input" id="cwo-odo" min="0"></div>
+            <div><label class="m-label" for="cwo-type">Service type</label><select class="m-select" id="cwo-type"><option>Oil Service</option><option>Inspection I</option><option>Inspection II</option><option>Major Service</option><option>Intermediate Service</option><option>Service A</option><option>Service B</option><option>Minor Service</option><option>Standard Service</option><option>Brake Fluid Flush</option><option>Coolant Flush</option><option>Timing Belt + Water Pump</option><option>DSG / S-Tronic Service</option><option>Tyres</option><option>Diagnostics</option><option selected>Other</option></select></div>
+            <div><label class="m-label" for="cwo-tech">Technician</label><select class="m-select" id="cwo-tech"></select></div>
+          </div>
+          <div class="cwo-jobs">
+            <div class="cwo-jh"><span>Job</span><span>Operation</span><span>Hrs</span><span>Instructions</span><span></span></div>
+            <div id="cwo-lines"></div>
+            <button type="button" class="btn" id="cwo-addline">Add job line</button>
+          </div>
+          <div class="m-row"><label class="m-label" for="cwo-notes">Notes</label><textarea class="m-textarea" id="cwo-notes" rows="2"></textarea></div>
+          <div class="cwo-foot">
+            <span class="cwo-total" id="cwo-total">0 h labour</span>
+            <button type="button" class="btn" id="cwo-clear">Clear</button>
+            <button type="button" class="btn primary" id="cwo-create">Create work order</button>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -1758,6 +1849,10 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
           <div class="m-row"><label class="m-label">Pay Now link (Stripe / PayPal / Square URL)</label><input class="m-input" id="set-paylink" placeholder="https://..."></div>
         </div>
         <div class="settings-card">
+          <div class="settings-card-title">Appearance</div>
+          <div class="settings-row"><div><div class="settings-row-lbl" id="set-theme-lbl">Light mode</div></div><button type="button" class="theme-switch" id="set-theme" role="switch" aria-checked="false" aria-labelledby="set-theme-lbl"><span class="theme-switch-knob"></span></button></div>
+        </div>
+        <div class="settings-card">
           <div class="settings-card-title">Notifications</div>
           <div class="settings-row"><div><div class="settings-row-lbl">Service due reminders</div></div><div class="toggle-switch on" data-key="notif-due"><div class="toggle-knob"></div></div></div>
           <div class="settings-row"><div><div class="settings-row-lbl">Low stock alerts</div></div><div class="toggle-switch on" data-key="notif-stock"><div class="toggle-knob"></div></div></div>
@@ -2038,7 +2133,7 @@ var CAL = (function() {
   function sLabel(s){ return {open:'Open',wip:'In progress',done:'Complete',hold:'On hold',closed:'Closed'}[s]||s.toUpperCase(); }
   function sColor(s){ return {open:'#3b82f6',wip:'#d97706',done:'#16a34a',hold:'#dc2626',closed:'#64748b'}[s]||'#3b82f6'; }
   function booked(ds){ return wosByDate(ds).reduce(function(a,w){return a+(parseFloat(w.hours)||0);},0); }
-  function capColor(b,cap){ var p=cap>0?b/cap:(b>0?1:0); return p>=1?'#ef8079':p>=0.875?'#dfae50':'#74c48b'; }
+  function capColor(b,cap){ var p=cap>0?b/cap:(b>0?1:0); return p>=1?'var(--bad)':p>=0.875?'var(--warn)':'var(--ok)'; }
   function capTag(b,cap){ var p=cap>0?b/cap:(b>0?1:0); return p>=1?{cls:'cap-tag-full',txt:'Full'}:p>=0.875?{cls:'cap-tag-warn',txt:'Busy'}:{cls:'cap-tag-ok',txt:'Open'}; }
 
   function render() {
@@ -2254,6 +2349,16 @@ var CAL = (function() {
     render(); setTimeout(function(){openPanel(dateV);},50);
   }
 
+  function createWO(d){
+    var wo={id:genId(),num:nextWoNum(),date:d.date,customer:d.customer,rego:d.rego||'',phone:d.phone||'',email:d.email||'',vehicle:d.vehicle||'',chassis:d.chassis||'',
+      type:d.type||'Other',tech:d.tech||((typeof STAFF!=='undefined'&&STAFF.firstTechName&&STAFF.firstTechName())||'Unassigned'),hours:d.hours||0,status:'open',notes:d.notes||''};
+    if(d.odometer!=null&&d.odometer!=='') wo.odometer=d.odometer;
+    if(d.buildYear) wo.buildYear=d.buildYear;
+    if(d.jobs&&d.jobs.length) wo.jobs=d.jobs;
+    WOS.push(wo); saveWOs(); fireChange(); render();
+    return wo.id;
+  }
+
   function deleteWO(id){
     if(!confirm('Delete this booking?')) return;
     WOS=WOS.filter(function(w){return w.id!==id;}); saveWOs(); fireChange(); render();
@@ -2273,117 +2378,155 @@ var CAL = (function() {
     var parts = (w.parts && w.parts.length) ? w.parts : null;
     var checklist = (w.checklist && w.checklist.length) ? w.checklist : null;
     var jobs = (w.jobs && w.jobs.length) ? w.jobs : null;
+    var S = {}; try{ S = JSON.parse(localStorage.getItem('wsc_settings_v1')||'{}'); }catch(e){}
+    var biz = S['set-name'] || 'Your Workshop';
+    var woNo = 'WO-'+(w.num != null ? w.num : w.id);
+    var fmtD = function(d){ if(!d) return ''; var p=String(d).split('-'); return p.length===3 ? (p[2]+'/'+p[1]+'/'+p[0].slice(2)) : d; };
+    var odo = (w.odometer!=null && w.odometer!=='') ? Number(w.odometer).toLocaleString('en-AU') : '';
+    var ymm = [w.buildYear, w.vehicle].filter(Boolean).join(' ');
+    var c = function(label, val, cls){ return '<div class="ro-c'+(cls?(' '+cls):'')+'"><div class="ro-l">'+label+'</div><div class="ro-v">'+(val ? escH(val) : '&nbsp;')+'</div></div>'; };
+    var lines = jobs ? jobs.map(function(j){ return { op:j.title||'Job', hrs:j.hours, ins:[j.subtitle].filter(Boolean).join(' ') }; })
+                     : [{ op:w.type||'Service', hrs:w.hours, ins:'' }];
     var html = ''
-      + '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Job Card '+escH(w.num ? ('WO-'+w.num) : w.id)+'</title>'
+      + '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Repair Order '+escH(woNo)+'</title>'
       + '<style>'
       + '  * { box-sizing:border-box; }'
-      + '  body { font-family: Arial, Helvetica, sans-serif; color:#1a1a1a; margin:32px; font-size:13px; }'
-      + '  .jc-head { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:3px solid #1a1a1a; padding-bottom:14px; margin-bottom:18px; }'
-      + '  .jc-title { font-size:22px; font-weight:800; letter-spacing:0.5px; }'
-      + '  .jc-sub { font-size:12px; color:#555; margin-top:3px; }'
-      + '  .jc-num { text-align:right; }'
-      + '  .jc-num .n { font-size:20px; font-weight:800; font-family: "Courier New", monospace; }'
-      + '  .jc-num .d { font-size:12px; color:#555; margin-top:3px; }'
-      + '  .jc-status { display:inline-block; margin-top:6px; padding:3px 10px; border-radius:3px; font-size:11px; font-weight:800; letter-spacing:0.5px; color:#fff; }'
-      + '  .jc-grid { display:grid; grid-template-columns: 1fr 1fr; gap:14px 28px; margin-bottom:20px; }'
-      + '  .jc-field { border-bottom:1px solid #ccc; padding-bottom:6px; }'
-      + '  .jc-field .l { font-size:10px; text-transform:uppercase; letter-spacing:0.6px; color:#777; margin-bottom:2px; }'
-      + '  .jc-field .v { font-size:14px; font-weight:600; }'
-      + '  .jc-section { margin-bottom:18px; }'
-      + '  .jc-section .h { font-size:13px; font-weight:800; text-transform:uppercase; letter-spacing:0.6px; border-bottom:2px solid #1a1a1a; padding-bottom:5px; margin-bottom:10px; }'
-      + '  .jc-section ul { margin:0; padding-left:20px; }'
-      + '  .jc-section li { margin-bottom:4px; }'
+      + '  html { background:#e9e9e9; }'
+      + '  body { font-family: Arial, Helvetica, sans-serif; color:#111; margin:0; font-size:12px; }'
+      + '  .sheet { width:210mm; margin:16px auto; background:#fff; padding:12mm 12mm; }'
+      + '  .ro-page { min-height:270mm; display:flex; flex-direction:column; }'
+      + '  .ro-top { display:flex; justify-content:space-between; align-items:flex-start; gap:24px; min-height:34mm; }'
+      + '  .ro-biz-name { font-size:22px; font-weight:700; margin-bottom:6px; }'
+      + '  .ro-biz-sub { font-size:11px; line-height:1.45; white-space:pre-line; }'
+      + '  .ro-legal { font-size:11px; line-height:1.45; text-align:left; white-space:pre-line; min-width:52mm; }'
+      + '  .ro-band { display:grid; grid-template-columns:30mm 1fr 1fr 34mm; border:1px solid #111; border-bottom:none; margin-top:4mm; }'
+      + '  .ro-band > div { padding:3px 5px; font-size:13px; font-weight:700; }'
+      + '  .ro-band .pg { font-weight:400; font-size:12px; text-align:center; }'
+      + '  .ro-band .doc { text-align:right; grid-column:3 / span 2; font-size:12px; font-weight:400; }'
+      + '  .ro-band .doc b { font-size:16px; }'
+      + '  .ro-grid { display:grid; grid-template-columns:30mm 1fr 1fr 34mm; border:1px solid #111; }'
+      + '  .ro-col { display:flex; flex-direction:column; border-right:1px solid #111; }'
+      + '  .ro-col:last-child { border-right:none; }'
+      + '  .ro-c { border-bottom:1px solid #111; padding:2px 5px 3px; min-height:11mm; }'
+      + '  .ro-col > .ro-c:last-child { border-bottom:none; flex:1; }'
+      + '  .ro-c.tall { flex:1; }'
+      + '  .ro-l { font-size:8.5px; color:#333; }'
+      + '  .ro-v { font-size:12.5px; margin-top:1px; white-space:pre-line; word-break:break-word; }'
+      + '  .ro-pair { display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid #111; }'
+      + '  .ro-pair > .ro-c { border-bottom:none; }'
+      + '  .ro-pair > .ro-c:first-child { border-right:1px solid #111; }'
+      + '  .ro-pay { font-size:10px; line-height:1.55; }'
+      + '  .ro-pay span { display:inline-block; width:9px; height:9px; border:1px solid #111; margin-right:5px; vertical-align:-1px; }'
+      + '  .ro-jobs { margin-top:5mm; }'
+      + '  .ro-jh, .ro-jr { display:grid; grid-template-columns:12mm 62mm 14mm 1fr; gap:0 6px; }'
+      + '  .ro-jh { font-size:11px; font-weight:700; padding-bottom:4px; }'
+      + '  .ro-jr { font-size:12px; padding:4px 0 8px; }'
+      + '  .ro-jr .ins { text-transform:uppercase; }'
+      + '  .ro-notes { margin:4px 0 0 calc(12mm + 62mm + 14mm + 18px); font-size:12px; white-space:pre-wrap; text-transform:uppercase; }'
+      + '  .ro-end { text-align:right; font-size:11px; margin-top:6px; }'
+      + '  .ro-auth { margin-top:auto; border:1px solid #111; padding:10px 12px 8px; }'
+      + '  .ro-auth p { margin:0; font-size:10.5px; line-height:1.45; text-align:justify; }'
+      + '  .ro-sign { display:flex; align-items:flex-end; gap:8px; margin-top:16mm; font-size:11px; }'
+      + '  .ro-sign .ln { flex:0 0 95mm; border-bottom:1px dotted #111; height:1px; }'
+      + '  .ro-sign .dt { margin-left:auto; }'
+      + '  .ro-sign .dt .ln { display:inline-block; width:32mm; vertical-align:bottom; }'
+      + '  .bk-page { page-break-before:always; break-before:page; height:270mm; display:flex; flex-direction:column; margin-top:14mm; }'
+      + '  .bk-head { display:flex; justify-content:space-between; font-size:13px; font-weight:700; padding-bottom:5px; }'
+      + '  .bk-head span:last-child { font-weight:400; font-size:11px; }'
+      + '  table.bk-story { width:100%; height:205mm; border-collapse:collapse; table-layout:fixed; border:1px solid #111; }'
+      + '  table.bk-story th { font-size:9px; font-weight:700; text-align:left; padding:3px 4px; border:1px solid #111; height:6mm; }'
+      + '  table.bk-story td { border-left:1px solid #111; border-right:1px solid #111; border-bottom:1px solid #9a9a9a; }'
+      + '  .bk-boxes { display:grid; grid-template-columns:1.25fr 1fr 1fr; gap:4mm; margin-top:auto; }'
+      + '  .bk-box { border:1px solid #111; }'
+      + '  .bk-box-h { font-size:10.5px; font-weight:700; padding:3px 5px; border-bottom:1px solid #111; }'
+      + '  table.bk-t { width:100%; border-collapse:collapse; table-layout:fixed; }'
+      + '  table.bk-t th, table.bk-t td { border-bottom:1px solid #9a9a9a; border-right:1px solid #9a9a9a; height:7mm; font-size:9px; padding:0 4px; text-align:left; }'
+      + '  table.bk-t thead th { height:5mm; font-weight:400; color:#333; }'
+      + '  table.bk-t tbody th { font-weight:700; width:24mm; }'
+      + '  table.bk-t tr > :last-child { border-right:none; }'
+      + '  table.bk-t tbody tr:last-child > * { border-bottom:none; }'
+      + '  .ro-detail-h { display:flex; justify-content:space-between; border-bottom:2px solid #111; padding-bottom:6px; margin-bottom:12px; font-size:13px; font-weight:700; }'
+      + '  .jc-section { margin-bottom:16px; }'
+      + '  .jc-section .h { font-size:12px; font-weight:700; border-bottom:1px solid #111; padding-bottom:4px; margin-bottom:8px; }'
       + '  table.jc-parts { width:100%; border-collapse:collapse; }'
-      + '  table.jc-parts th, table.jc-parts td { text-align:left; padding:6px 8px; border-bottom:1px solid #ddd; font-size:12px; }'
-      + '  table.jc-parts th { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#777; }'
-      + '  .jc-notes { border:1px solid #ccc; border-radius:4px; padding:10px 12px; min-height:50px; font-size:12px; white-space:pre-wrap; }'
-      + '  .jc-sign { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:28px; }'
-      + '  .jc-sign-box { border-top:1px solid #1a1a1a; padding-top:6px; font-size:11px; color:#555; }'
-      + '  .jc-sign-line { height:46px; }'
-      + '  .jc-foot { margin-top:24px; padding-top:10px; border-top:1px solid #ccc; font-size:10px; color:#999; display:flex; justify-content:space-between; }'
-      + '  .jc-job { border:1px solid #ccc; border-radius:5px; padding:12px 14px; margin-bottom:12px; page-break-inside:avoid; }'
-      + '  .jc-job-hdr { display:flex; align-items:center; gap:10px; margin-bottom:8px; padding-bottom:7px; border-bottom:1px solid #e5e5e5; }'
-      + '  .jc-job-num { background:#1a1a1a; color:#fff; font-size:10px; font-weight:800; letter-spacing:0.6px; text-transform:uppercase; padding:3px 9px; border-radius:3px; white-space:nowrap; }'
-      + '  .jc-job-title { font-size:14px; font-weight:800; flex:1; }'
-      + '  .jc-job-hrs { font-size:11px; color:#666; font-family:"Courier New",monospace; white-space:nowrap; }'
-      + '  .jc-job-sub { font-size:11px; color:#777; margin:-3px 0 9px; }'
+      + '  table.jc-parts th, table.jc-parts td { text-align:left; padding:5px 6px; border-bottom:1px solid #ccc; font-size:11px; }'
+      + '  table.jc-parts th { font-size:10px; color:#444; font-weight:400; }'
+      + '  .jc-notes { border:1px solid #999; padding:8px 10px; min-height:44px; font-size:11px; white-space:pre-wrap; }'
+      + '  .jc-sign { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:24px; }'
+      + '  .jc-sign-box { border-top:1px solid #111; padding-top:5px; font-size:10px; color:#333; }'
+      + '  .jc-sign-line { height:40px; }'
+      + '  .jc-job { border:1px solid #999; padding:10px 12px; margin-bottom:10px; page-break-inside:avoid; }'
+      + '  .jc-job-hdr { display:flex; align-items:baseline; gap:10px; margin-bottom:6px; padding-bottom:6px; border-bottom:1px solid #ddd; }'
+      + '  .jc-job-num { font-size:11px; font-weight:700; white-space:nowrap; }'
+      + '  .jc-job-title { font-size:13px; font-weight:700; flex:1; }'
+      + '  .jc-job-hrs { font-size:11px; color:#444; white-space:nowrap; }'
+      + '  .jc-job-sub { font-size:11px; color:#444; margin:-2px 0 8px; }'
       + '  .jc-job-cols { display:grid; grid-template-columns:1fr 1fr; gap:16px; }'
-      + '  .jc-col-hdr { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:#777; font-weight:800; margin-bottom:6px; }'
-      + '  .jc-empty { color:#999; font-size:11px; font-style:italic; }'
+      + '  .jc-col-hdr { font-size:10px; color:#444; font-weight:700; margin-bottom:5px; }'
+      + '  .jc-empty { color:#777; font-size:11px; }'
       + '  ul.jc-check-list { list-style:none; margin:0; padding:0; }'
-      + '  .jc-check-item { display:flex; align-items:flex-start; gap:8px; margin-bottom:6px; font-size:12px; line-height:1.35; }'
-      + '  .jc-box { display:inline-block; flex-shrink:0; width:13px; height:13px; margin-top:1px; border:1.5px solid #1a1a1a; border-radius:2px; }'
+      + '  .jc-check-item { display:flex; align-items:flex-start; gap:8px; margin-bottom:5px; font-size:11px; line-height:1.35; }'
+      + '  .jc-box { display:inline-block; flex-shrink:0; width:12px; height:12px; margin-top:1px; border:1.2px solid #111; }'
       + '  table.jc-job-parts { width:100%; border-collapse:collapse; }'
-      + '  table.jc-job-parts th, table.jc-job-parts td { text-align:left; padding:4px 6px; border-bottom:1px solid #eee; font-size:11px; }'
-      + '  table.jc-job-parts th { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; color:#888; }'
-      + '  @media print { body { margin:14mm; } .jc-noprint { display:none; } }'
+      + '  table.jc-job-parts th, table.jc-job-parts td { text-align:left; padding:3px 5px; border-bottom:1px solid #eee; font-size:10.5px; }'
+      + '  table.jc-job-parts th { font-size:9.5px; color:#555; font-weight:400; }'
+      + '  .noprint { width:210mm; margin:16px auto 0; text-align:right; }'
+      + '  .noprint button { padding:7px 16px; font-size:13px; border:1px solid #999; background:#fff; cursor:pointer; margin-left:6px; }'
+      + '  .noprint button.p { background:#111; color:#fff; border-color:#111; }'
+      + '  @page { size:A4; margin:12mm; }'
+      + '  @media print { html { background:#fff; } .sheet { width:auto; margin:0; padding:0; } .ro-page { min-height:271mm; } .bk-page { margin-top:0; height:271mm; } .noprint { display:none; } }'
       + '</style></head><body>'
-      + '  <div class="jc-noprint" style="text-align:right;margin-bottom:14px">'
-      + '    <button onclick="window.print()" style="padding:8px 18px;font-size:13px;font-weight:700;border-radius:4px;border:1px solid #1a1a1a;background:#1a1a1a;color:#fff;cursor:pointer">🖨 Print</button>'
-      + '    <button onclick="window.close()" style="padding:8px 18px;font-size:13px;font-weight:700;border-radius:4px;border:1px solid #ccc;background:#fff;color:#1a1a1a;cursor:pointer;margin-left:8px">Close</button>'
-      + '  </div>'
-      + '  <div class="jc-head">'
-      + '    <div><div class="jc-title">WorkShopConnect</div><div class="jc-sub">Workshop Job Card &middot; Service Department</div></div>'
-      + '    <div class="jc-num"><div class="n">WO-'+escH(w.num != null ? w.num : w.id)+'</div><div class="d">Booking date: '+escH(w.date||'—')+'</div>'
-      + '      <div class="jc-status" style="background:'+statusColor+'">'+escH(statusText)+'</div>'
+      + '  <div class="noprint"><button class="p" onclick="window.print()">Print</button><button onclick="window.close()">Close</button></div>'
+      + '  <div class="sheet">'
+      + '  <div class="ro-page">'
+      + '    <div class="ro-top">'
+      + '      <div><div class="ro-biz-name">'+escH(biz)+'</div><div class="ro-biz-sub">'+escH([S['set-addr'], S['set-phone'] ? ('P: '+S['set-phone']) : ''].filter(Boolean).join('\n'))+'</div></div>'
+      + '      <div class="ro-legal">'+escH([biz, S['set-abn'] ? ('ABN: '+S['set-abn']) : ''].filter(Boolean).join('\n'))+'</div>'
+      + '    </div>'
+      + '    <div class="ro-band"><div>Repair Order</div><div class="pg">Page 1</div><div class="doc">Doc # <b>'+escH(woNo)+'</b></div></div>'
+      + '    <div class="ro-grid">'
+      + '      <div class="ro-col">'+c('WO No.', woNo)+c('Doc Date', fmtD(w.date))+c('Reg. No.', w.rego)+c('Printed', new Date().toLocaleDateString('en-AU'))+'</div>'
+      + '      <div class="ro-col">'+c('Customer Name &amp; Address', w.customer, 'tall')
+      +          '<div class="ro-pair">'+c('Mobile Phone', w.phone)+c('Terms', '')+'</div>'
+      +          c('Email', w.email)
+      +          '<div class="ro-c"><div class="ro-pay"><span></span>Credit card &nbsp; <span></span>Cash &nbsp; <span></span>Account</div></div>'
+      + '      </div>'
+      + '      <div class="ro-col">'+c('Advisor', S['set-advisor'] && S['set-advisor']!=='Service Advisor' ? S['set-advisor'] : '')+c('Year / Make / Model', ymm)+c('Chassis / VIN', w.chassis)
+      +          '<div class="ro-pair">'+c('Kilometres', odo)+c('Build Year', w.buildYear)+'</div>'
+      +          '<div class="ro-pair">'+c('Date Promised', '')+c('Time Received', '')+'</div>'
+      + '      </div>'
+      + '      <div class="ro-col">'+c('Technician', w.tech||'')+c('Service Type', w.type)+c('Status', statusText)+c('Est. Labour', w.hours ? (w.hours+' h') : '')+c('Retain Parts', 'Yes ☐   No ☐')+'</div>'
+      + '    </div>'
+      + '    <div class="ro-jobs">'
+      + '      <div class="ro-jh"><div>Job</div><div>Operation</div><div>Hrs</div><div>Instructions</div></div>'
+      +        lines.map(function(l,k){ return '<div class="ro-jr"><div>'+(k+1)+'</div><div>'+escH(l.op)+'</div><div>'+(l.hrs ? escH(Number(l.hrs).toFixed(1)) : '')+'</div><div class="ins">'+escH(l.ins)+'</div></div>'; }).join('')
+      +        (w.notes ? '<div class="ro-notes">'+escH(w.notes)+'</div>' : '')
+      + '      <div class="ro-end">[End of repair order]</div>'
+      + '    </div>'
+      + '    <div class="ro-auth">'
+      + '      <p>I authorise the repair work set out above to be carried out, together with the necessary parts and materials. I agree that '+escH(biz)+' is not responsible for loss of or damage to the vehicle or articles left in it caused by fire, theft or any other cause beyond its control, or for delays caused by the unavailability of parts or delays in their delivery. I give '+escH(biz)+' and its employees permission to operate the vehicle on streets, highways or elsewhere for the purpose of testing and inspection. Any additional work will be quoted and approved before it is carried out.</p>'
+      + '      <div class="ro-sign">Signature of owner (or agent)<span class="ln"></span><span class="dt">Date <span class="ln"></span></span></div>'
       + '    </div>'
       + '  </div>'
-      + '  <div class="jc-grid">'
-      + '    <div class="jc-field"><div class="l">Customer</div><div class="v">'+escH(w.customer||'—')+'</div></div>'
-      + '    <div class="jc-field"><div class="l">Rego Plate</div><div class="v">'+escH(w.rego||'—')+'</div></div>'
-      + '    <div class="jc-field"><div class="l">Vehicle</div><div class="v">'+escH(w.vehicle||'—')+'</div></div>'
-      + '    <div class="jc-field"><div class="l">Chassis / VIN</div><div class="v">'+escH(w.chassis||'—')+'</div></div>'
-      + '    <div class="jc-field"><div class="l">Service Type</div><div class="v">'+escH(w.type||'—')+'</div></div>'
-      + '    <div class="jc-field"><div class="l">Technician</div><div class="v">'+escH(w.tech||TECH_NAME)+'</div></div>'
-      + '    <div class="jc-field"><div class="l">Estimated Labour</div><div class="v">'+(w.hours ? escH(w.hours)+' hours' : '—')+'</div></div>'
-      + '    <div class="jc-field"><div class="l">Date Printed</div><div class="v">'+escH(new Date().toLocaleDateString('en-AU'))+'</div></div>'
+      + '  <div class="bk-page">'
+      + '    <div class="bk-head"><span>Technician&rsquo;s Report</span><span>'+escH(woNo)+' &middot; '+escH(w.customer||'')+' &middot; '+escH(w.rego||'')+'</span></div>'
+      + '    <table class="bk-story"><colgroup><col style="width:10mm"><col style="width:17mm"><col style="width:17mm"><col></colgroup>'
+      + '      <thead><tr><th>Job</th><th>Date</th><th>Tech</th><th>Story &mdash; concern, cause, correction, work performed</th></tr></thead>'
+      + '      <tbody>'+new Array(29).join('<tr><td></td><td></td><td></td><td></td></tr>')+'</tbody>'
+      + '    </table>'
+      + '    <div class="bk-boxes">'
+      + '      <div class="bk-box"><div class="bk-box-h">Tyre Pressures &amp; Tread</div><table class="bk-t"><thead><tr><th></th><th>PSI found</th><th>PSI set</th><th>Tread mm</th></tr></thead><tbody>'
+      +          ['Front left','Front right','Rear left','Rear right','Spare'].map(function(r){ return '<tr><th>'+r+'</th><td></td><td></td><td></td></tr>'; }).join('')
+      + '      </tbody></table></div>'
+      + '      <div class="bk-box"><div class="bk-box-h">Brake Life</div><table class="bk-t"><thead><tr><th></th><th>mm</th><th>%</th></tr></thead><tbody>'
+      +          ['Front pads','Rear pads','Front discs','Rear discs','Park brake'].map(function(r){ return '<tr><th>'+r+'</th><td></td><td></td></tr>'; }).join('')
+      + '      </tbody></table></div>'
+      + '      <div class="bk-box"><div class="bk-box-h">Fluids Used</div><table class="bk-t"><thead><tr><th></th><th>Type / spec</th><th>Litres</th></tr></thead><tbody>'
+      +          ['Engine oil','Coolant','Brake fluid','Trans / diff','Other'].map(function(r){ return '<tr><th>'+r+'</th><td></td><td></td></tr>'; }).join('')
+      + '      </tbody></table></div>'
+      + '    </div>'
       + '  </div>'
-      + (jobs ? (''
-        + '  <div class="jc-section"><div class="h">Jobs To Be Performed</div>'
-        + jobs.map(function(j,ji){
-            var jParts = (j.parts && j.parts.length) ? j.parts : null;
-            var jChecks = (j.checklist && j.checklist.length) ? j.checklist : null;
-            return ''
-              + '<div class="jc-job">'
-              + '  <div class="jc-job-hdr"><span class="jc-job-num">Job Line '+(ji+1)+'</span><span class="jc-job-title">'+escH(j.title||('Job '+(ji+1)))+'</span>'
-              +    (j.hours ? '<span class="jc-job-hrs">'+escH(j.hours)+'h labour</span>' : '')
-              + '  </div>'
-              + (j.subtitle ? '<div class="jc-job-sub">'+escH(j.subtitle)+'</div>' : '')
-              + '  <div class="jc-job-cols">'
-              + '    <div><div class="jc-col-hdr">Parts &amp; Materials</div>'
-              +        (jParts ? (''
-                          + '<table class="jc-job-parts"><thead><tr><th>Item</th><th>Part No.</th><th>Specification</th></tr></thead><tbody>'
-                          + jParts.map(function(p){ return '<tr><td>'+escH(p.name||'')+'</td><td>'+escH(p.partNo||partNoFor(p.name)||'\u2014')+'</td><td>'+escH(p.spec||'')+'</td></tr>'; }).join('')
-                          + '</tbody></table>') : '<div class="jc-empty">No physical parts required</div>')
-              + '    </div>'
-              + '    <div><div class="jc-col-hdr">Required Checks</div>'
-              +        (jChecks ? (''
-                          + '<ul class="jc-check-list">'
-                          + jChecks.map(function(c){ return '<li class="jc-check-item"><span class="jc-box"></span><span>'+escH(c)+'</span></li>'; }).join('')
-                          + '</ul>') : '<div class="jc-empty">No checklist items</div>')
-              + '    </div>'
-              + '  </div>'
-              + '</div>';
-          }).join('')
-        + '  </div>')
-      : ((parts ? (''
-        + '  <div class="jc-section"><div class="h">Parts &amp; Materials</div>'
-        + '    <table class="jc-parts"><thead><tr><th>Item</th><th>Part No.</th><th>Specification</th></tr></thead><tbody>'
-        + parts.map(function(p){ return '<tr><td>'+escH(p.name||'')+'</td><td>'+escH(p.partNo||partNoFor(p.name)||'\u2014')+'</td><td>'+escH(p.spec||'')+'</td></tr>'; }).join('')
-        + '    </tbody></table>'
-        + '  </div>') : '')
-      + (checklist ? (''
-        + '  <div class="jc-section"><div class="h">Work To Be Performed</div>'
-        + '    <ul class="jc-check-list">'+checklist.map(function(c){ return '<li class="jc-check-item"><span class="jc-box"></span><span>'+escH(c)+'</span></li>'; }).join('')+'</ul>'
-        + '  </div>') : '')))
-      + '  <div class="jc-section"><div class="h">Notes / Customer Instructions</div>'
-      + '    <div class="jc-notes">'+(w.notes ? escH(w.notes) : ' ')+'</div>'
       + '  </div>'
-      + '  <div class="jc-sign">'
-      + '    <div class="jc-sign-box"><div class="jc-sign-line"></div>Customer signature &middot; authorisation to proceed</div>'
-      + '    <div class="jc-sign-box"><div class="jc-sign-line"></div>Technician signature &middot; work completed</div>'
-      + '  </div>'
-      + '  <div class="jc-foot"><span>Generated by WorkShopConnect</span><span>WO-'+escH(w.num != null ? w.num : w.id)+' &middot; '+escH(new Date().toLocaleString('en-AU'))+'</span></div>'
       + '</body></html>';
     win.document.open();
     win.document.write(html);
@@ -2419,7 +2562,7 @@ var CAL = (function() {
     if(typeof STAFF !== 'undefined' && STAFF.onChange) STAFF.onChange(function(){ render(); if(panelDate) renderPanel(panelDate); });
     render();
   }
-  return {init:init,openPanel:openPanel,openModal:openModal,editWO:editWO,deleteWO:deleteWO,printJobCard:printJobCard,setPendingJobs:setPendingJobs,getAll:function(){return WOS.slice();},getWO:getWO,updateWO:updateWO,onChange:onWOChange};
+  return {init:init,openPanel:openPanel,openModal:openModal,editWO:editWO,deleteWO:deleteWO,printJobCard:printJobCard,setPendingJobs:setPendingJobs,createWO:createWO,getAll:function(){return WOS.slice();},getWO:getWO,updateWO:updateWO,onChange:onWOChange};
 })();
 window.CAL = CAL;
 
@@ -4916,7 +5059,7 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
         var offToday=(t.daysOff||[]).indexOf(ds)>=0;
         var on=!!t.onShift && !offToday;
         var statusLbl=offToday?'Day off':(t.onShift?'On shift':'Inactive');
-        var statusColor=on?'#74c48b':'var(--text3)';
+        var statusColor=on?'var(--ok)':'var(--text3)';
         var hrs=parseFloat(t.hours)||0;
         var eff=(t.eff!=null && t.eff!=='')?t.eff:0;
         html+='<div class="tech-card">'+
@@ -5244,6 +5387,16 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
         }
         location.reload();
       });
+      var tsel = document.getElementById('set-theme');
+      if(tsel){
+        tsel.setAttribute('aria-checked', document.documentElement.getAttribute('data-theme')==='light' ? 'true' : 'false');
+        tsel.addEventListener('click', function(){
+          var t = tsel.getAttribute('aria-checked')==='true' ? 'dark' : 'light';
+          tsel.setAttribute('aria-checked', t==='light' ? 'true' : 'false');
+          if(t==='light') document.documentElement.setAttribute('data-theme','light'); else document.documentElement.removeAttribute('data-theme');
+          try{ localStorage.setItem('wsc_theme_v1', t); }catch(e){}
+        });
+      }
       var abtn = document.getElementById('set-reset-appearance');
       if(abtn) abtn.addEventListener('click', function(){
         if(!confirm('Restore the original colours/theme and clear any self-edit customisations on this device?')) return;
@@ -6335,14 +6488,14 @@ window.AI = AI;
           '<button class="btn primary clock-act" id="clock-off-btn">Clock OFF</button>';
         var b=document.getElementById('clock-off-btn'); if(b) b.addEventListener('click',function(){ flash(clockOff(curTech)); renderPanel(); render(); });
       } else {
-        var list=wos().filter(function(w){ return w.date===todayStr() && w.status!=='done'; });
+        var today=todayStr(); var list=wos().filter(function(w){ return w.status!=='done' && w.status!=='closed'; }).sort(function(a,b){ var at=a.date===today?0:1, bt=b.date===today?0:1; return (at-bt)||String(a.date||'').localeCompare(String(b.date||''))||((a.num||0)-(b.num||0)); });
         if(list.length){
           panel.innerHTML='<div class="clock-status">Hi <b>'+escH(t.name)+'</b> (Tech '+escH(curTech)+') — not clocked on.</div>'+
-            '<select class="m-select clock-wosel" id="clock-wosel">'+list.map(function(w){ return '<option value="'+escH(w.id)+'">'+escH(woLabel(w))+' ('+(w.hours||0)+'h)</option>'; }).join('')+'</select>'+
+            '<select class="m-select clock-wosel" id="clock-wosel">'+list.map(function(w){ return '<option value="'+escH(w.id)+'">'+escH(woLabel(w))+' · '+escH(w.date||'No date')+' ('+(w.hours||0)+'h)</option>'; }).join('')+'</select>'+
             '<button class="btn primary clock-act" id="clock-on-btn">Clock ON</button>';
           var b2=document.getElementById('clock-on-btn'); if(b2) b2.addEventListener('click',function(){ var sel=document.getElementById('clock-wosel'); flash(clockOn(curTech, sel?sel.value:null)); renderPanel(); render(); });
         } else {
-          panel.innerHTML='<div class="clock-status">Hi <b>'+escH(t.name)+'</b> (Tech '+escH(curTech)+').</div><div class="clock-msg">No open work orders booked today to clock onto.</div>';
+          panel.innerHTML='<div class="clock-status">Hi <b>'+escH(t.name)+'</b> (Tech '+escH(curTech)+').</div><div class="clock-msg">No open work orders to clock onto.</div>';
         }
       }
     }
@@ -6374,7 +6527,7 @@ window.AI = AI;
           tb.innerHTML=order.map(function(wid){
             var w=woById(wid)||{}; var booked=parseFloat(w.hours)||0; var actual=actualSecsForWo(wid)/3600;
             var e=(booked>0&&actual>0)?Math.round(booked/actual*100):null;
-            var ec=e==null?'var(--text3)':(e>=100?'#74c48b':(e>=80?'#dfae50':'#ef8079'));
+            var ec=e==null?'var(--text3)':(e>=100?'var(--ok)':(e>=80?'var(--warn)':'var(--bad)'));
             return '<tr><td class="td-mono">'+(w.num?('WO-'+w.num):'—')+'</td><td class="td-primary">'+escH(w.customer||'—')+'</td><td>'+escH(w.vehicle||'—')+'</td><td class="td-mono">'+(booked?booked+'h':'—')+'</td><td class="td-mono">'+(Math.round(actual*10)/10)+'h</td><td class="td-mono" style="color:'+ec+'">'+(e==null?'—':e+'%')+'</td></tr>';
           }).join('');
         }
@@ -6430,7 +6583,7 @@ window.AI = AI;
         var past=(w.date && w.date<today);
         return '<tr class="owo-row" data-id="'+escH(w.id)+'" data-date="'+escH(w.date||'')+'" style="cursor:pointer'+(past?'':'')+'">'
           +'<td class="td-mono">'+(w.num?('WO-'+w.num):'—')+'</td>'
-          +'<td class="td-mono">'+escH(w.date||'—')+(past?' <span style="color:#ef8079">(past due)</span>':'')+'</td>'
+          +'<td class="td-mono">'+escH(w.date||'—')+(past?' <span style="color:var(--bad)">(past due)</span>':'')+'</td>'
           +'<td class="td-primary">'+escH(w.customer||'—')+'</td>'
           +'<td>'+escH(w.vehicle||'—')+'</td>'
           +'<td>'+escH(w.type||'—')+'</td>'
@@ -6779,7 +6932,7 @@ window.AI = AI;
       } else if(w.parts && w.parts.length){
         box.innerHTML='<div class="wod-sub-h">Parts</div>'+w.parts.map(function(p){ return '<div class="wod-part">'+escH(p.name||'')+(p.spec?' <span class="wod-part-spec">'+escH(p.spec)+'</span>':'')+'</div>'; }).join('');
       } else {
-        box.innerHTML='<div class="wod-empty">No jobs or parts attached. Create the work order from the Service Planner to attach structured jobs and parts.</div>';
+        box.innerHTML='<div class="wod-empty">No jobs or parts attached. Create the work order from Generate Work Order to attach structured jobs and parts.</div>';
       }
     }
     function renderHistory(w){
@@ -6857,6 +7010,70 @@ window.AI = AI;
   window.WODETAIL = WODETAIL;
   window.openWO = function(id){ WODETAIL.open(id); };
 
+  // ════════════════════════════════════════════════════════════
+  // CUSTOMWO — hand-built work order on the Generate Work Order page
+  // ════════════════════════════════════════════════════════════
+  var CUSTOMWO = (function(){
+    function el(id){ return document.getElementById(id); }
+    function today(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+    function esc(v){ return String(v==null?'':v).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+    function techOptions(){
+      var sel=el('cwo-tech'); if(!sel) return;
+      var cur=sel.value, list=(typeof STAFF!=='undefined'&&STAFF.technicians)?STAFF.technicians():[];
+      sel.innerHTML='<option value="">Unassigned</option>'+list.map(function(t){ return '<option value="'+esc(t.name)+'">'+esc(t.name)+'</option>'; }).join('');
+      if(cur && list.some(function(t){ return t.name===cur; })) sel.value=cur;
+      else { var f=(typeof STAFF!=='undefined'&&STAFF.firstTechName)?STAFF.firstTechName():null; if(f) sel.value=f; }
+    }
+    function renumber(){
+      var rows=el('cwo-lines').querySelectorAll('.cwo-line');
+      for(var i=0;i<rows.length;i++){ rows[i].querySelector('.n').textContent=String(i+1); rows[i].querySelector('.cwo-del').style.visibility=rows.length>1?'visible':'hidden'; }
+      total();
+    }
+    function addLine(){
+      var row=document.createElement('div'); row.className='cwo-line';
+      row.innerHTML='<span class="n"></span><input type="text" class="m-input cwo-op" aria-label="Operation"><input type="number" class="m-input cwo-hrs" min="0" step="0.1" aria-label="Hours"><textarea class="m-textarea cwo-ins" rows="1" aria-label="Instructions"></textarea><button type="button" class="cwo-del">Remove</button>';
+      row.querySelector('.cwo-del').addEventListener('click', function(){ row.remove(); renumber(); });
+      row.querySelector('.cwo-hrs').addEventListener('input', total);
+      el('cwo-lines').appendChild(row); renumber();
+      return row;
+    }
+    function lines(){
+      return Array.prototype.map.call(el('cwo-lines').querySelectorAll('.cwo-line'), function(r){
+        return { title:r.querySelector('.cwo-op').value.trim(), hours:parseFloat(r.querySelector('.cwo-hrs').value)||0, subtitle:r.querySelector('.cwo-ins').value.trim(), parts:[], checklist:[] };
+      }).filter(function(l){ return l.title||l.subtitle||l.hours; });
+    }
+    function total(){ var h=lines().reduce(function(a,l){ return a+l.hours; },0); el('cwo-total').textContent=(Math.round(h*10)/10)+' h labour'; return Math.round(h*100)/100; }
+    function clear(){
+      ['cwo-customer','cwo-phone','cwo-email','cwo-rego','cwo-vehicle','cwo-year','cwo-chassis','cwo-odo','cwo-notes'].forEach(function(id){ el(id).value=''; });
+      el('cwo-type').value='Other'; el('cwo-date').value=today(); el('cwo-lines').innerHTML=''; addLine(); techOptions();
+    }
+    function create(){
+      var ls=lines(), d={ date:el('cwo-date').value, customer:el('cwo-customer').value.trim() };
+      if(!d.date || !d.customer){ alert('Please enter a date and customer name.'); return; }
+      var ph=el('cwo-phone').value.trim(), em=el('cwo-email').value.trim();
+      if(!ph || ph.replace(/\D/g,'').length<8){ alert('Please enter a valid phone number.'); el('cwo-phone').focus(); return; }
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ alert('Please enter a valid email address.'); el('cwo-email').focus(); return; }
+      if(!ls.length || ls.some(function(l){ return !l.title; })){ alert('Each job line needs an operation.'); return; }
+      var hrs=total(); if(!hrs){ alert('Please enter hours for at least one job line.'); return; }
+      d.phone=el('cwo-phone').value.trim(); d.email=el('cwo-email').value.trim(); d.rego=el('cwo-rego').value.trim().toUpperCase();
+      d.vehicle=el('cwo-vehicle').value.trim(); d.chassis=el('cwo-chassis').value.trim(); d.type=el('cwo-type').value; d.tech=el('cwo-tech').value;
+      var y=parseInt(el('cwo-year').value,10); if(y) d.buildYear=y;
+      var o=parseInt(el('cwo-odo').value,10); if(!isNaN(o)) d.odometer=o;
+      d.notes=el('cwo-notes').value.trim(); d.hours=hrs; d.jobs=ls;
+      var id=CAL.createWO(d); clear();
+      if(typeof window.openWO==='function') window.openWO(id);
+    }
+    function init(){
+      if(!el('cwo')) return;
+      el('cwo-addline').addEventListener('click', function(){ addLine().querySelector('.cwo-op').focus(); });
+      el('cwo-clear').addEventListener('click', clear);
+      el('cwo-create').addEventListener('click', create);
+      if(typeof STAFF!=='undefined'&&STAFF.onChange) STAFF.onChange(techOptions);
+      clear();
+    }
+    return { init:init };
+  })();
+
 
   STAFF.init();
   TODAY.init();
@@ -6875,6 +7092,7 @@ window.AI = AI;
   CLOSEDWO.init();
   PERF.init();
   INVOICE.init();
+  CUSTOMWO.init();
 
   /* WSC splash dismiss */
   (function(){
