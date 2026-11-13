@@ -1108,6 +1108,209 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
 .ai-ref:hover{border-color:var(--accent)}
 .ai-code{margin:8px 0;padding:10px 12px;max-height:360px;overflow:auto;background:var(--surface2);border:1px solid var(--border);border-radius:4px;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre;color:var(--text)}
 .ai-code code{background:none;padding:0;font:inherit}
+.xero-chip{display:inline-block;margin-left:6px;padding:1px 7px;font-size:12px;border-radius:3px;border:1px solid var(--border);color:var(--text2)}
+.xero-ok{color:var(--ok);border-color:rgba(22,163,74,0.4)}
+.xero-bad{color:var(--bad);border-color:rgba(220,38,38,0.4)}
+.xero-conn{margin-bottom:10px;font-size:13px}
+.xero-err{color:var(--bad);font-size:12px;margin:6px 0}
+.xero-actions{display:flex;gap:8px}
+.exp-actions{white-space:nowrap}
+.exp-est{font-size:11px;color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:0 4px;margin-left:4px}
+.ex-gst-row{display:flex;align-items:end;padding-bottom:9px;font-size:13px}
+.ex-gst-row input{margin-right:6px}
+.xero-sub{margin:14px 0 6px;font-size:12px;font-weight:600;color:var(--text2)}
+.mail-acct{display:grid;grid-template-columns:90px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
+.mail-acct-name{font-weight:600}
+.mail-acct-addr{font-size:13px}
+.mail-check{display:flex;gap:8px;align-items:flex-start;font-size:13px}
+.mail-text{font-family:inherit;line-height:1.45;resize:vertical;min-height:120px}
+.mail-att-row{font-size:13px;color:var(--text2);margin:4px 0 6px}
+.mail-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:6px;font-size:13px;opacity:0;pointer-events:none;transition:all .2s;z-index:9999;max-width:560px}
+.mail-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN LAYER v2 — cards, pills and breathing room.
+   Loaded last so it refines the earlier flat styles without touching layout code.
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#141518; --sidebar:#101113; --surface:#1d1f23; --surface2:#25282d; --surface3:#30343a;
+  --field:#16181b; --line:#2b2e33; --border:#3a3e44;
+  --radius:12px; --radius-sm:8px;
+  --card-shadow:0 1px 0 rgba(255,255,255,0.03) inset, 0 1px 2px rgba(0,0,0,0.25);
+  --pop-shadow:0 18px 50px rgba(0,0,0,0.45);
+  --accent:#3b7ddd; --accent-h:#326cc2; --accent-soft:rgba(59,125,221,0.16); --accent-text:#93c0f5;
+}
+:root[data-theme="light"]{
+  --bg:#f3f5f8; --sidebar:#ffffff; --surface:#ffffff; --surface2:#f4f6f9; --surface3:#e8ebf0;
+  --field:#ffffff; --line:#e4e7ec; --border:#cfd4db;
+  --card-shadow:0 1px 2px rgba(16,24,40,0.06), 0 1px 3px rgba(16,24,40,0.04);
+  --pop-shadow:0 18px 50px rgba(16,24,40,0.18);
+  --accent:#2f6fd0; --accent-h:#285fb3; --accent-soft:rgba(47,111,208,0.10); --accent-text:#245ab0;
+}
+body{ background:var(--bg); -webkit-font-smoothing:antialiased; }
+
+/* ── chrome ── */
+.topbar{ background:var(--sidebar); border-bottom:1px solid var(--line); }
+.dealer-name{ font-weight:600; color:var(--text); }
+.topbar-user{ border-radius:999px; background:var(--surface2); border:1px solid var(--line); padding:4px 12px 4px 4px; }
+.user-avatar{ border-radius:999px; }
+.sidebar{ background:var(--sidebar); border-right:1px solid var(--line); }
+.sidebar-label{ font-size:0.6875rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--text3); padding:0 18px 6px; }
+.nav-item{ margin:1px 8px; padding:7px 10px; border-radius:var(--radius-sm); color:var(--text2); }
+.nav-item .nav-text{ color:var(--text2); }
+.nav-item:hover{ background:var(--surface2); }
+.nav-item.active{ background:var(--accent-soft); }
+.nav-item.active .nav-icon, .nav-item.active .nav-text{ color:var(--accent-text); font-weight:600; }
+
+/* ── page frame ── */
+.page-header{ padding:22px 28px 10px; align-items:center; }
+.page-title{ font-size:1.375rem; font-weight:650; letter-spacing:-0.01em; color:var(--text); }
+.page-sub{ font-size:0.8125rem; color:var(--text3); margin-top:3px; }
+.page-body{ padding:10px 28px 32px; }
+.page-actions{ display:flex; gap:8px; align-items:center; }
+
+/* ── buttons & fields ── */
+.btn{ height:34px; padding:0 14px; border-radius:var(--radius-sm); font-size:0.8125rem; font-weight:600; background:var(--surface); border:1px solid var(--border); color:var(--text); display:inline-flex; align-items:center; gap:6px; }
+.btn:hover{ background:var(--surface2); }
+.btn.primary, .m-save{ box-shadow:0 1px 2px rgba(0,0,0,0.2); }
+.co-btn{ height:28px; padding:0 10px; border-radius:7px; background:var(--surface); border:1px solid var(--border); font-weight:500; }
+.co-btn:hover{ background:var(--surface2); }
+.co-btn-close{ background:var(--accent-soft); border-color:transparent; color:var(--accent-text); }
+.co-btn-close:hover{ background:var(--accent); color:#fff; }
+.m-input, .m-select, input.m-input, textarea.m-input{ border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--field); min-height:36px; padding:7px 10px; transition:border-color .12s, box-shadow .12s; }
+.m-input:focus, .m-select:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+.m-label{ font-size:0.75rem; font-weight:600; color:var(--text2); margin-bottom:5px; }
+.m-save, .m-cancel{ height:36px; border-radius:var(--radius-sm); padding:0 16px; }
+
+/* ── stat tiles ── */
+.stat-strip, .kpi-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-bottom:20px; }
+.stat-cell, .kpi-tile{ position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px 15px; box-shadow:var(--card-shadow); overflow:hidden; }
+.stat-cell::before, .kpi-tile::before{ content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); opacity:.85; }
+.stat-cell:nth-child(2)::before, .kpi-tile.green::before{ background:var(--ok); }
+.stat-cell:nth-child(3)::before, .kpi-tile.orange::before{ background:var(--warn); }
+.stat-cell:nth-child(4)::before, .kpi-tile.red::before{ background:var(--bad); }
+.stat-cell-lbl, .kpi-label{ font-size:0.75rem; font-weight:500; color:var(--text3); margin-bottom:6px; }
+.stat-cell-val, .kpi-value{ font-size:1.625rem; font-weight:650; letter-spacing:-0.01em; color:var(--text); line-height:1.15; }
+.kpi-delta{ display:block; font-size:0.75rem; margin-top:6px; color:var(--text3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.kpi-tile{ display:block; color:var(--text); }
+.stat-cell::before, .kpi-tile::before{ display:block; right:auto; height:auto; }
+
+/* ── tables as cards ── */
+.data-table, .perf-sheet, .inv-tbl{ border-collapse:separate; border-spacing:0; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--card-shadow); overflow:hidden; font-size:0.8125rem; }
+.data-table th, .perf-sheet thead th, .inv-tbl th{ background:var(--surface2); color:var(--text3); font-size:0.6875rem; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; padding:10px 14px; border-bottom:1px solid var(--line); white-space:nowrap; }
+.data-table td, .perf-sheet td, .inv-tbl td{ padding:11px 14px; border-bottom:1px solid var(--line); color:var(--text); vertical-align:middle; }
+.data-table tbody tr:last-child td, .perf-sheet tbody tr:last-child td, .inv-tbl tbody tr:last-child td{ border-bottom:none; }
+.data-table tbody tr, .owo-row{ transition:background .1s; }
+.data-table tbody tr:hover td, .owo-row:hover td{ background:var(--surface2); }
+.data-table td:first-child{ font-weight:600; }
+.data-table td[colspan]{ text-align:center !important; padding:34px 14px !important; color:var(--text3); font-weight:400; }
+.td-primary{ font-weight:600; color:var(--text); }
+.table-wrap, .perf-sheet-wrap{ border:none; overflow-x:auto; border-radius:var(--radius); }
+
+/* ── status pills ── */
+.status-pill, .stock-pill, .xero-chip, .day-car-st{ display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:999px; font-size:0.75rem; font-weight:600; line-height:1.5; border:none; white-space:nowrap; background:color-mix(in srgb, currentColor 14%, transparent); }
+.status-pill::before, .stock-pill::before{ content:''; width:6px; height:6px; border-radius:50%; background:currentColor; }
+.xero-chip{ color:var(--text2); margin-left:4px; }
+.xero-ok{ color:var(--ok); } .xero-bad{ color:var(--bad); }
+.sp-closed, .inv-draft{ color:var(--text3); }
+.exp-est{ border-radius:999px; padding:0 7px; }
+
+/* ── cards: panels, settings, detail boxes ── */
+.panel, .settings-card, .wod-card, .bk-card, .clock-terminal, .perf-gross{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 18px 16px; box-shadow:var(--card-shadow); }
+.panel{ padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.panel-head{ padding:14px 16px 12px; border-bottom:1px solid var(--line); align-items:center; }
+.panel-body{ padding:6px 0; flex:1; }
+.panel-title, .settings-card-title, .wod-card-title, .bk-card-title{ font-size:0.9375rem; font-weight:650; color:var(--text); margin:0; }
+.settings-card-title, .wod-card-title, .bk-card-title{ margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+.panel-link{ font-size:0.8125rem; font-weight:600; color:var(--accent-text); }
+.settings-row-sub{ color:var(--text3); line-height:1.5; }
+.dash-grid{ display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr); gap:16px; align-items:start; }
+@media (max-width:1250px){ .dash-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } .dash-grid > :first-child{ grid-column:1 / -1; } }
+
+/* ── modals & menus ── */
+.modal{ border-radius:16px; border:1px solid var(--line); box-shadow:var(--pop-shadow); }
+.modal-header{ padding:18px 20px 14px; border-bottom:1px solid var(--line); }
+.modal-title{ font-size:1.0625rem; font-weight:650; }
+.modal-body{ padding:16px 20px; }
+.modal-footer{ padding:12px 20px 16px; border-top:1px solid var(--line); gap:8px; }
+.role-menu{ border-radius:10px; box-shadow:var(--pop-shadow); border:1px solid var(--line); overflow:hidden; }
+
+/* ── dashboard widgets ── */
+.dash-row{ display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; padding:10px 16px; cursor:pointer; border-bottom:1px solid var(--line); }
+.dash-row:last-child{ border-bottom:none; }
+.dash-row:hover{ background:var(--surface2); }
+.dash-row-closed .dash-cust, .dash-row-closed .dash-meta{ opacity:.7; }
+.dash-time{ font-size:0.75rem; font-weight:600; color:var(--text2); background:var(--surface2); border-radius:6px; padding:4px 7px; min-width:52px; text-align:center; }
+.dash-main{ min-width:0; }
+.dash-cust{ font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.dash-meta{ font-size:0.75rem; color:var(--text3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
+.dash-tech{ padding:11px 16px; border-bottom:1px solid var(--line); }
+.dash-tech:last-child{ border-bottom:none; }
+.dash-tech-top{ display:flex; justify-content:space-between; font-size:0.8125rem; margin-bottom:7px; }
+.dash-tech-name{ font-weight:600; color:var(--text); }
+.dash-tech-hrs{ color:var(--text3); font-variant-numeric:tabular-nums; }
+.dash-bar{ height:6px; border-radius:999px; background:var(--surface3); overflow:hidden; }
+.dash-bar > i{ display:block; height:100%; border-radius:999px; background:var(--accent); }
+.dash-bar > i.warn{ background:var(--warn); } .dash-bar > i.bad{ background:var(--bad); }
+.dash-act{ display:grid; grid-template-columns:8px 1fr; gap:10px; padding:10px 16px; border-bottom:1px solid var(--line); font-size:0.8125rem; }
+.dash-act:last-child{ border-bottom:none; }
+.dash-dot{ width:8px; height:8px; border-radius:50%; margin-top:5px; background:var(--accent); }
+.dash-dot.ok{ background:var(--ok); } .dash-dot.warn{ background:var(--warn); } .dash-dot.bad{ background:var(--bad); }
+.dash-act-t{ color:var(--text); } .dash-act-w{ font-size:0.75rem; color:var(--text3); margin-top:1px; }
+.empty-state{ color:var(--text3); }
+.panel-body .empty-state{ padding:30px 16px !important; text-align:center !important; }
+.nav-sub-item{ padding-left:36px; margin-left:8px; }
+.nav-sub-item .nav-text{ color:var(--text3); }
+.nav-sub-item.active .nav-text{ color:var(--accent-text); }
+/* technicians: one card per person */
+.tech-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
+.tech-card{ display:block; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:var(--card-shadow); }
+.tech-card-head{ display:flex; align-items:center; gap:12px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+.tech-avatar{ display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:50%; background:var(--accent-soft); color:var(--accent-text); font-weight:700; font-size:0.8125rem; flex-shrink:0; }
+.tech-card-name{ font-size:0.9375rem; font-weight:650; }
+.tech-card-role{ color:var(--text3); }
+.tech-card-row{ flex-direction:row; justify-content:space-between; align-items:center; padding:5px 0; color:var(--text3); }
+.tech-card-row span:last-child{ color:var(--text); font-weight:600; }
+.tech-card-job{ margin-top:12px; padding:9px 11px; background:var(--surface2); border-radius:var(--radius-sm); border-left:3px solid var(--accent); }
+/* charts in panels */
+.panel-body .trend-row{ padding:9px 16px; }
+.trend-lbl{ color:var(--text2); }
+.trend-val{ color:var(--text); font-weight:600; font-variant-numeric:tabular-nums; }
+.bar-track{ height:8px; border-radius:999px; background:var(--surface3); }
+.bar-fill{ display:block; height:100%; border-radius:999px; }
+.kpi-delta .up{ color:var(--ok); font-weight:600; } .kpi-delta .dn{ color:var(--bad); font-weight:600; }
+.settings-grid{ gap:16px; }
+
+/* ── section hubs ── */
+.legacy-nav{ display:none !important; }
+.hub-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; max-width:1200px; }
+.hub-tile{ display:grid; grid-template-columns:48px 1fr; grid-template-rows:auto auto; column-gap:14px; row-gap:10px; align-items:center; text-align:left; padding:18px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--card-shadow); cursor:pointer; font-family:inherit; color:var(--text); transition:border-color .12s, transform .12s, box-shadow .12s; }
+.hub-tile{ min-height:132px; align-content:start; }
+.hub-tile:hover{ border-color:var(--accent); transform:translateY(-1px); box-shadow:0 6px 18px rgba(0,0,0,0.18); }
+.hub-tile:focus-visible{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+.hub-ic{ width:48px; height:48px; border-radius:12px; background:var(--accent-soft); color:var(--accent-text); display:flex; align-items:center; justify-content:center; }
+.hub-ic svg{ width:24px; height:24px; }
+.hub-txt{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+.hub-name{ font-size:1rem; font-weight:650; }
+.hub-desc{ font-size:0.8125rem; color:var(--text3); }
+.hub-stat{ grid-column:1 / -1; font-size:0.8125rem; font-weight:600; color:var(--text2); padding-top:10px; border-top:1px solid var(--line); }
+.hub-stat:empty{ display:none; }
+.crumb{ margin-bottom:4px; }
+.crumb-link{ font-size:0.8125rem; font-weight:600; color:var(--accent-text); cursor:pointer; }
+.crumb-link:hover{ text-decoration:underline; }
+.sidebar > .sidebar-section{ padding-top:14px; }
+.sidebar > .sidebar-section .nav-item{ padding:9px 12px; margin:2px 10px; font-size:0.875rem; }
+.cwo-range{ display:inline-flex; gap:4px; padding:4px; background:var(--surface); border:1px solid var(--line); border-radius:10px; margin-bottom:14px; }
+.cwo-chip{ height:30px; padding:0 14px; border:none; border-radius:7px; background:transparent; color:var(--text2); font-weight:600; font-size:0.8125rem; cursor:pointer; font-family:inherit; }
+.cwo-chip:hover{ color:var(--text); background:var(--surface2); }
+.cwo-chip.active{ background:var(--accent-soft); color:var(--accent-text); }
+.cwo-table tr.cwo-group td{ background:var(--surface2) !important; padding:9px 14px !important; text-align:left !important; border-bottom:1px solid var(--line); font-weight:400; color:var(--text); }
+.cwo-group-d{ font-weight:650; }
+.cwo-group-n{ float:right; color:var(--text3); font-size:0.75rem; font-variant-numeric:tabular-nums; }
+.cwo-table tr.cwo-group:hover td{ background:var(--surface2) !important; }
+.cwo{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px; box-shadow:var(--card-shadow); max-width:1240px; }
+.cwo-title{ font-size:0.9375rem; font-weight:650; margin:0 0 14px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+.cal-cell, .cal-day{ transition:background .1s; }
 </style>
 </head>
 <body>
@@ -1435,6 +1638,32 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="sidebar-section">
+    <div class="nav-item" data-page="dashboard">
+      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div><div class="nav-text">Home</div>
+    </div>
+    <div class="nav-item" data-page="hub-workshop" data-hub="1">
+      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div><div class="nav-text">Workshop</div>
+    </div>
+    <div class="nav-item" data-page="hub-accounts" data-hub="1">
+      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/></svg></div><div class="nav-text">Accounts</div>
+    </div>
+    <div class="nav-item" data-page="hub-people" data-hub="1">
+      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></div><div class="nav-text">People</div>
+    </div>
+    <div class="nav-item" data-page="parts">
+      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7l8.7 5 8.7-5M12 22V12"/></svg></div><div class="nav-text">Parts</div>
+    </div>
+    <div class="nav-item" data-page="ai">
+      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></div><div class="nav-text">AI Assistant</div>
+    </div>
+  </div>
+  <div class="sidebar-bottom">
+    <div class="nav-item" data-page="settings">
+      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg></div><div class="nav-text">Settings</div>
+    </div>
+  </div>
+  <div class="legacy-nav" hidden aria-hidden="true">
+  <div class="sidebar-section">
     <div class="sidebar-label">Main</div>
     <div class="nav-item active" data-page="dashboard">
       <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></div><div class="nav-text">Dashboard</div>
@@ -1472,6 +1701,9 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
     </div>
     <div class="nav-item" data-page="invoices">
       <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></div><div class="nav-text">Invoices</div>
+    </div>
+    <div class="nav-item" data-page="expenses" id="nav-expenses">
+      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v12H3z"/><path d="M3 11h18M7 15h4"/><path d="M7 7V5h10v2"/></svg></div><div class="nav-text">Expenses</div>
     </div>
   </div>
   <div class="sidebar-divider"></div>
@@ -1511,9 +1743,35 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
     
   </div>
 </div>
+</div>
 
 <!-- MAIN -->
 <div class="shell-main">
+
+  <!-- SECTION HUBS -->
+  <div class="page" id="page-hub-workshop">
+    <div class="page-header">
+      <div><div class="page-title">Workshop</div><div class="page-sub">Everything on the workshop floor</div></div>
+      <div class="page-actions"><button class="btn primary" data-go="planner">+ New Work Order</button></div>
+    </div>
+    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="planner"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 11h6M9 15h4"/></svg></span><span class="hub-txt"><span class="hub-name">New Work Order</span><span class="hub-desc">Book a vehicle in</span></span><span class="hub-stat" id="hubst-planner"></span></button><button class="hub-tile" data-go="bookings"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span class="hub-txt"><span class="hub-name">Calendar</span><span class="hub-desc">Bookings and capacity by day</span></span><span class="hub-stat" id="hubst-bookings"></span></button><button class="hub-tile" data-go="today"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></span><span class="hub-txt"><span class="hub-name">Today</span><span class="hub-desc">Who is on what today</span></span><span class="hub-stat" id="hubst-today"></span></button><button class="hub-tile" data-go="openwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span><span class="hub-txt"><span class="hub-name">Work Orders</span><span class="hub-desc">Jobs in progress</span></span><span class="hub-stat" id="hubst-openwo"></span></button><button class="hub-tile" data-go="closedwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span><span class="hub-txt"><span class="hub-name">Closed Work Orders</span><span class="hub-desc">Finished jobs by date</span></span><span class="hub-stat" id="hubst-closedwo"></span></button><button class="hub-tile" data-go="clock"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="hub-txt"><span class="hub-name">Clocking</span><span class="hub-desc">Clock technicians on and off jobs</span></span><span class="hub-stat" id="hubst-clock"></span></button></div></div>
+  </div>
+
+  <div class="page" id="page-hub-accounts">
+    <div class="page-header">
+      <div><div class="page-title">Accounts</div><div class="page-sub">Billing, costs and how the month is tracking</div></div>
+      <div class="page-actions"></div>
+    </div>
+    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="invoices"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span><span class="hub-txt"><span class="hub-name">Invoices</span><span class="hub-desc">Bill customers and track payments</span></span><span class="hub-stat" id="hubst-invoices"></span></button><button class="hub-tile" data-go="expenses"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v12H3z"/><path d="M3 11h18M7 15h4"/><path d="M7 7V5h10v2"/></svg></span><span class="hub-txt"><span class="hub-name">Expenses</span><span class="hub-desc">Parts costs, sublet and other spend</span></span><span class="hub-stat" id="hubst-expenses"></span></button><button class="hub-tile" data-go="financials"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="hub-txt"><span class="hub-name">Financials</span><span class="hub-desc">Revenue, margin and trends</span></span><span class="hub-stat" id="hubst-financials"></span></button></div></div>
+  </div>
+
+  <div class="page" id="page-hub-people">
+    <div class="page-header">
+      <div><div class="page-title">People</div><div class="page-sub">Your team and how they are performing</div></div>
+      <div class="page-actions"></div>
+    </div>
+    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="technicians"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="hub-txt"><span class="hub-name">Technicians</span><span class="hub-desc">Hours, rosters and current jobs</span></span><span class="hub-stat" id="hubst-technicians"></span></button><button class="hub-tile" data-go="team"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="hub-txt"><span class="hub-name">Team Management</span><span class="hub-desc">Staff, roles and days off</span></span><span class="hub-stat" id="hubst-team"></span></button><button class="hub-tile" data-go="performance"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span><span class="hub-txt"><span class="hub-name">Performance</span><span class="hub-desc">Efficiency and productivity</span></span><span class="hub-stat" id="hubst-performance"></span></button></div></div>
+  </div>
 
   <!-- DASHBOARD -->
   <div class="page active" id="page-dashboard">
@@ -1523,35 +1781,29 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
         <div class="page-sub" id="dashdate"></div>
       </div>
       <div class="page-actions">
-        <button class="btn">Export Report</button>
-        <button class="btn primary">+ New Work Order</button>
+        <button class="btn" data-nav="bookings">Calendar</button>
+        <button class="btn primary" data-nav="planner">+ New Work Order</button>
       </div>
     </div>
     <div class="page-body">
       <div class="kpi-grid">
-        <div class="kpi-tile blue"><div class="kpi-label">Open WOs Today</div><div class="kpi-value">0</div><div class="kpi-delta" style="color:var(--text3)">No data yet</div></div>
-        <div class="kpi-tile green"><div class="kpi-label">Workshop Efficiency</div><div class="kpi-value">0%</div><div class="kpi-delta" style="color:var(--text3)">No data yet</div></div>
-        <div class="kpi-tile orange"><div class="kpi-label">Labour Revenue</div><div class="kpi-value">$0</div><div class="kpi-delta" style="color:var(--text3)">No data yet</div></div>
-        <div class="kpi-tile red"><div class="kpi-label">Vehicles On Hold</div><div class="kpi-value">0</div><div class="kpi-delta" style="color:var(--text3)">No data yet</div></div>
+        <div class="kpi-tile blue"><div class="kpi-label">Jobs open today</div><div class="kpi-value" id="dash-kpi-open">0</div><div class="kpi-delta" id="dash-kpi-open-d"></div></div>
+        <div class="kpi-tile green"><div class="kpi-label">Workshop load today</div><div class="kpi-value" id="dash-kpi-load">0%</div><div class="kpi-delta" id="dash-kpi-load-d"></div></div>
+        <div class="kpi-tile orange"><div class="kpi-label">Labour invoiced this month</div><div class="kpi-value" id="dash-kpi-rev">$0</div><div class="kpi-delta" id="dash-kpi-rev-d"></div></div>
+        <div class="kpi-tile red"><div class="kpi-label">Vehicles on hold</div><div class="kpi-value" id="dash-kpi-hold">0</div><div class="kpi-delta" id="dash-kpi-hold-d"></div></div>
       </div>
       <div class="dash-grid">
         <div class="panel">
-          <div class="panel-head"><div class="panel-title">Open Work Orders</div><div class="panel-link" onclick="navTo('bookings')">View all</div></div>
-          <div class="panel-body">
-            <div class="empty-state" style="padding:32px 16px;text-align:center;color:var(--text3)">No work orders yet — create one from Generate Work Order or the Calendar.</div>
-            </div>
+          <div class="panel-head"><div class="panel-title">Today’s jobs</div><div class="panel-link" data-nav="today">Open Today</div></div>
+          <div class="panel-body" id="dash-jobs"></div>
         </div>
         <div class="panel">
-          <div class="panel-head"><div class="panel-title">Technician Efficiency</div><div class="panel-link" onclick="navTo('performance')">Full report</div></div>
-          <div class="panel-body">
-            <div class="empty-state" style="padding:32px 16px;text-align:center;color:var(--text3)">No technicians on roster yet.</div>
-          </div>
+          <div class="panel-head"><div class="panel-title">Technician load</div><div class="panel-link" data-nav="technicians">Technicians</div></div>
+          <div class="panel-body" id="dash-techs"></div>
         </div>
         <div class="panel">
-          <div class="panel-head"><div class="panel-title">Activity Feed</div></div>
-          <div class="panel-body">
-            <div class="empty-state" style="padding:32px 16px;text-align:center;color:var(--text3)">No recent activity.</div>
-          </div>
+          <div class="panel-head"><div class="panel-title">Recent activity</div><div class="panel-link" data-nav="invoices">Invoices</div></div>
+          <div class="panel-body" id="dash-activity"></div>
         </div>
       </div>
     </div>
@@ -1833,7 +2085,7 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
       </div>
       <div class="table-wrap">
         <table class="data-table">
-          <thead><tr><th>Part #</th><th>Description</th><th>Category</th><th>Qty</th><th>Reorder Lvl</th><th>Supplier</th><th>Unit Price</th><th>Status</th></tr></thead>
+          <thead><tr><th>Part #</th><th>Description</th><th>Category</th><th>Qty</th><th>Reorder Lvl</th><th>Supplier</th><th>Cost</th><th>Sell</th><th>Markup</th><th>Status</th></tr></thead>
           <tbody id="parts-tbody"></tbody>
         </table>
       </div>
@@ -1857,8 +2109,12 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
           <div><label class="m-label">Reorder Level</label><input class="m-input" id="pa-reorder" type="number" min="0" placeholder="0"></div>
         </div>
         <div class="m-row-2">
-          <div><label class="m-label">Supplier</label><input class="m-input" id="pa-supplier" placeholder="e.g. ECB Mahle"></div>
-          <div><label class="m-label">Unit Price ($)</label><input class="m-input" id="pa-price" type="number" min="0" step="0.01" placeholder="0.00"></div>
+          <div><label class="m-label">Supplier</label><input class="m-input" id="pa-supplier" placeholder="e.g. Repco"></div>
+          <div><label class="m-label">Cost price ($, ex GST)</label><input class="m-input" id="pa-cost" type="number" min="0" step="0.01" placeholder="What you pay"></div>
+        </div>
+        <div class="m-row-2">
+          <div><label class="m-label">Sell price ($, ex GST)</label><input class="m-input" id="pa-price" type="number" min="0" step="0.01" placeholder="Blank = cost + default markup"></div>
+          <div class="set-eff-note" id="pa-markup-note"></div>
         </div>
       </div>
       <div class="modal-footer"><button class="m-cancel" id="pa-cancel">Cancel</button><button class="m-save" id="pa-save">Add Part</button></div>
@@ -1988,9 +2244,12 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
         <div class="stat-cell"><div class="stat-cell-val" id="cwo-stat-hours">0h</div><div class="stat-cell-lbl">Labour Hours Closed</div></div>
         <div class="stat-cell"><div class="stat-cell-val" id="cwo-stat-month">0</div><div class="stat-cell-lbl">Closed This Month</div></div>
       </div>
+      <div class="cwo-range" id="cwo-range">
+        <button class="cwo-chip" data-r="today">Today</button><button class="cwo-chip" data-r="week">Last 7 days</button><button class="cwo-chip" data-r="month">This month</button><button class="cwo-chip active" data-r="all">All</button>
+      </div>
       <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr><th>WO</th><th>Booked</th><th>Customer</th><th>Vehicle</th><th>Service</th><th>Technician</th><th>Hours</th><th>Closed</th></tr></thead>
+        <table class="data-table cwo-table">
+          <thead><tr><th>WO</th><th>Booked</th><th>Customer</th><th>Vehicle</th><th>Service</th><th>Technician</th><th>Hours</th><th>Closed at</th></tr></thead>
           <tbody id="cwo-tbody"></tbody>
         </table>
       </div>
@@ -2027,6 +2286,63 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
         <div id="inv-preview"></div>
       </div>
       <div class="modal-footer"><button class="m-cancel" id="inv-cancel">Cancel</button><button class="m-save" id="inv-create">Create Invoice</button></div>
+    </div>
+  </div>
+
+  <div class="page" id="page-expenses">
+    <div class="page-header">
+      <div><div class="page-title">Expenses</div><div class="page-sub" id="exp-sub"></div></div>
+      <div class="page-actions"><button class="btn primary" id="exp-add-btn">+ Add Expense</button></div>
+    </div>
+    <div class="page-body">
+      <div class="stat-strip">
+        <div class="stat-cell"><div class="stat-cell-val" id="exp-stat-month">$0.00</div><div class="stat-cell-lbl">Costs this month (ex GST)</div></div>
+        <div class="stat-cell"><div class="stat-cell-val" id="exp-stat-psell">$0.00</div><div class="stat-cell-lbl">Parts sold this month</div></div>
+        <div class="stat-cell"><div class="stat-cell-val" id="exp-stat-pcost">$0.00</div><div class="stat-cell-lbl">Parts cost this month</div></div>
+        <div class="stat-cell"><div class="stat-cell-val" id="exp-stat-margin">—</div><div class="stat-cell-lbl">Parts margin</div></div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Expense</th><th>Date</th><th>Supplier</th><th>Description</th><th>Category</th><th>Ref</th><th>Cost ex GST</th><th>GST</th><th>Total</th><th>Parts margin</th><th>Actions</th></tr></thead>
+          <tbody id="exp-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="exp-modal">
+    <div class="modal">
+      <div class="modal-header"><div><div class="modal-title">Add Expense</div><div class="modal-sub">Internal only — never shown to customers</div></div><div class="modal-close" id="exp-modal-close">&#215;</div></div>
+      <div class="modal-body">
+        <div class="m-row-2">
+          <div><label class="m-label" for="ex-date">Date</label><input class="m-input" id="ex-date" type="date"></div>
+          <div><label class="m-label" for="ex-supplier">Supplier</label><input class="m-input" id="ex-supplier" placeholder="e.g. Repco, Burson, sublet trimmer"></div>
+        </div>
+        <div class="m-row-2">
+          <div><label class="m-label" for="ex-cat">Category</label><select class="m-select" id="ex-cat"></select></div>
+          <div><label class="m-label" for="ex-wo">Work order (optional)</label><select class="m-select" id="ex-wo"></select></div>
+        </div>
+        <div class="m-row"><label class="m-label" for="ex-desc">Description</label><input class="m-input" id="ex-desc" placeholder="e.g. Windscreen sublet, shop consumables"></div>
+        <div class="m-row-2">
+          <div><label class="m-label" for="ex-amount">Amount ($, ex GST)</label><input class="m-input" id="ex-amount" type="number" min="0" step="0.01" placeholder="0.00"></div>
+          <div class="ex-gst-row"><label><input type="checkbox" id="ex-gst" checked> Includes GST credit (supplier charged GST)</label></div>
+        </div>
+      </div>
+      <div class="modal-footer"><button class="m-cancel" id="ex-cancel">Cancel</button><button class="m-save" id="ex-save">Add Expense</button></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="mail-modal">
+    <div class="modal">
+      <div class="modal-header"><div><div class="modal-title">Email invoice</div><div class="modal-sub">From <span id="mail-from"></span></div></div><div class="modal-close" id="mail-modal-close">&#215;</div></div>
+      <div class="modal-body">
+        <div class="m-row"><label class="m-label" for="mail-to">To</label><input class="m-input" id="mail-to" type="email" placeholder="customer@example.com"></div>
+        <div class="m-row"><label class="m-label" for="mail-subject">Subject</label><input class="m-input" id="mail-subject"></div>
+        <div class="m-row"><label class="m-label" for="mail-text">Message</label><textarea class="m-input mail-text" id="mail-text" rows="11"></textarea></div>
+        <div class="mail-att-row">Attached: <b id="mail-att"></b> <button class="co-btn" id="mail-preview">View</button></div>
+        <div class="xero-err" id="mail-err"></div>
+      </div>
+      <div class="modal-footer"><button class="m-cancel" id="mail-cancel">Cancel</button><button class="m-save" id="mail-send">Send</button></div>
     </div>
   </div>
 
@@ -2101,22 +2417,22 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
   <div class="page" id="page-financials">
     <div class="page-header">
       <div><div class="page-title">Financials</div><div class="page-sub"></div></div>
-      <div class="page-actions"><button class="btn">Export Report</button></div>
+      <div class="page-actions"><button class="btn" id="fin-export">Export CSV</button></div>
     </div>
     <div class="page-body">
       <div class="kpi-grid">
-        <div class="kpi-tile blue"><div class="kpi-label">Total Revenue (Mth)</div><div class="kpi-value">$0</div><div class="kpi-delta"><span class="up">+8.4%</span> vs last month</div></div>
-        <div class="kpi-tile green"><div class="kpi-label">Labour Revenue</div><div class="kpi-value">$0</div><div class="kpi-delta">60.3% of total</div></div>
-        <div class="kpi-tile orange"><div class="kpi-label">Parts Revenue</div><div class="kpi-value">$0</div><div class="kpi-delta">39.7% of total</div></div>
-        <div class="kpi-tile red"><div class="kpi-label">Gross Profit Margin</div><div class="kpi-value">0.0%</div><div class="kpi-delta"><span class="up">+1.2%</span> vs target 45%</div></div>
+        <div class="kpi-tile blue"><div class="kpi-label">Revenue this month (ex GST)</div><div class="kpi-value" id="fin-rev">$0</div><div class="kpi-delta" id="fin-rev-d"></div></div>
+        <div class="kpi-tile green"><div class="kpi-label">Labour</div><div class="kpi-value" id="fin-lab">$0</div><div class="kpi-delta" id="fin-lab-d"></div></div>
+        <div class="kpi-tile orange"><div class="kpi-label">Parts &amp; other</div><div class="kpi-value" id="fin-parts">$0</div><div class="kpi-delta" id="fin-parts-d"></div></div>
+        <div class="kpi-tile red"><div class="kpi-label">Gross margin</div><div class="kpi-value" id="fin-gp">—</div><div class="kpi-delta" id="fin-gp-d"></div></div>
       </div>
       <div class="dash-grid" style="grid-template-columns: 1.1fr 1fr;">
         <div class="panel">
-          <div class="panel-head"><div class="panel-title">Revenue Trend &mdash; Last 6 Months</div></div>
+          <div class="panel-head"><div class="panel-title">Revenue — last 6 months</div></div>
           <div class="panel-body" id="fin-trend-list"></div>
         </div>
         <div class="panel">
-          <div class="panel-head"><div class="panel-title">Top Services &mdash; By Revenue (Mth)</div></div>
+          <div class="panel-head"><div class="panel-title">Top services this month</div></div>
           <div class="panel-body" id="fin-svc-list"></div>
         </div>
       </div>
@@ -2149,6 +2465,10 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
             <div class="set-eff-note" id="set-book-eff-note"></div>
           </div>
           <div class="m-row-2">
+            <div><label class="m-label" for="set-markup">Default parts markup (%)</label><input class="m-input" id="set-markup" type="number" min="0" max="500" step="1" placeholder="30"></div>
+            <div class="set-eff-note">Added to a part’s cost price when it has no sell price. Costs stay internal (Expenses) and never show on customer invoices.</div>
+          </div>
+          <div class="m-row-2">
             <div><label class="m-label">GST Rate (%)</label><input class="m-input" id="set-gst" type="number" min="0" max="100" step="0.1" value="" placeholder="10"></div>
             <div><label class="m-label">Invoice Terms (days)</label><input class="m-input" id="set-terms" type="number" min="0" value="" placeholder="14"></div>
           </div>
@@ -2173,6 +2493,14 @@ button:focus-visible, .nav-item:focus-visible { outline: 2px solid var(--accent-
           </div>
           <div class="m-row"><label class="m-label">PayID (instant — email or mobile)</label><input class="m-input" id="set-payid" placeholder="e.g. pay@yourworkshop.com.au"></div>
           <div class="m-row"><label class="m-label">Pay Now link (Stripe / PayPal / Square URL)</label><input class="m-input" id="set-paylink" placeholder="https://..."></div>
+        </div>
+        <div class="settings-card" id="mail-card">
+          <div class="settings-card-title">Email (Gmail / Outlook)</div>
+          <div id="mail-card-body"></div>
+        </div>
+        <div class="settings-card" id="xero-card">
+          <div class="settings-card-title">Xero</div>
+          <div id="xero-card-body"></div>
         </div>
         <div class="settings-card">
           <div class="settings-card-title">Parking &amp; Drop-offs</div>
@@ -2281,11 +2609,6 @@ function effColor(eff){
   if(eff >= 70) return 'var(--accent)';
   return 'var(--orange)';
 }
-function maxVal(arr){
-  var m = 0;
-  for(var i=0;i<arr.length;i++){ if(arr[i].val > m) m = arr[i].val; }
-  return m || 1;
-}
 
 // ── Clock ───────────────────────────────────────────────
 function tick() {
@@ -2312,6 +2635,13 @@ function navTo(pageId) {
   pages.forEach(function(p)   { p.classList.toggle('active', p.id === 'page-' + pageId); });
   if (pageId === 'bookings' && !calInit) { calInit = true; CAL.init(); }
   if (pageId === 'bookings' && typeof CARRY !== 'undefined') CARRY.render();
+  // refresh live pages whenever they're shown
+  try {
+    if (pageId === 'dashboard' && typeof DASH !== 'undefined') DASH.render();
+    if (pageId === 'financials' && typeof FIN !== 'undefined' && FIN.render) FIN.render();
+    if (pageId === 'expenses' && typeof EXPENSES !== 'undefined') EXPENSES.render();
+  } catch (e) {}
+  if (typeof HUB !== 'undefined') HUB.onNav(pageId);
   var act = document.querySelector('.nav-item.active[data-page]');
   if (act) { var sub = act.closest('.nav-sub'); if (sub) { sub.classList.add('open'); var head = sub.parentNode.querySelector('.nav-group-head'); if (head) head.classList.add('expanded'); } }
 }
@@ -2394,10 +2724,24 @@ document.querySelectorAll('.nav-group-head').forEach(function(head){
     "Transmission Fluid":90, "Transmission Oil (manual)":60, "DSG Filter":70, "DSG ATF Oil":120, "DSG/S-tronic ATF Oil":120,
     "Transfer Case Fluid":80, "Differential Oil":45, "AdBlue (DEF)":30
   };
-  function partInvPrice(name){
-    try{ var raw=localStorage.getItem('wsc_parts_v1'); if(!raw) return null; var arr=JSON.parse(raw)||[]; var k=String(name||'').toLowerCase();
-      for(var i=0;i<arr.length;i++){ var p=arr[i]||{}; var nm=String(p.name||p.desc||p.description||'').toLowerCase(); if(nm && nm===k){ var pr=parseFloat(p.price); if(!isNaN(pr)) return pr; } } }catch(e){}
+  function partInvRecord(name){
+    try{ var raw=localStorage.getItem('wsc_parts_v1'); if(!raw) return null; var arr=JSON.parse(raw)||[]; var k=String(name||'').toLowerCase().trim();
+      for(var i=0;i<arr.length;i++){ var p=arr[i]||{}; var nm=String(p.name||p.desc||p.description||'').toLowerCase().trim(); if(nm && nm===k) return p; } }catch(e){}
     return null;
+  }
+  // Default upcharge on parts (Settings → Workshop Configuration), as a percentage of cost.
+  function partMarkupPct(){ try{ var v=parseFloat(JSON.parse(localStorage.getItem('wsc_settings_v1')||'{}')['set-markup']); return isNaN(v)?30:Math.max(0,v); }catch(e){ return 30; } }
+  function partInvPrice(name){
+    var p=partInvRecord(name); if(!p) return null;
+    var pr=parseFloat(p.price); if(!isNaN(pr) && pr>0) return pr;
+    var c=parseFloat(p.cost); if(c>0) return Math.round(c*(1+partMarkupPct()/100)*100)/100;      // sell = cost + markup
+    return isNaN(pr)?null:pr;
+  }
+  // What a part costs the workshop (internal only). Without a cost price in Parts it is estimated from the sell price and default markup.
+  function partCostFor(name){
+    var p=partInvRecord(name), sup=p&&p.supplier&&p.supplier!=='\u2014'?String(p.supplier):'';
+    var c=p?parseFloat(p.cost):NaN; if(c>0) return {cost:c, supplier:sup, est:false};
+    var sell=partPriceFor(name)||0; return {cost:Math.round(sell/(1+partMarkupPct()/100)*100)/100, supplier:sup, est:true};
   }
   function partKeywordPrice(name){
     var n=String(name||'').toLowerCase();
@@ -2468,6 +2812,8 @@ var CAL = (function() {
     catch(e) { return seedData(); }
   }
   function saveWOs() {
+    // A closed job always carries the moment it was closed; reopening clears it.
+    WOS.forEach(function(w){ if(!w) return; if(w.status==='closed'){ if(!w.closedAt) w.closedAt=new Date().toISOString(); } else if(w.closedAt) delete w.closedAt; });
     try { localStorage.setItem('wsc_wos_v3', JSON.stringify(WOS)); } catch(e) {}
   }
   function seedData() {
@@ -5791,14 +6137,16 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
           '<td class="td-mono">' + p.qty + '</td>' +
           '<td class="td-mono" style="color:var(--text3)">' + p.reorder + '</td>' +
           '<td>' + escH(p.supplier) + '</td>' +
-          '<td class="td-mono">' + fmtMoney(p.price) + '</td>' +
+          '<td class="td-mono" style="color:var(--text3)">' + (p.cost>0 ? fmtMoney(p.cost) : '\u2014') + '</td>' +
+          '<td class="td-mono">' + fmtMoney(sellOf(p)) + '</td>' +
+          '<td class="td-mono" style="color:var(--text3)">' + (p.cost>0 && sellOf(p)>0 ? Math.round((sellOf(p)-p.cost)/p.cost*100) + '%' : '\u2014') + '</td>' +
           '<td><span class="stock-pill ' + pillCls + '">' + pillLbl + '</span></td>' +
         '</tr>';
       }
       if(shown === 0){
         rows = data.length === 0
-          ? '<tr><td colspan="8" style="text-align:center;color:var(--text3);padding:26px 0">No parts in inventory yet — click + Add Part to add one.</td></tr>'
-          : '<tr><td colspan="8" style="text-align:center;color:var(--text3);padding:26px 0">No parts match your search.</td></tr>';
+          ? '<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:26px 0">No parts in inventory yet — click + Add Part to add one.</td></tr>'
+          : '<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:26px 0">No parts match your search.</td></tr>';
       }
       tbody.innerHTML = rows;
       var sub = document.getElementById('parts-sub');
@@ -5806,13 +6154,14 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
       updateStats();
     }
 
+    function sellOf(p){ var pr=Number(p.price)||0; if(pr>0) return pr; var c=Number(p.cost)||0; return c>0 ? Math.round(c*(1+partMarkupPct()/100)*100)/100 : 0; }
     function updateStats(){
       var low = 0, out = 0, value = 0;
       for(var i=0;i<data.length;i++){
         var st = statusOf(data[i]);
         if(st === 'low') low++;
         if(st === 'out') out++;
-        value += (Number(data[i].qty)||0) * (Number(data[i].price)||0);
+        value += (Number(data[i].qty)||0) * ((Number(data[i].cost)||0) || sellOf(data[i]));   // stock valued at cost
       }
       setTxt('parts-stat-total', data.length);
       setTxt('parts-stat-low', low);
@@ -5825,7 +6174,8 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
     }
 
     function openAdd(){
-      var ids = ['pa-num','pa-cat','pa-desc','pa-qty','pa-reorder','pa-supplier','pa-price'];
+      var ids = ['pa-num','pa-cat','pa-desc','pa-qty','pa-reorder','pa-supplier','pa-price','pa-cost'];
+      var note = document.getElementById('pa-markup-note'); if(note) note.textContent = 'Default markup is ' + partMarkupPct() + '% (Settings).';
       for(var i=0;i<ids.length;i++){
         var el = document.getElementById(ids[i]);
         if(el) el.value = '';
@@ -5852,8 +6202,10 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
         qty: parseInt(val('pa-qty'), 10) || 0,
         reorder: parseInt(val('pa-reorder'), 10) || 0,
         supplier: val('pa-supplier') || '—',
+        cost: parseFloat(val('pa-cost')) || 0,
         price: parseFloat(val('pa-price')) || 0
       };
+      if(!rec.price && rec.cost) rec.price = Math.round(rec.cost*(1+partMarkupPct()/100)*100)/100;
       data.unshift(rec);
       persist();
       closeAdd();
@@ -5887,48 +6239,50 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
   // FIN — Financials dashboard
   // ════════════════════════════════════════════════════════════
   var FIN = (function(){
-    var TREND = [];
-    var SVCS = [];
-    function fmtMoney(n){
-      n = Number(n) || 0;
-      return '$' + n.toLocaleString('en-AU', {maximumFractionDigits:0});
+    // Monthly figures from billed invoices (ex GST) and recorded parts costs.
+    function g(id){ return document.getElementById(id); }
+    function fmtMoney(n){ return '$'+Math.round(Number(n)||0).toLocaleString('en-AU'); }
+    function ym(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2); }
+    function billed(){ return ((typeof INVOICE!=='undefined'&&INVOICE.list)?INVOICE.list():[]).filter(function(iv){ return iv.status!=='draft'; }); }
+    function split(iv){ var lab=0, parts=0, other=0; (iv.lines||[]).forEach(function(l){ var a=Number(l.amount)||0; if(l.kind==='labour'||(!l.kind&&/labour/i.test(l.desc||''))) lab+=a; else if(l.kind==='part') parts+=a; else other+=a; }); return {lab:lab, parts:parts, other:other}; }
+    function monthStats(key){
+      var rev=0, lab=0, parts=0, n=0;
+      billed().forEach(function(iv){ if(String(iv.date||'').slice(0,7)!==key) return; var sp=split(iv); rev+=Number(iv.subtotal)||0; lab+=sp.lab; parts+=sp.parts+sp.other; n++; });
+      var cost=((typeof EXPENSES!=='undefined'&&EXPENSES.list)?EXPENSES.list():[]).filter(function(e){ return String(e.date||'').slice(0,7)===key; }).reduce(function(a,e){ return a+(Number(e.subtotal)||0); },0);
+      return {rev:rev, lab:lab, parts:parts, cost:cost, n:n};
     }
+    function delta(cur, prev){ if(!(prev>0)) return ''; var d=Math.round((cur-prev)/prev*1000)/10; return '<span class="'+(d>=0?'up':'dn')+'">'+(d>=0?'+':'')+d+'%</span> vs last month'; }
+    function set(id,h){ var el=g(id); if(el) el.innerHTML=h; }
     function render(){
-      var trendList = document.getElementById('fin-trend-list');
-      if(trendList){
-        var maxT = maxVal(TREND);
-        var h = '';
-        for(var i=0;i<TREND.length;i++){
-          var d = TREND[i];
-          var pct = Math.round((d.val / maxT) * 100);
-          h += '<div class="trend-row">' +
-            '<span class="trend-lbl">' + escH(d.lbl) + '</span>' +
-            '<span class="bar-track"><span class="bar-fill" style="width:' + pct + '%;background:var(--green)"></span></span>' +
-            '<span class="trend-val">' + fmtMoney(d.val) + '</span>' +
-          '</div>';
-        }
-        if(TREND.length === 0) h = '<div class="empty-state" style="padding:20px;text-align:center;color:var(--text3)">No data available yet.</div>';
-        trendList.innerHTML = h;
-      }
-      var svcList = document.getElementById('fin-svc-list');
-      if(svcList){
-        var maxS = maxVal(SVCS);
-        var h2 = '';
-        for(var j=0;j<SVCS.length;j++){
-          var s = SVCS[j];
-          var pct2 = Math.round((s.val / maxS) * 100);
-          h2 += '<div class="trend-row">' +
-            '<span class="trend-lbl" style="width:140px">' + escH(s.lbl) + '</span>' +
-            '<span class="bar-track"><span class="bar-fill" style="width:' + pct2 + '%;background:var(--accent)"></span></span>' +
-            '<span class="trend-val">' + fmtMoney(s.val) + '</span>' +
-          '</div>';
-        }
-        if(SVCS.length === 0) h2 = '<div class="empty-state" style="padding:20px;text-align:center;color:var(--text3)">No data available yet.</div>';
-        svcList.innerHTML = h2;
-      }
+      var now=new Date(), cur=ym(now), pd=new Date(now.getFullYear(), now.getMonth()-1, 1), prev=ym(pd);
+      var a=monthStats(cur), b=monthStats(prev);
+      set('fin-rev', fmtMoney(a.rev)); set('fin-rev-d', delta(a.rev,b.rev) || (a.n+' invoice'+(a.n===1?'':'s')+' billed'));
+      set('fin-lab', fmtMoney(a.lab)); set('fin-lab-d', a.rev>0?Math.round(a.lab/a.rev*100)+'% of revenue':'—');
+      set('fin-parts', fmtMoney(a.parts)); set('fin-parts-d', a.rev>0?Math.round(a.parts/a.rev*100)+'% of revenue':'—');
+      var gp=(a.rev>0&&a.cost>0)?Math.round((a.rev-a.cost)/a.rev*1000)/10:null;
+      set('fin-gp', gp==null?'—':gp+'%'); set('fin-gp-d', gp!=null?fmtMoney(a.rev-a.cost)+' after recorded costs':(a.rev>0?'No costs recorded yet (Expenses)':'Bill an invoice to see margin'));
+      var trend=[]; for(var k=5;k>=0;k--){ var d=new Date(now.getFullYear(), now.getMonth()-k, 1); trend.push({lbl:d.toLocaleDateString('en-AU',{month:'short', year:'2-digit'}), val:monthStats(ym(d)).rev}); }
+      var maxT=Math.max.apply(null, trend.map(function(t){ return t.val; }).concat([1]));
+      set('fin-trend-list', trend.some(function(t){ return t.val>0; }) ? trend.map(function(t){ return '<div class="trend-row"><span class="trend-lbl">'+escH(t.lbl)+'</span><span class="bar-track"><span class="bar-fill" style="width:'+Math.round(t.val/maxT*100)+'%;background:var(--accent)"></span></span><span class="trend-val">'+fmtMoney(t.val)+'</span></div>'; }).join('')
+        : '<div class="empty-state" style="padding:30px;text-align:center">No billed invoices yet.</div>');
+      var svc={}; billed().forEach(function(iv){ if(String(iv.date||'').slice(0,7)!==cur) return; var w=(typeof CAL!=='undefined'&&CAL.getWO&&iv.woId)?CAL.getWO(iv.woId):null; var t=(w&&w.type)||'Other'; svc[t]=(svc[t]||0)+(Number(iv.subtotal)||0); });
+      var list=Object.keys(svc).map(function(k){ return {lbl:k, val:svc[k]}; }).sort(function(x,y){ return y.val-x.val; }).slice(0,8), maxS=Math.max.apply(null, list.map(function(t){ return t.val; }).concat([1]));
+      set('fin-svc-list', list.length ? list.map(function(t){ return '<div class="trend-row"><span class="trend-lbl" style="width:140px">'+escH(t.lbl)+'</span><span class="bar-track"><span class="bar-fill" style="width:'+Math.round(t.val/maxS*100)+'%;background:var(--ok)"></span></span><span class="trend-val">'+fmtMoney(t.val)+'</span></div>'; }).join('')
+        : '<div class="empty-state" style="padding:30px;text-align:center">Nothing billed this month yet.</div>');
     }
-    function init(){ render(); }
-    return {init:init};
+    function exportCsv(){
+      var rows=[['Invoice','Date','Work order','Customer','Vehicle','Rego','Labour ex GST','Parts & other ex GST','Subtotal','GST','Total','Status']];
+      billed().forEach(function(iv){ var sp=split(iv); rows.push(['INV-'+iv.num, iv.date, iv.woNum!=null?'WO-'+iv.woNum:'', iv.customer, iv.vehicle, iv.rego, sp.lab.toFixed(2), (sp.parts+sp.other).toFixed(2), Number(iv.subtotal||0).toFixed(2), Number(iv.gst||0).toFixed(2), Number(iv.total||0).toFixed(2), iv.status]); });
+      var csv=rows.map(function(r){ return r.map(function(v){ v=String(v==null?'':v); if(/^[=+\-@]/.test(v)) v="'"+v; return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v; }).join(','); }).join('\r\n');
+      var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'})); a.download='financials-'+ym(new Date())+'.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },500);
+    }
+    function init(){
+      var b=g('fin-export'); if(b) b.addEventListener('click', exportCsv);
+      if(typeof CAL!=='undefined' && CAL.onChange) CAL.onChange(function(){ var pg=g('page-financials'); if(pg && pg.classList.contains('active')) render(); });
+      var nav=document.querySelector('.nav-item[data-page="financials"]'); if(nav) nav.addEventListener('click', render);
+      render();
+    }
+    return {init:init, render:render};
   })();
 
   // ════════════════════════════════════════════════════════════
@@ -5936,7 +6290,7 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
   // ════════════════════════════════════════════════════════════
   var SET = (function(){
     var KEY = 'wsc_settings_v1';
-    var FIELDS = ['set-name','set-addr','set-phone','set-abn','set-rate','set-cap','set-gst','set-terms','set-acctname','set-bankname','set-bsb','set-acc','set-payid','set-paylink','set-advisor','set-region','set-park-spaces','set-park-reserve','set-park-open','set-park-close','set-park-lastdrop','set-park-slot','set-park-perslot','set-park-checkin','set-park-overrun','set-park-invoice','set-park-collect','set-book-eff'];
+    var FIELDS = ['set-name','set-addr','set-phone','set-abn','set-rate','set-cap','set-gst','set-terms','set-acctname','set-bankname','set-bsb','set-acc','set-payid','set-paylink','set-advisor','set-region','set-park-spaces','set-park-reserve','set-park-open','set-park-close','set-park-lastdrop','set-park-slot','set-park-perslot','set-park-checkin','set-park-overrun','set-park-invoice','set-park-collect','set-book-eff','set-markup'];
     var toastTimer = null;
 
     function loadSaved(){
@@ -6264,6 +6618,8 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
       if(navTeam) navTeam.style.display = isManager ? '' : 'none';
       var bookingGrp = document.getElementById('navgroup-booking');
       if(bookingGrp) bookingGrp.style.display = isController ? 'none' : '';
+      var navExp = document.getElementById('nav-expenses');
+      if(navExp) navExp.style.display = isController ? 'none' : '';
       var repSection = document.getElementById('section-reporting');
       if(repSection) repSection.style.display = isController ? 'none' : '';
       var activePage = document.querySelector('.page.active');
@@ -6271,7 +6627,7 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
     }
     function canAccess(pageId){
       if(pageId==='team') return current==='manager';
-      if(current==='controller' && ['planner','performance','financials'].indexOf(pageId)>=0) return false;
+      if(current==='controller' && ['planner','performance','financials','expenses'].indexOf(pageId)>=0) return false;
       return true;
     }
     function setRole(r){ if(!ROLES[r]) return; current = r; try{ localStorage.setItem(KEY, r); }catch(e){} apply(); }
@@ -6578,6 +6934,14 @@ var AI = (function() {
      keys:['parts','part','stock','inventory','reorder','supplier','sku','low','backorder'],
      text:'**Parts → + Add Part**: part number, description, category, quantity, **reorder level**, supplier and unit price. Status shows **In stock**, **Low stock** or **Backorder**. Parts a day’s jobs need are listed on that day’s page, and you can ask me “what parts do I need this week?”.'},
 
+    {id:'app-email', topic:'Emailing invoices (Gmail / Outlook)', page:'settings',
+     q:['how do i email an invoice','send invoice to customer','connect gmail','connect outlook','email invoices automatically','change the invoice email message','did the invoice get emailed'],
+     keys:['email','emails','gmail','outlook','send','invoice','pdf','automatic','auto','template','message','hotmail','office'],
+     text:'**Emailing invoices**\n• Settings → **Email (Gmail / Outlook)** → **Connect Gmail** or **Connect Outlook** and sign in on Google\u2019s or Microsoft\u2019s page. WorkShopConnect can only send, never read your mail.\n• Invoices go out from your own address with the **PDF attached**, and land in your Sent folder.\n• With **Email automatically when I bill a customer** ticked, clicking **Bill customer** emails the invoice straight away (if the customer has an email address).\n• The **Email** button on an invoice opens a window to check the address and message before sending.\n• Edit the subject and message in Settings; {customer}, {total}, {due}, {vehicle} and {payment} fill in automatically. **Send me a test** sends a sample to yourself.\n• An **Emailed** tag on the invoice shows when and where it went; **Email failed** shows why on hover.'},
+    {id:'app-expenses', topic:'Expenses and parts margin', page:'expenses',
+     q:['where do i put expenses','track parts cost','parts markup','what did the parts cost us','add a sublet cost','is the cost shown to the customer','parts margin','send expenses to xero'],
+     keys:['expenses','expense','cost','costs','markup','upcharge','margin','supplier','sublet','consumables','bill','bills'],
+     text:'**Expenses** (manager and advisor only) holds what jobs cost the workshop — never shown on customer invoices.\n• Give parts a **cost price** in Parts; leave the sell price blank and your **default parts markup** (Settings) is added.\n• When you **bill** an invoice, its parts costs are recorded automatically, one expense per supplier, with the parts margin.\n• **+ Add Expense** for sublet, consumables, freight or tools, optionally linked to a work order.\n• With Xero connected, expenses go to Xero as supplier **bills** (Draft by default) against your cost account.'},
     {id:'app-perf', topic:'Performance figures', page:'performance',
      q:['what is productivity','how is efficiency calculated','performance page','billed hours','available hours','labour gp'],
      keys:['performance','productivity','efficiency','billed','available','gp','profit','metrics'],
@@ -6748,7 +7112,7 @@ var AI = (function() {
   }
 
   /* ── references: [[page:id|Label]] and [[wo:id|Label]] become buttons ── */
-  var PAGE_NAMES={dashboard:'Dashboard',planner:'Generate Work Order',bookings:'Calendar',today:'Today',openwo:'Work Orders',closedwo:'Closed Work Orders',invoices:'Invoices',technicians:'Technicians',parts:'Parts',clock:'Clocking',team:'Team Management',performance:'Performance',financials:'Financials',settings:'Settings',ai:'AI Assistant'};
+  var PAGE_NAMES={'hub-workshop':'Workshop','hub-accounts':'Accounts','hub-people':'People',dashboard:'Home',planner:'Generate Work Order',bookings:'Calendar',today:'Today',openwo:'Work Orders',closedwo:'Closed Work Orders',invoices:'Invoices',expenses:'Expenses',technicians:'Technicians',parts:'Parts',clock:'Clocking',team:'Team Management',performance:'Performance',financials:'Financials',settings:'Settings',ai:'AI Assistant'};
   function pageRef(p){ return PAGE_NAMES[p]?'[[page:'+p+'|Open '+PAGE_NAMES[p]+']]':''; }
   function woRef(w){ return '[[wo:'+w.id+'|Open '+woNo(w)+']]'; }
   function dayRef(ds){ return '[[day:'+ds+'|Open '+fmtD(ds)+']]'; }
@@ -6953,6 +7317,8 @@ var AI = (function() {
     PERF:'Performance page: per-technician available (clocked) hours, billed hours, productivity, efficiency and labour GP.',
     INVOICE:'Invoices: builds invoice lines from a work order (labour, parts, GST), draft → billed → paid (paying closes the job), email, print and labour-hour totals (wsc_invoices_v1).',
     WODETAIL:'Work order page: edit a job, technician’s story, vehicle history by rego, print, invoice, close/reopen (closing needs a paid invoice).',
+    MAIL:'Email: connecting Gmail or Outlook, emailing customers their invoice as a PDF from the workshop\u2019s own address, automatic emailing when an invoice is billed, the editable message template, and the test email.',
+    EXPENSES:'Expenses: internal job costs never shown to customers — parts costs recorded per supplier when an invoice is billed (with parts margin), manual expenses such as sublet or consumables, and sending them to Xero as supplier bills.',
     CUSTOMWO:'Custom work order form on Generate Work Order: required date/customer/mobile/email, job lines with hours, creates the work order and opens it.'
   };
   var FNDOC={
@@ -7175,7 +7541,7 @@ var AI = (function() {
   // Rank functions for a question. Rare words weigh more (IDF over all functions); a word can match a
   // function's name parts, its everyday keywords, its description, or its module; action words map to
   // the verbs code uses (shows → render, adds → save/add, switches → set …).
-  var MODALIAS={CAL:'calendar bookings booking form day page',PARK:'parking park drop off dropoff bays',TODAY:'today',TECH:'technicians technician page',PARTS:'parts inventory stock',FIN:'financials revenue',SET:'settings',STAFF:'team staff management technician days off roster',ROLE:'role roles advisor manager controller permission permissions access',AI:'assistant ai chat knowledge',DEV:'self edit customise',LOCALM:'model download install wscm local',ENGINE:'engine model server',CLOCK:'clocking clock clocked sessions',OPENWO:'work orders list active',CARRY:'carryover overdue',CLOSEDWO:'closed archive',PERF:'performance productivity efficiency',INVOICE:'invoice invoices billing bill',WODETAIL:'work order page detail history story',CUSTOMWO:'custom work order form','(top level)':'planner service schedule schedules generate rego navigation'};
+  var MODALIAS={CAL:'calendar bookings booking form day page',PARK:'parking park drop off dropoff bays',TODAY:'today',TECH:'technicians technician page',PARTS:'parts inventory stock',FIN:'financials revenue',SET:'settings',STAFF:'team staff management technician days off roster',ROLE:'role roles advisor manager controller permission permissions access',AI:'assistant ai chat knowledge',DEV:'self edit customise',LOCALM:'model download install wscm local',ENGINE:'engine model server',CLOCK:'clocking clock clocked sessions',OPENWO:'work orders list active',CARRY:'carryover overdue',CLOSEDWO:'closed archive',PERF:'performance productivity efficiency',INVOICE:'invoice invoices billing bill',EXPENSES:'expenses expense costs cost markup margin supplier bills sublet',MAIL:'email gmail outlook send pdf invoice automatic template',WODETAIL:'work order page detail history story',CUSTOMWO:'custom work order form','(top level)':'planner service schedule schedules generate rego navigation'};
   var VERBS={add:'add save create new openadd',adds:'add save create new openadd',create:'create add new build',creates:'create add new build',make:'create build',makes:'create build',generate:'create generate build',generates:'create generate build',
     show:'render open view',shows:'render open view',draw:'render',draws:'render',display:'render',displays:'render',list:'render',lists:'render',
     remember:'save persist load',remembers:'save persist load',store:'save persist',stores:'save persist',load:'load getitem parse',
@@ -7237,7 +7603,7 @@ var AI = (function() {
   }
   // Users never see the source: no code, function or variable names, storage keys or line numbers.
   // The assistant still reads its own code (above) to explain in plain English how the app behaves.
-  var MODPLAIN={CAL:'Calendar',PARK:'Calendar',TODAY:'today',TECH:'technicians',PARTS:'parts',FIN:'financials',SET:'settings',STAFF:'team',ROLE:'dashboard',AI:'ai',DEV:'ai',LOCALM:'ai',ENGINE:'ai',CLOCK:'clock',OPENWO:'openwo',CARRY:'bookings',CLOSEDWO:'closedwo',PERF:'performance',INVOICE:'invoices',WODETAIL:'openwo',CUSTOMWO:'planner','(top level)':'planner'};
+  var MODPLAIN={MAIL:'email',EXPENSES:'expenses',CAL:'Calendar',PARK:'Calendar',TODAY:'today',TECH:'technicians',PARTS:'parts',FIN:'financials',SET:'settings',STAFF:'team',ROLE:'dashboard',AI:'ai',DEV:'ai',LOCALM:'ai',ENGINE:'ai',CLOCK:'clock',OPENWO:'openwo',CARRY:'bookings',CLOSEDWO:'closedwo',PERF:'performance',INVOICE:'invoices',WODETAIL:'openwo',CUSTOMWO:'planner','(top level)':'planner'};
   function sanitize(t){
     return String(t||'')
       .replace(/`[^`]*`/g,'')
@@ -8255,34 +8621,63 @@ window.AI = AI;
   // CLOSEDWO — Closed work orders archive (read-only)
   // ════════════════════════════════════════════════════════════
   var CLOSEDWO = (function(){
+    // Closed work orders, newest first, grouped under the day they were closed.
+    var range='all';
     function wos(){ return (typeof CAL!=='undefined'&&CAL.getAll)?CAL.getAll():[]; }
     function setTxt(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; }
-    function fmtClosed(w){ if(!w.closedAt) return '—'; var d=new Date(w.closedAt); if(isNaN(d.getTime())) return '—'; return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+    function ymd(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+    function closedDay(w){ var d=new Date(w.closedAt||''); return isNaN(d.getTime())?String(w.date||''):ymd(d); }
+    function closedTime(w){ var d=new Date(w.closedAt||''); return isNaN(d.getTime())?'':d.toLocaleTimeString('en-AU',{hour:'numeric', minute:'2-digit'}); }
+    function dayLabel(ds){
+      var t=new Date(), today=ymd(t), y=new Date(t); y.setDate(t.getDate()-1);
+      var d=new Date(ds+'T12:00:00'); if(isNaN(d.getTime())) return 'Date unknown';
+      var nice=d.toLocaleDateString('en-AU',{weekday:'long', day:'numeric', month:'long', year:(d.getFullYear()===t.getFullYear()?undefined:'numeric')});
+      return ds===today?'Today · '+nice:(ds===ymd(y)?'Yesterday · '+nice:nice);
+    }
+    function inRange(ds){
+      var t=new Date(); if(range==='all') return true;
+      if(range==='today') return ds===ymd(t);
+      if(range==='month') return ds.slice(0,7)===ymd(t).slice(0,7);
+      var w=new Date(t); w.setDate(t.getDate()-6); return ds>=ymd(w) && ds<=ymd(t);
+    }
     function render(){
       var tbody=document.getElementById('cwo-tbody'); if(!tbody) return;
-      var list=wos().filter(function(w){ return w && w.status==='closed'; });
+      var all=wos().filter(function(w){ return w && w.status==='closed'; });
+      var hrsAll=0, monthC=0, ym=ymd(new Date()).slice(0,7);
+      all.forEach(function(w){ hrsAll+=parseFloat(w.hours)||0; if(closedDay(w).slice(0,7)===ym) monthC++; });
+      setTxt('cwo-stat-total', String(all.length)); setTxt('cwo-stat-hours', (Math.round(hrsAll*10)/10)+'h'); setTxt('cwo-stat-month', String(monthC));
+      document.querySelectorAll('#cwo-range .cwo-chip').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-r')===range); });
+      var list=all.filter(function(w){ return inRange(closedDay(w)); });
       list.sort(function(a,b){ return String(b.closedAt||b.date||'').localeCompare(String(a.closedAt||a.date||'')); });
-      var hrs=0, monthC=0, now=new Date(), ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-      list.forEach(function(w){ hrs+=parseFloat(w.hours)||0; if(String(w.closedAt||'').slice(0,7)===ym) monthC++; });
-      setTxt('cwo-stat-total', String(list.length));
-      setTxt('cwo-stat-hours', (Math.round(hrs*10)/10)+'h');
-      setTxt('cwo-stat-month', String(monthC));
-      if(!list.length){ tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--text3);padding:30px 0">No closed work orders yet.</td></tr>'; return; }
-      tbody.innerHTML=list.map(function(w){
-        return '<tr class="cwo-row" data-id="'+escH(w.id)+'" style="cursor:pointer">'
-          +'<td class="td-mono">'+(w.num?('WO-'+w.num):'—')+'</td>'
-          +'<td class="td-mono">'+escH(w.date||'—')+'</td>'
-          +'<td class="td-primary">'+escH(w.customer||'—')+'</td>'
-          +'<td>'+escH(w.vehicle||'—')+'</td>'
-          +'<td>'+escH(w.type||'—')+'</td>'
-          +'<td>'+escH(w.tech||'—')+'</td>'
-          +'<td class="td-mono">'+(w.hours?(w.hours+'h'):'—')+'</td>'
-          +'<td class="td-mono">'+fmtClosed(w)+'</td>'
-          +'</tr>';
+      setTxt('cwo-sub', list.length+' shown'+(range==='all'?'':' · '+({today:'today', week:'last 7 days', month:'this month'}[range])));
+      if(!list.length){ tbody.innerHTML='<tr><td colspan="8">'+(all.length?'Nothing closed in this period.':'No closed work orders yet.')+'</td></tr>'; return; }
+      var groups=[], by={};
+      list.forEach(function(w){ var k=closedDay(w); if(!by[k]){ by[k]=[]; groups.push(k); } by[k].push(w); });
+      tbody.innerHTML=groups.map(function(k){
+        var g=by[k], h=g.reduce(function(a,w){ return a+(parseFloat(w.hours)||0); },0);
+        return '<tr class="cwo-group"><td colspan="8"><span class="cwo-group-d">'+escH(dayLabel(k))+'</span><span class="cwo-group-n">'+g.length+' job'+(g.length===1?'':'s')+' · '+(Math.round(h*10)/10)+'h</span></td></tr>'+
+          g.map(function(w){
+            return '<tr class="cwo-row" data-id="'+escH(w.id)+'" style="cursor:pointer">'
+              +'<td class="td-mono">'+(w.num?('WO-'+w.num):'—')+'</td>'
+              +'<td class="td-mono">'+escH(w.date||'—')+'</td>'
+              +'<td class="td-primary">'+escH(w.customer||'—')+'</td>'
+              +'<td>'+escH(w.vehicle||'—')+'</td>'
+              +'<td>'+escH(w.type||'—')+'</td>'
+              +'<td>'+escH(w.tech||'—')+'</td>'
+              +'<td class="td-mono">'+(w.hours?(w.hours+'h'):'—')+'</td>'
+              +'<td class="td-mono">'+escH(closedTime(w)||'—')+'</td>'
+              +'</tr>';
+          }).join('');
       }).join('');
       tbody.querySelectorAll('.cwo-row').forEach(function(r){ r.addEventListener('click', function(){ var id=r.getAttribute('data-id'); if(id && typeof window.openWO==='function') window.openWO(id); }); });
     }
-    function init(){ render(); var rf=document.getElementById('cwo-refresh'); if(rf) rf.addEventListener('click', render); var nav=document.querySelector('.nav-item[data-page="closedwo"]'); if(nav) nav.addEventListener('click', render); if(typeof CAL!=='undefined'&&CAL.onChange) CAL.onChange(render); }
+    function init(){
+      render();
+      var rf=document.getElementById('cwo-refresh'); if(rf) rf.addEventListener('click', render);
+      var nav=document.querySelector('.nav-item[data-page="closedwo"]'); if(nav) nav.addEventListener('click', render);
+      var rg=document.getElementById('cwo-range'); if(rg) rg.addEventListener('click', function(e){ var b=e.target.closest('.cwo-chip'); if(!b) return; range=b.getAttribute('data-r'); render(); });
+      if(typeof CAL!=='undefined'&&CAL.onChange) CAL.onChange(render);
+    }
     return { init:init, render:render };
   })();
   window.CLOSEDWO = CLOSEDWO;
@@ -8375,15 +8770,27 @@ window.AI = AI;
     function addDays(ds,n){ var d=new Date(ds+'T00:00:00'); d.setDate(d.getDate()+n); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
     function nextNum(){ var n=1000; try{ n=parseInt(localStorage.getItem(CKEY),10)||1000; }catch(e){} var mx=n; invoices.forEach(function(iv){ if(iv.num>mx) mx=iv.num; }); var nx=mx+1; try{ localStorage.setItem(CKEY,String(nx)); }catch(e){} return nx; }
 
+    // Invoice lines, itemised the same way in the app and in Xero:
+    // one labour line per job (its hours × labour rate), then that job's parts, one line per part.
     function buildLines(w){
-      var lines=[], hrs=parseFloat(w.hours)||0;
-      if(!hrs && w.jobs) hrs=w.jobs.reduce(function(a,j){return a+(parseFloat(j.hours)||0);},0);
-      var r=rate();
-      if(hrs>0) lines.push({desc:(w.type?w.type+' — ':'')+'Labour', qty:r2(hrs), unit:r2(r), amount:r2(hrs*r)});
-      var parts=[];
-      if(w.jobs && w.jobs.length) w.jobs.forEach(function(j){ (j.parts||[]).forEach(function(p){ parts.push(p); }); });
-      else if(w.parts && w.parts.length) parts=w.parts;
-      parts.forEach(function(p){ var nm=(p&&p.name)||String(p||''); if(!nm) return; var up=priceOf(nm); lines.push({desc:nm, qty:1, unit:r2(up), amount:r2(up)}); });
+      var lines=[], r=rate(), hrs=parseFloat(w.hours)||0, jobs=(w.jobs||[]).filter(function(j){ return j&&(j.title||j.hours||(j.parts&&j.parts.length)); });
+      var jobHrs=jobs.reduce(function(a,j){ return a+(parseFloat(j.hours)||0); },0);
+      if(!hrs) hrs=jobHrs;
+      var perJob=jobs.length>0 && jobHrs>0 && Math.abs(jobHrs-hrs)<0.05;      // job hours still add up to the work order's hours
+      function labour(desc,h){ if(h>0) lines.push({kind:'labour', desc:desc+' — Labour', qty:r2(h), unit:r2(r), amount:r2(h*r)}); }
+      function part(p){
+        var nm=(p&&p.name)||String(p||''); if(!nm) return;
+        var no=p&&(p.partNo||p.sku||p.code), q=Math.max(1, parseFloat(p&&p.qty)||1), up=r2(priceOf(nm));
+        var c=partCostFor(nm);
+        lines.push({kind:'part', name:nm, desc:nm+(no?' ('+no+')':''), qty:r2(q), unit:up, amount:r2(q*up), cost:r2(c.cost), supplier:c.supplier, costEst:c.est});
+      }
+      if(perJob){
+        jobs.forEach(function(j){ labour(j.title||w.type||'Labour', parseFloat(j.hours)||0); (j.parts||[]).forEach(part); });
+      } else {
+        labour(w.type||'Workshop', hrs);
+        if(jobs.length) jobs.forEach(function(j){ (j.parts||[]).forEach(part); });
+        else (w.parts||[]).forEach(part);
+      }
       return lines;
     }
     function totalsOf(lines){
@@ -8424,7 +8831,11 @@ window.AI = AI;
     }
     function statusPill(s){ var m={draft:'inv-draft',issued:'inv-issued',paid:'inv-paid'}, L={draft:'Draft',issued:'Issued',paid:'Paid'}; return '<span class="status-pill '+(m[s]||'inv-draft')+'">'+(L[s]||String(s||'').toUpperCase())+'</span>'; }
     function isPaid(woId){ return invoices.some(function(iv){ return iv.woId===woId && iv.status==='paid'; }); }
-    function setStatus(id,s){ var iv=invoices.find(function(x){return x.id===id;}); if(!iv) return; iv.status=s; if(s==='issued'&&!iv.issuedAt) iv.issuedAt=new Date().toISOString(); if(s==='paid'){ if(!iv.issuedAt) iv.issuedAt=new Date().toISOString(); iv.paidAt=new Date().toISOString(); if(iv.woId && typeof CAL!=='undefined' && CAL.getWO && CAL.updateWO){ var w0=CAL.getWO(iv.woId); if(w0 && w0.status!=='closed') CAL.updateWO(iv.woId,{status:'closed', closedAt:new Date().toISOString()}); } } save(); render(); }
+    function setStatus(id,s,opts){ var iv=invoices.find(function(x){return x.id===id;}); if(!iv) return; iv.status=s; if(s==='issued'&&!iv.issuedAt) iv.issuedAt=new Date().toISOString(); if(s==='paid'){ if(!iv.issuedAt) iv.issuedAt=new Date().toISOString(); iv.paidAt=new Date().toISOString(); if(iv.woId && typeof CAL!=='undefined' && CAL.getWO && CAL.updateWO){ var w0=CAL.getWO(iv.woId); if(w0 && w0.status!=='closed') CAL.updateWO(iv.woId,{status:'closed', closedAt:new Date().toISOString()}); } } save(); render();
+      if(s==='issued' && typeof EXPENSES!=='undefined') EXPENSES.fromInvoice(iv);
+      if(s==='issued' && typeof MAIL!=='undefined') MAIL.onBilled(iv, opts);
+      if(typeof FIN!=='undefined' && FIN.render) FIN.render(); if(typeof DASH!=='undefined') DASH.render();
+      if(typeof XERO!=='undefined' && XERO.onStatus) XERO.onStatus(id, s, opts); }
     function del(id){ if(!confirm('Delete this draft invoice?')) return; invoices=invoices.filter(function(x){return x.id!==id;}); save(); render(); }
     function render(){
       var tb=document.getElementById('inv-tbody'); if(!tb) return;
@@ -8438,13 +8849,19 @@ window.AI = AI;
         act+='<button class="co-btn" onclick="INVOICE.email(\''+iv.id+'\')">Email</button>';
         if(iv.status==='draft'){ act+='<button class="co-btn co-btn-close" onclick="INVOICE.setStatus(\''+iv.id+'\',\'issued\')">Bill customer</button><button class="co-btn" onclick="INVOICE.del(\''+iv.id+'\')">Delete</button>'; }
         else if(iv.status==='issued'){ act+='<button class="co-btn co-btn-close" onclick="INVOICE.setStatus(\''+iv.id+'\',\'paid\')">Mark paid</button>'; }
+        if(typeof MAIL!=='undefined' && MAIL.chip) act+=MAIL.chip(iv);
+        if(typeof XERO!=='undefined' && XERO.chip) act+=XERO.chip(iv);
         return '<tr><td class="td-mono">INV-'+iv.num+'</td><td class="td-mono">'+escH(iv.date||'—')+'</td><td class="td-mono">'+(iv.woNum!=null?('WO-'+iv.woNum):'—')+'</td><td class="td-primary">'+escH(iv.customer||'—')+'</td><td class="td-mono">'+labourHrs(iv.lines)+'h</td><td class="td-mono">'+money(iv.total)+'</td><td>'+statusPill(iv.status)+'</td><td><div class="co-actions">'+act+'</div></td></tr>';
       }).join('');
     }
     function view(id){
       var iv=invoices.find(function(x){return x.id===id;}); if(!iv){ alert('Invoice not found.'); return; }
-      var s=settings(), biz=s['set-name']||'WorkShopConnect';
       var win=window.open('','_blank','width=860,height=1000'); if(!win){ alert('Pop-up blocked — allow pop-ups to view invoices.'); return; }
+      win.document.open(); win.document.write(docHtml(iv,false)); win.document.close();
+    }
+    // The customer's invoice document. forPdf drops the on-screen Print/Close buttons.
+    function docHtml(iv, forPdf){
+      var s=settings(), biz=s['set-name']||'WorkShopConnect';
       var rows=iv.lines.map(function(l){ return '<tr><td>'+escH(l.desc)+'</td><td class="num">'+l.qty+'</td><td class="num">'+money(l.unit)+'</td><td class="num">'+money(l.amount)+'</td></tr>'; }).join('');
       var bizsub=[s['set-addr'],s['set-phone'],(s['set-abn']?('ABN '+s['set-abn']):'')].filter(Boolean).join('\n');
       var paid=iv.status==='paid'?'<div class="paid-stamp">PAID</div>':'';
@@ -8467,7 +8884,7 @@ window.AI = AI;
         +'.paid-stamp{position:absolute;top:150px;right:60px;border:4px solid #16a34a;color:#16a34a;font-size:38px;font-weight:800;letter-spacing:4px;padding:6px 20px;border-radius:8px;transform:rotate(-14deg);opacity:0.85;}'
         +'.pay-box{margin-top:22px;border:1px solid #ccc;border-radius:6px;padding:14px 16px;}.pay-h{font-size:11px;text-transform:uppercase;letter-spacing:0.6px;color:#777;font-weight:800;margin-bottom:10px;}.pay-btn{display:inline-block;background:#16a34a;color:#fff;text-decoration:none;font-weight:800;font-size:14px;padding:10px 24px;border-radius:6px;margin-bottom:12px;}.pay-rows div{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid #eee;}.pay-rows span{color:#777;}.pay-rows b{color:#1a1a1a;}'+'@media print{body{margin:14mm;}.inv-noprint{display:none;}}'
         +'</style></head><body>'
-        +'<div class="inv-noprint" style="text-align:right;margin-bottom:14px"><button onclick="window.print()" style="padding:8px 18px;font-weight:700;border-radius:4px;border:1px solid #1a1a1a;background:#1a1a1a;color:#fff;cursor:pointer">Print / Save PDF</button> <button onclick="window.close()" style="padding:8px 18px;font-weight:700;border-radius:4px;border:1px solid #ccc;background:#fff;cursor:pointer">Close</button></div>'
+        +(forPdf?'':'<div class="inv-noprint" style="text-align:right;margin-bottom:14px"><button onclick="window.print()" style="padding:8px 18px;font-weight:700;border-radius:4px;border:1px solid #1a1a1a;background:#1a1a1a;color:#fff;cursor:pointer">Print / Save PDF</button> <button onclick="window.close()" style="padding:8px 18px;font-weight:700;border-radius:4px;border:1px solid #ccc;background:#fff;cursor:pointer">Close</button></div>')
         +paid
         +'<div class="inv-head"><div><div class="inv-biz">'+escH(biz)+'</div><div class="inv-biz-sub">'+escH(bizsub)+'</div></div><div class="inv-meta"><div class="t">TAX INVOICE</div><div class="n">INV-'+iv.num+'</div><div class="d">Issued: '+escH(iv.date||'—')+'<br>Due: '+escH(iv.due||'—')+(iv.woNum!=null?('<br>Work Order: WO-'+escH(iv.woNum)):'')+'</div></div></div>'
         +'<div class="inv-parties"><div class="inv-party"><div class="h">Bill To</div><div class="v"><b>'+escH(iv.customer||'—')+'</b>'+(iv.phone?('<br>'+escH(iv.phone)):'')+(iv.email?('<br>'+escH(iv.email)):'')+'</div></div><div class="inv-party"><div class="h">Vehicle</div><div class="v">'+escH(iv.vehicle||'—')+(iv.rego?('<br>Rego: '+escH(iv.rego)):'')+(iv.chassis?('<br>VIN: '+escH(iv.chassis)):'')+'</div></div></div>'
@@ -8476,10 +8893,11 @@ window.AI = AI;
         +paySection
         +'<div class="inv-terms">Payment terms: '+terms()+' days from issue'+(iv.status==='paid'?(' · PAID '+escH((iv.paidAt||'').slice(0,10))):'')+'.<br>Please quote invoice number INV-'+iv.num+' with payment. Thank you for your business.</div>'
         +'</body></html>';
-      win.document.open(); win.document.write(html); win.document.close();
+      return html;
     }
     function email(id){
       var iv=invoices.find(function(x){return x.id===id;}); if(!iv) return;
+      if(typeof MAIL!=='undefined' && MAIL.ready()){ MAIL.compose(id); return; }      // send from the workshop's Gmail/Outlook with the PDF attached
       var s=settings(), biz=s['set-name']||'WorkShopConnect', NL='\r\n';
       var lineTxt=iv.lines.map(function(l){ return '  - '+l.desc+(l.qty>1?(' x'+l.qty):'')+' : '+money(l.amount); }).join(NL);
       var pay=[];
@@ -8514,13 +8932,637 @@ window.AI = AI;
       var nav=document.querySelector('.nav-item[data-page="invoices"]'); if(nav) nav.addEventListener('click', render);
       if(typeof CAL!=='undefined'&&CAL.onChange) CAL.onChange(render);
     }
-    return { init:init, render:render, fromWO:fromWO, view:view, email:email, isPaid:isPaid, setStatus:setStatus, del:del };
+    return { init:init, render:render, fromWO:fromWO, view:view, docHtml:docHtml, email:email, isPaid:isPaid, setStatus:setStatus, del:del,
+      list:function(){ return invoices; }, get:function(id){ return invoices.find(function(x){ return x.id===id; })||null; }, saveAll:save };
   })();
   window.INVOICE = INVOICE;
 
   // ════════════════════════════════════════════════════════════
   // WODETAIL — full Work Order record page (data entry + history + tech story)
   // ════════════════════════════════════════════════════════════
+  // ════════════════════════════════════════════════════════════
+  // XERO — invoices, contacts and payments sync with Xero.
+  // The desktop shell holds the Xero sign-in (window.wscXero); this module only maps
+  // WorkShopConnect invoices to Xero and keeps both sides in step. Settings: wsc_xero_v1.
+  // ════════════════════════════════════════════════════════════
+  // ════════════════════════════════════════════════════════════
+  // EXPENSES — internal costs, never shown to customers.
+  // Billing an invoice records what its parts cost the workshop (one expense per supplier),
+  // so parts margin is visible; other costs (sublet, consumables, freight) are added by hand.
+  // Expenses can go to Xero as supplier bills. Storage: wsc_expenses_v1.
+  // ════════════════════════════════════════════════════════════
+  var EXPENSES = (function(){
+    var KEY='wsc_expenses_v1', list=[];
+    var CATS=['Parts','Sublet','Consumables','Freight','Tools & equipment','Other'];
+    function load(){ try{ list=JSON.parse(localStorage.getItem(KEY)||'[]')||[]; }catch(e){ list=[]; } }
+    function save(){ try{ localStorage.setItem(KEY, JSON.stringify(list)); }catch(e){} }
+    function r2(n){ return Math.round((Number(n)||0)*100)/100; }
+    function money(n){ return '$'+(Number(n)||0).toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function gstRate(){ try{ var g=parseFloat(JSON.parse(localStorage.getItem('wsc_settings_v1')||'{}')['set-gst']); return isNaN(g)?10:g; }catch(e){ return 10; } }
+    function today(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+    function nextNum(){ return list.reduce(function(m,x){ return Math.max(m, x.num||1000); },1000)+1; }
+    function totals(lines, withGst){ var sub=r2(lines.reduce(function(a,l){ return a+(Number(l.amount)||0); },0)), g=withGst?gstRate():0, gst=r2(sub*g/100); return {subtotal:sub, gstRate:g, gst:gst, total:r2(sub+gst)}; }
+
+    // From a billed invoice: group its part lines by supplier; cost = unit cost × qty.
+    function fromInvoice(iv){
+      if(!iv || !iv.lines) return [];
+      var made=[], groups={};
+      iv.lines.forEach(function(l){
+        if((l.kind||'')!=='part') return;
+        var name=l.name||String(l.desc||'').replace(/\s*\([^)]*\)\s*$/,'');
+        var c=(l.cost!=null)?{cost:Number(l.cost)||0, supplier:l.supplier||'', est:!!l.costEst}:partCostFor(name);
+        if(!(c.cost>0)) return;
+        var sup=c.supplier||'Parts supplier';
+        (groups[sup]=groups[sup]||[]).push({desc:l.desc, qty:Number(l.qty)||1, unit:r2(c.cost), amount:r2(c.cost*(Number(l.qty)||1)), sell:Number(l.amount)||0, est:c.est});
+      });
+      Object.keys(groups).forEach(function(sup){
+        var key=iv.id+'|'+sup; if(list.some(function(x){ return x.key===key; })) return;      // once per invoice & supplier
+        var lines=groups[sup], t=totals(lines, Number(iv.gstRate)>0);
+        var e={ id:'exp-'+Date.now()+'-'+Math.floor(Math.random()*1e4), key:key, num:nextNum(), auto:true, date:iv.date||today(), supplier:sup, cat:'Parts',
+          desc:'Parts for INV-'+iv.num+(iv.woNum!=null?' · WO-'+iv.woNum:'')+(iv.vehicle?' · '+iv.vehicle:''), invId:iv.id, invNum:iv.num, woId:iv.woId||null, woNum:iv.woNum,
+          lines:lines, subtotal:t.subtotal, gstRate:t.gstRate, gst:t.gst, total:t.total, sell:r2(lines.reduce(function(a,l){ return a+l.sell; },0)),
+          estimated:lines.some(function(l){ return l.est; }), createdAt:new Date().toISOString() };
+        list.push(e); made.push(e);
+      });
+      if(made.length){ save(); render(); made.forEach(function(e){ if(typeof XERO!=='undefined'&&XERO.onExpense) XERO.onExpense(e.id); }); }
+      return made;
+    }
+    function addManual(d){
+      var amt=r2(d.amount), withGst=!!d.gst, lines=[{desc:d.desc||d.cat, qty:1, unit:amt, amount:amt}], t=totals(lines, withGst);
+      var wo=d.woId&&typeof CAL!=='undefined'?CAL.getWO(d.woId):null;
+      var e={ id:'exp-'+Date.now()+'-'+Math.floor(Math.random()*1e4), num:nextNum(), auto:false, date:d.date||today(), supplier:d.supplier||'Supplier', cat:d.cat||'Other',
+        desc:d.desc||d.cat||'Expense', woId:wo?wo.id:null, woNum:wo?wo.num:null, lines:lines, subtotal:t.subtotal, gstRate:t.gstRate, gst:t.gst, total:t.total, createdAt:new Date().toISOString() };
+      list.push(e); save(); render();
+      if(typeof XERO!=='undefined'&&XERO.onExpense) XERO.onExpense(e.id);
+      return e;
+    }
+    function del(id){
+      var e=list.find(function(x){ return x.id===id; }); if(!e) return;
+      if(e.xero&&e.xero.billId){ alert('This expense is already in Xero as a bill — void or delete it in Xero instead.'); return; }
+      if(!confirm('Delete expense EXP-'+e.num+'?')) return;
+      list=list.filter(function(x){ return x.id!==id; }); save(); render();
+    }
+
+    // ── page ──
+    function inMonth(d){ var n=new Date(); return String(d||'').slice(0,7)===n.getFullYear()+'-'+('0'+(n.getMonth()+1)).slice(-2); }
+    function render(){
+      var tb=document.getElementById('exp-tbody'); if(!tb) return;
+      var rows=list.slice().sort(function(a,b){ return String(b.date).localeCompare(String(a.date))||(b.num-a.num); });
+      tb.innerHTML=rows.length?rows.map(function(e){
+        var margin=e.auto&&e.sell?(e.sell-e.subtotal):null, pct=margin!=null&&e.sell>0?Math.round(margin/e.sell*100):null;
+        var ref=(e.invNum?'INV-'+e.invNum:'')+(e.woNum!=null?(e.invNum?' · ':'')+'WO-'+e.woNum:'');
+        var act=(typeof XERO!=='undefined'&&XERO.billChip?XERO.billChip(e):'')+(!(e.xero&&e.xero.billId)?' <button class="co-btn" onclick="EXPENSES.del(\''+e.id+'\')">Delete</button>':'');
+        return '<tr><td class="td-mono">EXP-'+e.num+'</td><td>'+escH(e.date||'')+'</td><td class="td-primary">'+escH(e.supplier)+'</td>'+
+          '<td>'+escH(e.auto?String(e.desc).replace(/^Parts for INV-\d+( · WO-\d+)?( · )?/,'')||'Parts':e.desc)+(e.estimated?' <span class="exp-est" title="No cost price in Parts for some items — cost estimated from your default markup">est.</span>':'')+'</td>'+
+          '<td>'+escH(e.cat)+'</td><td class="td-mono">'+escH(ref||'—')+'</td>'+
+          '<td class="td-mono">'+money(e.subtotal)+'</td><td class="td-mono">'+money(e.gst)+'</td><td class="td-mono">'+money(e.total)+'</td>'+
+          '<td class="td-mono">'+(margin!=null?money(margin)+(pct!=null?' ('+pct+'%)':''):'—')+'</td><td class="exp-actions">'+act+'</td></tr>';
+      }).join(''):'<tr><td colspan="11" style="text-align:center;color:var(--text3);padding:26px 0">No expenses yet. Parts costs are added automatically when you bill an invoice; use + Add Expense for anything else.</td></tr>';
+      var m=list.filter(function(e){ return inMonth(e.date); }), cost=m.reduce(function(a,e){ return a+e.subtotal; },0);
+      var parts=m.filter(function(e){ return e.auto; }), pc=parts.reduce(function(a,e){ return a+e.subtotal; },0), ps=parts.reduce(function(a,e){ return a+(e.sell||0); },0);
+      var set=function(id,v){ var el=document.getElementById(id); if(el) el.textContent=v; };
+      set('exp-stat-month', money(cost)); set('exp-stat-psell', money(ps)); set('exp-stat-pcost', money(pc));
+      set('exp-stat-margin', ps>0?money(ps-pc)+' ('+Math.round((ps-pc)/ps*100)+'%)':'—');
+      set('exp-sub', list.length+' expense'+(list.length===1?'':'s')+' · internal only — never shown on customer invoices');
+    }
+    function openModal(){
+      var g=function(id){ return document.getElementById(id); };
+      g('ex-date').value=today(); ['ex-supplier','ex-desc','ex-amount'].forEach(function(i){ g(i).value=''; }); g('ex-gst').checked=true;
+      g('ex-cat').innerHTML=CATS.map(function(c){ return '<option>'+c+'</option>'; }).join('');
+      var wos=(typeof CAL!=='undefined'?CAL.getAll():[]).filter(function(w){ return w&&w.status!=='closed'; }).sort(function(a,b){ return (b.num||0)-(a.num||0); }).slice(0,80);
+      g('ex-wo').innerHTML='<option value="">— None —</option>'+wos.map(function(w){ return '<option value="'+escH(w.id)+'">WO-'+escH(w.num)+' · '+escH(w.customer||'')+(w.vehicle?' · '+escH(w.vehicle):'')+'</option>'; }).join('');
+      g('exp-modal').classList.add('open'); g('ex-supplier').focus();
+    }
+    function closeModal(){ var m=document.getElementById('exp-modal'); if(m) m.classList.remove('open'); }
+    function saveModal(){
+      var g=function(id){ return document.getElementById(id); }, amt=parseFloat(g('ex-amount').value);
+      if(!g('ex-supplier').value.trim()){ alert('Enter the supplier.'); return; }
+      if(!(amt>0)){ alert('Enter the amount (ex GST).'); return; }
+      addManual({date:g('ex-date').value, supplier:g('ex-supplier').value.trim(), cat:g('ex-cat').value, desc:g('ex-desc').value.trim(), amount:amt, gst:g('ex-gst').checked, woId:g('ex-wo').value});
+      closeModal();
+    }
+    function init(){
+      load();
+      var b=document.getElementById('exp-add-btn'); if(b) b.addEventListener('click', openModal);
+      ['exp-modal-close','ex-cancel'].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener('click', closeModal); });
+      var sv=document.getElementById('ex-save'); if(sv) sv.addEventListener('click', saveModal);
+      var nav=document.querySelector('.nav-item[data-page="expenses"]'); if(nav) nav.addEventListener('click', render);
+      render();
+    }
+    return { init:init, render:render, fromInvoice:fromInvoice, addManual:addManual, del:del,
+      list:function(){ return list; }, get:function(id){ return list.find(function(x){ return x.id===id; })||null; }, saveAll:save };
+  })();
+  window.EXPENSES = EXPENSES;
+
+  // ════════════════════════════════════════════════════════════
+  // MAIL — email customers their invoice (PDF attached) from the workshop's own Gmail or Outlook.
+  // Sign-in and sending happen in the desktop app; the page never sees mail passwords or tokens.
+  // Settings (template, auto-send) stored in wsc_mail_v1.
+  // ════════════════════════════════════════════════════════════
+  var MAIL = (function(){
+    var KEY='wsc_mail_v1', bridge=window.wscMail||null, status={available:false, accounts:{}}, busy=false, compId=null;
+    var DEF_SUBJECT='Invoice INV-{number} from {business}';
+    var DEF_BODY='Hi {customer},\n\nPlease find attached invoice INV-{number} for work on your {vehicle}.\n\nTotal due: {total} by {due}.\n\nHow to pay:\n{payment}\n\nThank you for your business.\n{business}\n{phone}';
+    function cfg(){ var c; try{ c=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ c={}; } if(c.auto==null) c.auto=true; c.subject=c.subject||DEF_SUBJECT; c.body=c.body||DEF_BODY; return c; }
+    function setCfg(patch){ var c=Object.assign(cfg(),patch); try{ localStorage.setItem(KEY, JSON.stringify(c)); }catch(e){} return c; }
+    function call(fn, arg){ return bridge[fn](arg).then(function(r){ if(!r||!r.ok) throw new Error((r&&r.error)||'Email isn’t available.'); return r.value; }); }
+    function ready(){ return !!(bridge && status.default); }
+    function fromAddr(){ var a=status.default&&status.accounts[status.default]; return a?a.email:''; }
+    function settings(){ try{ return JSON.parse(localStorage.getItem('wsc_settings_v1')||'{}')||{}; }catch(e){ return {}; } }
+    function money(n){ return '$'+(Number(n)||0).toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function auDate(d){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(d||'')); return m?(+m[3])+'/'+m[2]+'/'+m[1]:String(d||''); }
+
+    function fill(tpl, iv){
+      var s=settings(), biz=s['set-name']||'WorkShopConnect', pay=[];
+      if(s['set-paylink']) pay.push('- Pay online: '+s['set-paylink']);
+      if(s['set-payid']) pay.push('- PayID: '+s['set-payid']+' (reference INV-'+iv.num+')');
+      if(s['set-bsb']||s['set-acc']) pay.push('- Bank transfer: '+(s['set-acctname']||biz)+', BSB '+(s['set-bsb']||'-')+', Acc '+(s['set-acc']||'-')+' (reference INV-'+iv.num+')');
+      if(!pay.length) pay.push('- Payment details available on request.');
+      var v={ customer:(String(iv.customer||'').trim().split(/\s+/)[0])||'there', fullname:iv.customer||'', number:iv.num, total:money(iv.total), due:auDate(iv.due), date:auDate(iv.date),
+        vehicle:(iv.vehicle||'vehicle')+(iv.rego?' ('+iv.rego+')':''), rego:iv.rego||'', business:biz, phone:s['set-phone']||'', payment:pay.join('\n') };
+      return String(tpl).replace(/\{(\w+)\}/g, function(m,k){ return Object.prototype.hasOwnProperty.call(v,k)?String(v[k]):m; }).replace(/\n{3,}/g,'\n\n').trim();
+    }
+    function mark(iv, patch){ iv.mail=Object.assign({}, iv.mail||{}, patch); INVOICE.saveAll(); INVOICE.render(); }
+
+    function sendInvoice(id, opts){
+      opts=opts||{};
+      var iv=INVOICE.get(id); if(!iv) return Promise.reject(new Error('Invoice not found.'));
+      if(!ready()) return Promise.reject(new Error('Connect Gmail or Outlook in Settings → Email first.'));
+      var to=opts.to!=null?opts.to:iv.email, c=cfg();
+      if(!String(to||'').trim()) return Promise.reject(new Error('INV-'+iv.num+' has no customer email address.'));
+      mark(iv,{state:'sending', error:null});
+      return call('send',{ to:to, subject:opts.subject!=null?opts.subject:fill(c.subject,iv), text:opts.text!=null?opts.text:fill(c.body,iv),
+          pdf:{ html:INVOICE.docHtml(iv,true), filename:'INV-'+iv.num+'.pdf' } })
+        .then(function(r){ mark(iv,{state:'sent', at:r.sentAt, to:(r.to||[]).join(', '), from:r.from, via:r.provider, error:null});
+          if(iv.status==='draft') INVOICE.setStatus(id,'issued',{emailed:true}); return r; })
+        .catch(function(err){ mark(iv,{state:'error', error:err.message}); throw err; });
+    }
+    // Called when an invoice is billed: email it automatically if that's switched on.
+    function onBilled(iv, opts){
+      if(opts&&opts.emailed) return;
+      if(!ready()||!cfg().auto||!iv||!iv.email||(iv.mail&&(iv.mail.state==='sent'||iv.mail.state==='sending'))) return;
+      sendInvoice(iv.id).catch(function(err){ toast('Couldn’t email INV-'+iv.num+': '+err.message); });
+    }
+    function chip(iv){
+      var m=iv.mail; if(!m) return '';
+      if(m.state==='sending') return '<span class="xero-chip">Emailing…</span>';
+      if(m.state==='error') return '<span class="xero-chip xero-bad" title="'+escH(m.error||'')+'">Email failed</span>';
+      if(m.state==='sent') return '<span class="xero-chip xero-ok" title="'+escH('Sent '+String(m.at||'').replace('T',' ').slice(0,16)+' to '+(m.to||'')+' from '+(m.from||''))+'">Emailed</span>';
+      return '';
+    }
+    function toast(msg){ var el=document.getElementById('mail-toast'); if(!el){ el=document.createElement('div'); el.id='mail-toast'; el.className='mail-toast'; document.body.appendChild(el); }
+      el.textContent=msg; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(function(){ el.classList.remove('show'); },6000); }
+
+    // ── compose window (Email button) ──
+    function compose(id){
+      var iv=INVOICE.get(id); if(!iv) return;
+      var c=cfg(), g=function(i){ return document.getElementById(i); };
+      compId=id;
+      g('mail-from').textContent=fromAddr()+' ('+(status.default==='google'?'Gmail':'Outlook')+')';
+      g('mail-to').value=iv.email||''; g('mail-subject').value=fill(c.subject,iv); g('mail-text').value=fill(c.body,iv);
+      g('mail-att').textContent='INV-'+iv.num+'.pdf';
+      g('mail-err').textContent=''; g('mail-send').disabled=false; g('mail-send').textContent='Send';
+      g('mail-modal').classList.add('open'); (iv.email?g('mail-send'):g('mail-to')).focus();
+    }
+    function closeCompose(){ var m=document.getElementById('mail-modal'); if(m) m.classList.remove('open'); compId=null; }
+    function sendCompose(){
+      var g=function(i){ return document.getElementById(i); }, id=compId; if(!id) return;
+      g('mail-send').disabled=true; g('mail-send').textContent='Sending…'; g('mail-err').textContent='';
+      sendInvoice(id,{to:g('mail-to').value, subject:g('mail-subject').value, text:g('mail-text').value})
+        .then(function(r){ closeCompose(); toast('Invoice emailed to '+(r.to||[]).join(', ')); })
+        .catch(function(err){ g('mail-err').textContent=err.message; g('mail-send').disabled=false; g('mail-send').textContent='Send'; });
+    }
+    function viewPdf(){ if(compId) INVOICE.view(compId); }
+
+    // ── Settings → Email ──
+    function renderCard(){
+      var box=document.getElementById('mail-card-body'); if(!box) return;
+      if(!bridge){ box.innerHTML='<div class="settings-row-sub">Emailing invoices from your own Gmail or Outlook needs WorkShopConnect 1.4.0 or later. Install the latest version, then come back here. Until then, the Email button opens your mail app.</div>'; return; }
+      var c=cfg(), acc=status.accounts||{}, rows='';
+      ['google','microsoft'].forEach(function(id){
+        var a=acc[id]||{name:id==='google'?'Gmail':'Outlook'}, nm=id==='google'?'Gmail':'Outlook';
+        rows+='<div class="mail-acct"><div class="mail-acct-name">'+nm+'</div>'+
+          (a.connected?'<div class="mail-acct-addr">'+escH(a.email||'')+(status.default===id?' <span class="xero-chip xero-ok">Sends invoices</span>':'')+'</div>'+
+            '<div class="mail-acct-act">'+(status.default!==id?'<button class="co-btn" data-mail-default="'+id+'">Use this</button> ':'')+'<button class="co-btn" data-mail-off="'+id+'">Disconnect</button></div>'
+          :(a.available===false?'<div class="mail-acct-addr" style="color:var(--text3)">Coming soon</div><div></div>':
+            '<div class="mail-acct-addr" style="color:var(--text3)">Not connected</div><div class="mail-acct-act"><button class="btn" data-mail-on="'+id+'"'+(busy?' disabled':'')+'>Connect '+nm+'</button></div>'))+'</div>';
+      });
+      box.innerHTML='<div class="settings-row-sub">Email invoices to customers as a PDF, sent from your own address so replies come back to you and copies sit in your Sent folder. You sign in on Google’s or Microsoft’s own page; WorkShopConnect can only send, never read your mail.</div>'+
+        rows+'<div class="settings-row-sub" id="mail-msg">'+(status.error?escH(status.error):'')+'</div>'+
+        (status.default?(
+        '<div class="m-row"><label class="mail-check"><input type="checkbox" id="mail-auto"'+(c.auto?' checked':'')+'> Email the invoice automatically when I bill a customer (if they have an email address)</label></div>'+
+        '<div class="m-row"><label class="m-label" for="mail-tpl-subject">Subject</label><input class="m-input" id="mail-tpl-subject" value="'+escH(c.subject)+'"></div>'+
+        '<div class="m-row"><label class="m-label" for="mail-tpl-body">Message</label><textarea class="m-input mail-text" id="mail-tpl-body" rows="9">'+escH(c.body)+'</textarea>'+
+        '<div class="settings-row-sub">Fills in automatically: {customer} {fullname} {number} {total} {due} {date} {vehicle} {rego} {business} {phone} {payment}. The invoice PDF is always attached.</div></div>'+
+        '<div class="m-row xero-actions"><button class="btn" id="mail-tpl-reset">Reset message</button> <button class="btn" id="mail-test">Send me a test</button></div>'):'');
+      bind();
+    }
+    function bind(){
+      var box=document.getElementById('mail-card-body'); if(!box) return;
+      box.querySelectorAll('[data-mail-on]').forEach(function(b){ b.addEventListener('click', function(){ connect(b.getAttribute('data-mail-on')); }); });
+      box.querySelectorAll('[data-mail-off]').forEach(function(b){ b.addEventListener('click', function(){ var id=b.getAttribute('data-mail-off');
+        if(!confirm('Disconnect '+(id==='google'?'Gmail':'Outlook')+'? Invoices won’t be emailed from it any more.')) return;
+        call('disconnect',id).then(function(st){ status=st; renderCard(); }).catch(function(e){ msg(e.message); }); }); });
+      box.querySelectorAll('[data-mail-default]').forEach(function(b){ b.addEventListener('click', function(){ call('setDefault',b.getAttribute('data-mail-default')).then(function(st){ status=st; renderCard(); }).catch(function(e){ msg(e.message); }); }); });
+      var au=document.getElementById('mail-auto'); if(au) au.addEventListener('change', function(){ setCfg({auto:au.checked}); });
+      var su=document.getElementById('mail-tpl-subject'); if(su) su.addEventListener('change', function(){ setCfg({subject:su.value.trim()||DEF_SUBJECT}); });
+      var bo=document.getElementById('mail-tpl-body'); if(bo) bo.addEventListener('change', function(){ setCfg({body:bo.value.trim()||DEF_BODY}); });
+      var rs=document.getElementById('mail-tpl-reset'); if(rs) rs.addEventListener('click', function(){ setCfg({subject:DEF_SUBJECT, body:DEF_BODY}); renderCard(); });
+      var te=document.getElementById('mail-test'); if(te) te.addEventListener('click', test);
+    }
+    function msg(t){ var m=document.getElementById('mail-msg'); if(m) m.textContent=t; }
+    function connect(id){
+      busy=true; renderCard(); msg('Finish signing in on the '+(id==='google'?'Google':'Microsoft')+' page that just opened in your browser…');
+      call('connect',id).then(function(st){ status=st; status.error=null; }).catch(function(e){ status.error=e.message; })
+        .then(function(){ busy=false; renderCard(); });
+    }
+    function test(){
+      var me=fromAddr(); if(!me) return;
+      var demo={ num:'TEST', customer:'Test Customer', email:me, vehicle:'Toyota HiLux', rego:'123ABC', date:new Date().toISOString().slice(0,10), due:new Date(Date.now()+14*864e5).toISOString().slice(0,10),
+        lines:[{kind:'labour',desc:'Logbook service — Labour',qty:1.5,unit:150,amount:225},{kind:'part',desc:'Oil filter',qty:1,unit:18.5,amount:18.5}], subtotal:243.5, gstRate:10, gst:24.35, total:267.85, status:'issued' };
+      var c=cfg(); msg('Sending a test to '+me+'…');
+      call('send',{to:me, subject:'[Test] '+fill(c.subject,demo), text:fill(c.body,demo), pdf:{html:INVOICE.docHtml(demo,true), filename:'INV-TEST.pdf'}})
+        .then(function(){ msg('Test sent to '+me+' — check your inbox.'); }).catch(function(e){ msg(e.message); });
+    }
+    function refresh(){ if(!bridge) return Promise.resolve(); return call('status').then(function(st){ status=st; renderCard(); INVOICE.render(); }).catch(function(){}); }
+    function init(){
+      var g=function(i){ return document.getElementById(i); };
+      if(g('mail-cancel')) g('mail-cancel').addEventListener('click', closeCompose);
+      if(g('mail-modal-close')) g('mail-modal-close').addEventListener('click', closeCompose);
+      if(g('mail-send')) g('mail-send').addEventListener('click', sendCompose);
+      if(g('mail-preview')) g('mail-preview').addEventListener('click', viewPdf);
+      var nav=document.querySelector('.nav-item[data-page="settings"]'); if(nav) nav.addEventListener('click', refresh);
+      renderCard(); refresh();
+    }
+    return { init:init, ready:ready, compose:compose, sendInvoice:sendInvoice, onBilled:onBilled, chip:chip, refresh:refresh, _fill:fill };
+  })();
+  window.MAIL = MAIL;
+
+  // ════════════════════════════════════════════════════════════
+  // DASH — live dashboard: today's numbers, today's jobs, technician load, recent activity.
+  // ════════════════════════════════════════════════════════════
+  var DASH = (function(){
+    function g(id){ return document.getElementById(id); }
+    function ymd(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+    function money0(n){ return '$'+Math.round(Number(n)||0).toLocaleString('en-AU'); }
+    function r1(n){ return Math.round((Number(n)||0)*10)/10; }
+    function stLabel(s){ return {open:'Open',wip:'In progress',done:'Complete',hold:'On hold',closed:'Closed'}[s]||'Open'; }
+    function stPill(s){ return {open:'sp-open',wip:'sp-wip',done:'sp-done',hold:'sp-hold',closed:'sp-closed'}[s]||'sp-open'; }
+    function staff(){ try{ return JSON.parse(localStorage.getItem('wsc_staff_v1')||'[]')||[]; }catch(e){ return []; } }
+    function ago(iso){ var t=Date.parse(iso); if(!t) return ''; var m=Math.round((Date.now()-t)/60000); if(m<1) return 'just now'; if(m<60) return m+' min ago'; var h=Math.round(m/60); if(h<24) return h+'h ago'; var d=Math.round(h/24); return d===1?'yesterday':d+' days ago'; }
+    function set(id,v){ var el=g(id); if(el) el.textContent=v; }
+    function setHtml(id,v){ var el=g(id); if(el) el.innerHTML=v; }
+
+    function render(){
+      if(!g('dash-kpi-open') || typeof CAL==='undefined') return;
+      var now=new Date(), ds=ymd(now), month=ds.slice(0,7);
+      var all=CAL.getAll(), localDay=function(iso){ var d=new Date(iso||''); return isNaN(d.getTime())?'':ymd(d); }, closedToday=function(w){ return w.status==='closed' && localDay(w.closedAt)===ds; };
+      var today=CAL.dayJobs(ds).filter(function(w){ return w && (w.status!=='closed' || closedToday(w)); });
+      all.forEach(function(w){ if(closedToday(w) && today.indexOf(w)<0) today.push(w); });       // closed today even if booked earlier
+      var hrsToday=function(w){ var h=CAL.hoursOn?CAL.hoursOn(w,ds):0; return h||(w.date===ds?(Number(w.hours)||0):0); };
+      var rank=function(w){ return w.status==='closed'?2:(w.status==='done'?1:0); };
+      today.sort(function(a,b){ return rank(a)-rank(b) || String(a.time||'99').localeCompare(String(b.time||'99')); });
+
+      // KPIs
+      var active=today.filter(function(w){ return w.status!=='done' && w.status!=='closed'; }).length;
+      var booked=today.reduce(function(a,w){ return a+hrsToday(w); },0), cap=(typeof STAFF!=='undefined'&&STAFF.capacityFor)?STAFF.capacityFor(ds):0;
+      var load=cap>0?Math.round(booked/cap*100):0;
+      var invs=(typeof INVOICE!=='undefined'&&INVOICE.list)?INVOICE.list():[];
+      var labour=0, billed=0, invByWo={};
+      var labOf=function(iv){ return (iv.lines||[]).reduce(function(a,l){ return a+((l.kind==='labour'||(!l.kind&&/labour/i.test(l.desc||'')))?(Number(l.amount)||0):0); },0); };
+      var labPaid=0;
+      invs.forEach(function(iv){ if(iv.woId && iv.status!=='draft') invByWo[iv.woId]=iv; if(iv.status==='draft'||String(iv.date||'').slice(0,7)!==month) return; billed+=Number(iv.subtotal)||0; labour+=labOf(iv); if(iv.status==='paid') labPaid+=labOf(iv); });
+
+      var hold=all.filter(function(w){ return w.status==='hold'; }).length;
+      var owed=invs.filter(function(iv){ return iv.status==='issued'; }).reduce(function(a,iv){ return a+(Number(iv.total)||0); },0);
+      set('dash-kpi-open', active); set('dash-kpi-open-d', today.length+' booked in today');
+      set('dash-kpi-load', load+'%'); set('dash-kpi-load-d', r1(booked)+'h of '+r1(cap)+'h tech time');
+      set('dash-kpi-rev', money0(labour)); set('dash-kpi-rev-d', labour>0?money0(labPaid)+' paid · '+money0(labour-labPaid)+' awaiting payment':'From invoices billed this month');
+      set('dash-kpi-hold', hold); set('dash-kpi-hold-d', owed>0?money0(owed)+' waiting on payment':'Nothing waiting on payment');
+
+      // Today's jobs
+      setHtml('dash-jobs', today.length? today.slice(0,9).map(function(w){
+        return '<div class="dash-row'+(w.status==='closed'?' dash-row-closed':'')+'" data-wo="'+escH(w.id)+'"><div class="dash-time">'+escH(w.status==='closed'?'Done':(w.date<ds?'Carry':(w.time||'—')))+'</div>'+
+          '<div class="dash-main"><div class="dash-cust">'+escH(w.customer||'—')+' <span style="font-weight:400;color:var(--text3)">· WO-'+escH(w.num)+'</span></div>'+
+          '<div class="dash-meta">'+escH([w.vehicle, w.rego, w.type, w.tech||'Unassigned', r1(hrsToday(w))+'h'].filter(Boolean).join(' · '))+'</div></div>'+
+          '<span class="status-pill '+stPill(w.status)+'">'+stLabel(w.status)+'</span></div>'; }).join('')+
+          (today.length>9?'<div class="dash-row" data-nav="today" style="grid-template-columns:1fr;color:var(--accent-text);font-weight:600">+ '+(today.length-9)+' more today</div>':'')
+        : '<div class="empty-state" style="padding:34px 16px;text-align:center">Nothing booked in today.<br><span class="panel-link" data-nav="planner" style="cursor:pointer">Create a work order</span></div>');
+
+      // Technician load
+      var techs=staff().filter(function(p){ return p && p.techNo && /tech|apprent|mechanic/i.test(p.role||'Technician'); });
+      setHtml('dash-techs', techs.length? techs.map(function(t){
+        var off=!t.onShift||(t.daysOff||[]).indexOf(ds)>=0, capT=off?0:(Number(t.hours)||0);
+        var b=today.filter(function(w){ return w.tech===t.name; }).reduce(function(a,w){ return a+hrsToday(w); },0);
+        var pct=capT>0?Math.round(b/capT*100):0, cls=pct>110?'bad':(pct>90?'warn':'');
+        return '<div class="dash-tech"><div class="dash-tech-top"><span class="dash-tech-name">'+escH(t.name)+'</span><span class="dash-tech-hrs">'+(off?'Off today':r1(b)+' / '+r1(capT)+'h · '+pct+'%')+'</span></div>'+
+          '<div class="dash-bar"><i class="'+cls+'" style="width:'+Math.min(100,pct)+'%"></i></div></div>'; }).join('')
+        : '<div class="empty-state" style="padding:34px 16px;text-align:center">No technicians yet.<br><span class="panel-link" data-nav="technicians" style="cursor:pointer">Add your team</span></div>');
+
+      // Recent activity
+      var ev=[];
+      invs.forEach(function(iv){
+        if(iv.paidAt) ev.push({t:iv.paidAt, c:'ok', a:'INV-'+iv.num+' paid', w:(iv.customer||'')+' · $'+(Number(iv.total)||0).toFixed(2)});
+        if(iv.mail&&iv.mail.state==='sent'&&iv.mail.at) ev.push({t:iv.mail.at, c:'', a:'INV-'+iv.num+' emailed', w:'to '+(iv.mail.to||'')});
+        if(iv.status!=='draft') ev.push({t:iv.issuedAt||iv.createdAt||(iv.date+'T09:00:00'), c:'', a:'INV-'+iv.num+' billed', w:(iv.customer||'')+' · $'+(Number(iv.total)||0).toFixed(2)});
+      });
+      all.forEach(function(w){
+        if(w.closedAt) ev.push({t:w.closedAt, c:'ok', a:'WO-'+w.num+' closed', w:(w.customer||'')+' · '+(w.vehicle||'')});
+        if(w.createdAt) ev.push({t:w.createdAt, c:'', a:'WO-'+w.num+' booked in', w:(w.customer||'')+' · '+(w.vehicle||'')});
+        if(w.status==='hold' && (w.updatedAt||w.createdAt)) ev.push({t:w.updatedAt||w.createdAt, c:'bad', a:'WO-'+w.num+' on hold', w:(w.customer||'')+' · '+(w.vehicle||'')});
+      });
+      ev=ev.filter(function(e){ var t=Date.parse(e.t); return t && t<=Date.now()+6e4; }).sort(function(a,b){ return Date.parse(b.t)-Date.parse(a.t); }).slice(0,8);
+      setHtml('dash-activity', ev.length? ev.map(function(e){ return '<div class="dash-act"><span class="dash-dot '+e.c+'"></span><div><div class="dash-act-t">'+escH(e.a)+'</div><div class="dash-act-w">'+escH(e.w)+' · '+escH(ago(e.t))+'</div></div></div>'; }).join('')
+        : '<div class="empty-state" style="padding:34px 16px;text-align:center">No recent activity.</div>');
+      set('dashdate', now.toLocaleDateString('en-AU',{weekday:'long', day:'numeric', month:'long', year:'numeric'}));
+    }
+    function init(){
+      var page=g('page-dashboard'); if(!page) return;
+      page.addEventListener('click', function(e){
+        var row=e.target.closest('[data-wo]'); if(row){ if(typeof WODETAIL!=='undefined'&&WODETAIL.open) WODETAIL.open(row.getAttribute('data-wo'),'dashboard'); return; }
+        var nv=e.target.closest('[data-nav]'); if(nv) HUB.go(nv.getAttribute('data-nav'));
+      });
+      var nav=document.querySelector('.nav-item[data-page="dashboard"]'); if(nav) nav.addEventListener('click', render);
+      if(CAL.onChange) CAL.onChange(render);
+      render(); setInterval(function(){ if(page.classList.contains('active')) render(); }, 60000);
+    }
+    return { init:init, render:render };
+  })();
+  window.DASH = DASH;
+
+
+  // ════════════════════════════════════════════════════════════
+  // HUB — simple top-level sections (Workshop, Accounts, People). Each section page shows
+  // icon tiles for its sub-pages; sub-pages get a breadcrumb back and keep their section lit.
+  // ════════════════════════════════════════════════════════════
+  var HUB = (function(){
+    var OF={planner:'hub-workshop',bookings:'hub-workshop',day:'hub-workshop',today:'hub-workshop',openwo:'hub-workshop',closedwo:'hub-workshop',clock:'hub-workshop',wodetail:'hub-workshop',
+      invoices:'hub-accounts',expenses:'hub-accounts',financials:'hub-accounts', technicians:'hub-people',team:'hub-people',performance:'hub-people'};
+    var NAME={'hub-workshop':'Workshop','hub-accounts':'Accounts','hub-people':'People'};
+    function go(pg){ var it=document.querySelector('.sidebar .nav-item[data-page="'+pg+'"]'); if(it) it.click(); else if(typeof navTo==='function') navTo(pg); }
+    function ymd(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+    function money0(n){ return '$'+Math.round(Number(n)||0).toLocaleString('en-AU'); }
+    function set(pg,t){ var el=document.getElementById('hubst-'+pg); if(el) el.textContent=t||''; }
+    function json(k,d){ try{ return JSON.parse(localStorage.getItem(k)||'')||d; }catch(e){ return d; } }
+    function canSee(pg){ return !(typeof ROLE!=='undefined' && ROLE.canAccess && !ROLE.canAccess(pg)); }
+    function render(){
+      document.querySelectorAll('.hub-tile[data-go]').forEach(function(t){ t.style.display=canSee(t.getAttribute('data-go'))?'':'none'; });
+      document.querySelectorAll('.sidebar > .sidebar-section .nav-item[data-hub]').forEach(function(n){
+        var any=[].some.call(document.querySelectorAll('#page-'+n.getAttribute('data-page')+' .hub-tile[data-go]'), function(t){ return t.style.display!=='none'; });
+        n.style.display=any?'':'none'; });
+      try{
+        var wos=(typeof CAL!=='undefined'&&CAL.getAll)?CAL.getAll():[], now=new Date(), ds=ymd(now), ym=ds.slice(0,7);
+        var wk=new Date(now); wk.setDate(now.getDate()+6); var we=ymd(wk);
+        var open=wos.filter(function(w){ return w && w.status!=='closed'; });
+        set('bookings', open.filter(function(w){ return w.date>=ds && w.date<=we; }).length+' booked next 7 days');
+        set('today', (CAL.dayJobs?CAL.dayJobs(ds).filter(function(w){ return w&&w.status!=='closed'; }).length:0)+' jobs today');
+        set('openwo', open.length+' open'+(open.filter(function(w){ return w.status==='hold'; }).length?' · '+open.filter(function(w){ return w.status==='hold'; }).length+' on hold':''));
+        set('closedwo', wos.filter(function(w){ var d=new Date(w&&w.closedAt||''); return w&&w.status==='closed'&&!isNaN(d)&&ymd(d).slice(0,7)===ym; }).length+' closed this month');
+        var clk=json('wsc_clock_v1',{}), on=clk&&clk.active?Object.keys(clk.active).length:0; set('clock', on?on+' clocked on now':'Nobody clocked on');
+        var inv=(typeof INVOICE!=='undefined'&&INVOICE.list)?INVOICE.list():[], unpaid=inv.filter(function(iv){ return iv.status==='issued'; });
+        set('invoices', unpaid.length?unpaid.length+' unpaid · '+money0(unpaid.reduce(function(a,iv){ return a+(Number(iv.total)||0); },0)):'All paid');
+        var ex=(typeof EXPENSES!=='undefined'&&EXPENSES.list)?EXPENSES.list():[]; set('expenses', money0(ex.filter(function(e){ return String(e.date||'').slice(0,7)===ym; }).reduce(function(a,e){ return a+(Number(e.subtotal)||0); },0))+' this month');
+        set('financials', money0(inv.filter(function(iv){ return iv.status!=='draft'&&String(iv.date||'').slice(0,7)===ym; }).reduce(function(a,iv){ return a+(Number(iv.subtotal)||0); },0))+' billed this month');
+        var st=json('wsc_staff_v1',[]), techs=st.filter(function(x){ return x&&x.techNo; });
+        set('technicians', techs.length+' technician'+(techs.length===1?'':'s')+' · '+techs.filter(function(x){ return x.onShift&&(x.daysOff||[]).indexOf(ds)<0; }).length+' in today');
+        set('team', st.length+' staff');
+        set('planner',''); set('performance','');
+      }catch(e){}
+    }
+    function crumb(pageId){
+      var hub=OF[pageId], page=document.getElementById('page-'+pageId); if(!hub||!page) return;
+      var head=page.querySelector('.page-header > div'); if(!head || head.querySelector('.crumb')) return;
+      var c=document.createElement('div'); c.className='crumb';
+      c.innerHTML='<span class="crumb-link" data-go="'+hub+'">‹ '+NAME[hub]+'</span>';
+      head.insertBefore(c, head.firstChild);
+    }
+    function onNav(pageId){
+      var hub=OF[pageId];
+      if(hub){ var it=document.querySelector('.sidebar > .sidebar-section .nav-item[data-page="'+hub+'"]'); if(it) it.classList.add('active'); crumb(pageId); }
+      if(String(pageId).indexOf('hub-')===0) render();
+    }
+    function init(){
+      document.addEventListener('click', function(e){ var t=e.target.closest('[data-go]'); if(!t) return; e.preventDefault(); go(t.getAttribute('data-go')); });
+      render();
+      if(typeof CAL!=='undefined'&&CAL.onChange) CAL.onChange(function(){ var a=document.querySelector('.page.active'); if(a&&/^page-hub-/.test(a.id)) render(); });
+      var rs=document.getElementById('role-switch'); if(rs) document.addEventListener('click', function(e){ if(e.target.closest('.role-opt')) setTimeout(render,0); });
+    }
+    return { init:init, render:render, onNav:onNav, go:go };
+  })();
+  window.HUB = HUB;
+
+  var XERO = (function(){
+    var KEY='wsc_xero_v1', st=null, cache={accounts:null, taxRates:null, bank:null}, syncing=false;
+    var bridge=function(){ return (typeof window!=='undefined' && window.wscXero) || null; };
+    function cfg(){ if(st) return st; try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+      st.labourAcct=st.labourAcct||'200'; st.partsAcct=st.partsAcct||'200'; st.taxType=st.taxType||'OUTPUT'; st.invStatus=st.invStatus||'AUTHORISED';
+      st.costAcct=st.costAcct||'310'; st.purchaseTax=st.purchaseTax||'INPUT'; st.billMode=st.billMode||'DRAFT';
+      if(st.auto==null) st.auto=true; st.contacts=st.contacts||{}; return st; }
+    function save(){ try{ localStorage.setItem(KEY, JSON.stringify(cfg())); }catch(e){} }
+    function call(name, arg){ var b=bridge(); if(!b) return Promise.reject(new Error('Connecting to Xero needs the latest WorkShopConnect installer.'));
+      return b[name](arg).then(function(r){ if(!r||!r.ok) throw new Error((r&&r.error)||'Xero request failed'); return r.value; }); }
+    function api(method, path, opts){ opts=opts||{}; return call('api',{method:method, path:path, query:opts.query, body:opts.body, idempotencyKey:opts.idem})
+      .then(function(r){ if(!r.ok) throw new Error(r.error||('Xero returned '+r.status)); return r.data; }); }
+    var status={available:false, connected:false};
+    function refreshStatus(){ if(!bridge()){ status={available:false, connected:false}; renderCard(); return Promise.resolve(status); }
+      return call('status').then(function(s){ status=s; renderCard(); return s; }).catch(function(e){ status={available:true, connected:false, error:e.message}; renderCard(); return status; }); }
+    function connected(){ return !!status.connected; }
+
+    // ── reference data for the mapping dropdowns ──
+    function loadOptions(){
+      return Promise.all([ api('GET','Accounts',{query:{where:'Status=="ACTIVE"'}}), api('GET','TaxRates') ]).then(function(r){
+        var acc=(r[0]&&r[0].Accounts)||[], tax=(r[1]&&r[1].TaxRates)||[];
+        cache.accounts=acc.filter(function(a){ return (a.Class==='REVENUE') && a.Code; });
+        cache.costs=acc.filter(function(a){ return a.Class==='EXPENSE' && a.Code; });
+        cache.purchaseTax=tax.filter(function(t){ return t.Status==='ACTIVE' && (t.CanApplyToExpenses!==false); });
+        cache.bank=acc.filter(function(a){ return a.Type==='BANK' || a.EnablePaymentsToAccount; });
+        cache.taxRates=tax.filter(function(t){ return t.Status==='ACTIVE' && (t.CanApplyToRevenue!==false); });
+        var c=cfg(); if(!c.payAcct && cache.bank[0]) { c.payAcct=cache.bank[0].AccountID; save(); }
+        renderCard();
+      });
+    }
+
+    // ── contacts: match by email, then name; create when missing ──
+    function contactKey(iv){ return String(iv.email||iv.customer||'').trim().toLowerCase(); }
+    function ensureSupplier(name){
+      var c=cfg(), k='supplier:'+String(name||'').trim().toLowerCase(); if(c.contacts[k]) return Promise.resolve(c.contacts[k]);
+      var nm=String(name||'Supplier').trim()||'Supplier';
+      return api('GET','Contacts',{query:{where:'Name=="'+nm.replace(/"/g,'\\"')+'"', summaryOnly:'true'}}).then(function(d){ var hit=(d&&d.Contacts||[])[0]; if(hit) return hit.ContactID;
+        return api('POST','Contacts',{body:{Contacts:[{Name:nm}]}, idem:'supplier-'+k}).then(function(d2){ return d2.Contacts[0].ContactID; }); })
+        .then(function(id){ c.contacts[k]=id; save(); return id; });
+    }
+    function billBody(e, contactId){
+      var c=cfg(), gst=Number(e.gstRate)>0, taxes=lineTaxes(e);
+      return { Invoices:[{ InvoiceID:(e.xero&&e.xero.billId)||undefined, Type:'ACCPAY', Contact:{ContactID:contactId}, Date:e.date, DueDate:e.date,
+        InvoiceNumber:'WSC-EXP-'+e.num, Reference:String(e.desc||'').slice(0,255), LineAmountTypes:'Exclusive', Status:c.billMode==='AUTHORISED'?'AUTHORISED':'DRAFT',
+        LineItems:(e.lines||[]).map(function(l,i){ return { Description:String(l.desc||'Item').slice(0,4000), Quantity:Number(l.qty)||1, UnitAmount:Number(l.unit)||0, LineAmount:Number(l.amount)||0,
+          AccountCode:c.costAcct, TaxType:gst?c.purchaseTax:'EXEMPTEXPENSES', TaxAmount:taxes[i] }; }) }] };
+    }
+    function markExp(e, patch){ e.xero=Object.assign({}, e.xero||{}, patch); EXPENSES.saveAll(); }
+    function pushBill(id){
+      var e=EXPENSES.get(id); if(!e) return Promise.reject(new Error('Expense not found.'));
+      if(!connected()) return Promise.reject(new Error('Not connected to Xero.'));
+      markExp(e,{state:'sending', error:null}); EXPENSES.render();
+      return ensureSupplier(e.supplier).then(function(cid){ return api('POST','Invoices',{body:billBody(e,cid), idem:e.id+'-'+((e.xero&&e.xero.rev)||0)}); })
+        .then(function(d){ var x=d.Invoices[0]; markExp(e,{billId:x.InvoiceID, number:x.InvoiceNumber, xeroStatus:x.Status, state:'sent', rev:((e.xero&&e.xero.rev)||0)+1, error:null}); EXPENSES.render(); return x; })
+        .catch(function(err){ markExp(e,{state:'error', error:err.message}); EXPENSES.render(); throw err; });
+    }
+    function onExpense(id){ if(!connected()||cfg().billMode==='off') return; var e=EXPENSES.get(id); if(e&&e.estimated) return;   // estimated costs wait for a manual send
+      pushBill(id).catch(function(err){ note('Couldn\u2019t send an expense to Xero: '+err.message); }); }
+    function billChip(e){
+      if(!connected()&&!(e.xero&&e.xero.billId)) return '';
+      var x=e.xero||{};
+      if(x.state==='sending') return '<span class="xero-chip">Xero…</span>';
+      if(x.state==='error') return '<span class="xero-chip xero-bad" title="'+escH(x.error||'')+'">Xero failed</span> <button class="co-btn" onclick="XERO.sendBill(\''+e.id+'\')">Retry</button>';
+      if(x.billId) return '<span class="xero-chip xero-ok" title="'+escH((x.number||'')+' · '+(x.xeroStatus||''))+'">Bill in Xero'+(x.xeroStatus==='DRAFT'?' · draft':'')+'</span>';
+      return (e.estimated?'<span class="xero-chip" title="Some costs are estimated — check them before sending">Estimate</span> ':'')+'<button class="co-btn" onclick="XERO.sendBill(\''+e.id+'\')">Send to Xero</button>';
+    }
+    function ensureContact(iv){
+      var c=cfg(), k=contactKey(iv); if(c.contacts[k]) return Promise.resolve(c.contacts[k]);
+      var name=String(iv.customer||'Customer').trim()||'Customer', email=String(iv.email||'').trim();
+      var esc=function(v){ return String(v).replace(/"/g,'\\"'); };
+      var find=email ? api('GET','Contacts',{query:{where:'EmailAddress=="'+esc(email)+'"', summaryOnly:'true'}}) : Promise.resolve({Contacts:[]});
+      return find.then(function(d){ var hit=(d&&d.Contacts||[])[0]; if(hit) return hit;
+          return api('GET','Contacts',{query:{where:'Name=="'+esc(name)+'"', summaryOnly:'true'}}).then(function(d2){ return (d2&&d2.Contacts||[])[0]; }); })
+        .then(function(hit){ if(hit) return hit.ContactID;
+          var body={Contacts:[{Name:name, EmailAddress:email||undefined, Phones:iv.phone?[{PhoneType:'MOBILE', PhoneNumber:String(iv.phone)}]:undefined}]};
+          return api('POST','Contacts',{body:body, idem:'contact-'+k}).then(function(d3){ return d3.Contacts[0].ContactID; }); })
+        .then(function(id){ c.contacts[k]=id; save(); return id; });
+    }
+
+    // ── invoices ──
+    // GST per line so Xero's total matches the app's to the cent (the app rounds GST once on the subtotal).
+    function lineTaxes(iv){
+      var ls=iv.lines||[], rate=Number(iv.gstRate)||0; if(!(rate>0)) return ls.map(function(){ return 0; });
+      var raw=ls.map(function(l){ return (Number(l.amount)||0)*rate/100; }), cents=raw.map(function(v){ return Math.round(v*100); });
+      var want=Math.round((Number(iv.gst)||0)*100), diff=want-cents.reduce(function(a,b){ return a+b; },0);
+      if(diff && ls.length){ var big=0; ls.forEach(function(l,i){ if((Number(l.amount)||0)>(Number(ls[big].amount)||0)) big=i; }); cents[big]+=diff; }
+      return cents.map(function(c){ return c/100; });
+    }
+    function invoiceBody(iv, contactId, statusOverride){
+      var c=cfg(), taxes=lineTaxes(iv), gst=Number(iv.gstRate)>0, lines=(iv.lines||[]).map(function(l,i){
+        var isLabour=l.kind?l.kind==='labour':/Labour$/.test(l.desc||'');
+        return { Description:String(l.desc||'Item').slice(0,4000), Quantity:Number(l.qty)||1, UnitAmount:Number(l.unit)||0, LineAmount:Number(l.amount)||0,
+          AccountCode:isLabour?c.labourAcct:c.partsAcct, TaxType:(gst?c.taxType:'EXEMPTOUTPUT'), TaxAmount:taxes[i] }; });
+      var x=iv.xero||{};
+      return { Invoices:[{ InvoiceID:x.invoiceId||undefined, Type:'ACCREC', Contact:{ContactID:contactId}, Date:iv.date, DueDate:iv.due||iv.date,
+        InvoiceNumber:(x.altNumber?'WSC-INV-':'INV-')+iv.num, Reference:[iv.woNum!=null?'WO-'+iv.woNum:'', iv.rego||'', iv.vehicle||''].filter(Boolean).join(' · ').slice(0,255),
+        LineAmountTypes:'Exclusive', Status:statusOverride||c.invStatus, LineItems:lines }] };
+    }
+    function mark(iv, patch){ iv.xero=Object.assign({}, iv.xero||{}, patch); if(typeof INVOICE!=='undefined'&&INVOICE.saveAll) INVOICE.saveAll(); }
+    function pushInvoice(id, statusOverride){
+      var iv=INVOICE.get(id); if(!iv) return Promise.reject(new Error('Invoice not found.'));
+      if(!connected()) return Promise.reject(new Error('Not connected to Xero.'));
+      mark(iv,{state:'sending', error:null}); INVOICE.render();
+      return ensureContact(iv).then(function(cid){
+        return api('POST','Invoices',{body:invoiceBody(iv,cid,statusOverride), idem:iv.id+'-'+(iv.xero&&iv.xero.rev||0)});
+      }).then(function(d){ var x=d.Invoices[0];
+        mark(iv,{invoiceId:x.InvoiceID, number:x.InvoiceNumber, xeroStatus:x.Status, state:'sent', sentAt:new Date().toISOString(), rev:((iv.xero&&iv.xero.rev)||0)+1, error:null});
+        INVOICE.render(); return x;
+      }).catch(function(e){
+        if(/unique|already (been )?used|already exists/i.test(e.message) && !(iv.xero&&iv.xero.altNumber) && !(iv.xero&&iv.xero.invoiceId)){
+          mark(iv,{altNumber:true}); return pushInvoice(id, statusOverride);
+        }
+        mark(iv,{state:'error', error:e.message}); INVOICE.render(); throw e; });
+    }
+    function pushPayment(id){
+      var iv=INVOICE.get(id), c=cfg(); if(!iv) return Promise.reject(new Error('Invoice not found.'));
+      if(!iv.xero||!iv.xero.invoiceId) return pushInvoice(id,'AUTHORISED').then(function(){ return pushPayment(id); });
+      if(iv.xero.paymentId) return Promise.resolve(null);
+      if(!c.payAcct) return Promise.reject(new Error('Choose the bank account for payments in Settings → Xero.'));
+      var ready=iv.xero.xeroStatus==='AUTHORISED' ? Promise.resolve() : pushInvoice(id,'AUTHORISED');     // Xero only takes payments on approved invoices
+      return ready.then(function(){
+        return api('PUT','Payments',{body:{Payments:[{ Invoice:{InvoiceID:iv.xero.invoiceId}, Account:{AccountID:c.payAcct}, Date:(iv.paidAt||new Date().toISOString()).slice(0,10), Amount:Number(iv.total)||0, Reference:'WSC INV-'+iv.num }]}, idem:iv.id+'-payment'});
+      }).then(function(d){ var p=d.Payments[0]; mark(iv,{paymentId:p.PaymentID, xeroStatus:'PAID', state:'paid', error:null}); INVOICE.render(); return p; })
+        .catch(function(e){ mark(iv,{state:'error', error:e.message}); INVOICE.render(); throw e; });
+    }
+    // Payments made straight into Xero: mark them paid here (which also closes the work order).
+    function syncPaid(){
+      if(!connected()||syncing) return Promise.resolve(0);
+      var open=INVOICE.list().filter(function(iv){ return iv.xero&&iv.xero.invoiceId&&iv.status!=='paid'; });
+      if(!open.length) return Promise.resolve(0);
+      syncing=true;
+      return api('GET','Invoices',{query:{IDs:open.map(function(iv){ return iv.xero.invoiceId; }).slice(0,40).join(','), summaryOnly:'true'}}).then(function(d){
+        var n=0; (d.Invoices||[]).forEach(function(x){ var iv=open.find(function(v){ return v.xero.invoiceId===x.InvoiceID; }); if(!iv) return;
+          mark(iv,{xeroStatus:x.Status}); if(x.Status==='PAID'){ INVOICE.setStatus(iv.id,'paid',{fromXero:true}); n++; } });
+        syncing=false; INVOICE.render(); return n;
+      }).catch(function(e){ syncing=false; throw e; });
+    }
+    // Called by INVOICE when an invoice changes status.
+    function onStatus(id, s, opts){
+      if(!connected()||!cfg().auto||(opts&&opts.fromXero)) return;
+      var iv=INVOICE.get(id); if(!iv) return;
+      if(s==='issued') pushInvoice(id).catch(function(e){ note('Couldn’t send INV-'+iv.num+' to Xero: '+e.message); });
+      if(s==='paid' && iv.xero && iv.xero.invoiceId) pushPayment(id).catch(function(e){ note('Couldn’t record the payment for INV-'+iv.num+' in Xero: '+e.message); });
+    }
+    function chip(iv){
+      if(!connected()&&!(iv.xero&&iv.xero.invoiceId)) return '';
+      var x=iv.xero||{};
+      if(x.state==='sending') return '<span class="xero-chip">Xero…</span>';
+      if(x.state==='error') return '<span class="xero-chip xero-bad" title="'+escH(x.error||'')+'">Xero failed</span> <button class="co-btn" onclick="XERO.send(\''+iv.id+'\')">Retry</button>';
+      if(x.invoiceId) return '<span class="xero-chip xero-ok" title="'+escH((x.number||'')+' · '+(x.xeroStatus||''))+'">In Xero'+(x.number&&x.number!=='INV-'+iv.num?' as '+escH(x.number):'')+(x.xeroStatus==='PAID'?' · paid':x.xeroStatus==='DRAFT'?' · draft':'')+'</span>';
+      if(iv.status!=='draft') return '<button class="co-btn" onclick="XERO.send(\''+iv.id+'\')">Send to Xero</button>';
+      return '';
+    }
+    function note(msg){ var el=document.getElementById('xero-msg'); if(el) el.textContent=msg; try{ console.warn('[xero]',msg); }catch(e){} }
+
+    // ── Settings card ──
+    function opt(list, val, label, value){ return (list||[]).map(function(x){ var v=value(x); return '<option value="'+escH(v)+'"'+(String(v)===String(val)?' selected':'')+'>'+escH(label(x))+'</option>'; }).join(''); }
+    function renderCard(){
+      var box=document.getElementById('xero-card-body'); if(!box) return;
+      var c=cfg();
+      if(!status.available){ box.innerHTML='<div class="settings-row-sub">Connecting to Xero needs the latest WorkShopConnect installer. Install it, then come back here.</div>'; return; }
+      if(!status.connected){ box.innerHTML='<div class="settings-row-sub">Send invoices to Xero automatically, record payments, and pick up invoices paid in Xero. You’ll sign in on Xero’s own page — WorkShopConnect never sees your Xero password.</div>'+
+        (status.error?'<div class="xero-err">'+escH(status.error)+'</div>':'')+'<div class="m-row"><button class="btn primary" id="xero-connect">Connect to Xero</button></div><div class="settings-row-sub" id="xero-msg"></div>'; bind(); return; }
+      var tenants=status.tenants||[];
+      var acc=cache.accounts, tax=cache.taxRates, bank=cache.bank;
+      box.innerHTML=
+        '<div class="xero-conn"><span class="xero-chip xero-ok">Connected</span> '+escH(status.tenantName||'')+'</div>'+
+        (tenants.length>1?'<div class="m-row"><label class="m-label" for="xero-tenant">Organisation</label><select class="m-select" id="xero-tenant">'+opt(tenants,status.tenantId,function(t){return t.tenantName;},function(t){return t.tenantId;})+'</select></div>':'')+
+        (acc?(
+        '<div class="m-row-2"><div><label class="m-label" for="xero-labour">Labour sales account</label><select class="m-select" id="xero-labour">'+opt(acc,c.labourAcct,function(a){return a.Code+' · '+a.Name;},function(a){return a.Code;})+'</select></div>'+
+        '<div><label class="m-label" for="xero-parts">Parts sales account</label><select class="m-select" id="xero-parts">'+opt(acc,c.partsAcct,function(a){return a.Code+' · '+a.Name;},function(a){return a.Code;})+'</select></div></div>'+
+        '<div class="m-row-2"><div><label class="m-label" for="xero-tax">GST rate</label><select class="m-select" id="xero-tax">'+opt(tax,c.taxType,function(t){return t.Name;},function(t){return t.TaxType;})+'</select></div>'+
+        '<div><label class="m-label" for="xero-pay">Payments go to</label><select class="m-select" id="xero-pay">'+opt(bank,c.payAcct,function(a){return (a.Code?a.Code+' · ':'')+a.Name;},function(a){return a.AccountID;})+'</select></div></div>'
+        ):'<div class="settings-row-sub">Loading your Xero accounts…</div>')+
+        '<div class="m-row-2"><div><label class="m-label" for="xero-status">Send invoices to Xero as</label><select class="m-select" id="xero-status">'+
+          opt([{v:'AUTHORISED',l:'Approved (ready to pay)'},{v:'SUBMITTED',l:'Awaiting approval'},{v:'DRAFT',l:'Draft (bookkeeper checks first)'}],c.invStatus,function(x){return x.l;},function(x){return x.v;})+'</select></div>'+
+        '<div><label class="m-label" for="xero-auto">When you bill a customer</label><select class="m-select" id="xero-auto"><option value="1"'+(c.auto?' selected':'')+'>Send to Xero automatically</option><option value="0"'+(!c.auto?' selected':'')+'>I’ll click Send to Xero</option></select></div></div>'+
+        '<div class="xero-sub">Expenses (parts costs, sublet, consumables) as supplier bills</div>'+
+        (cache.costs?(
+        '<div class="m-row-2"><div><label class="m-label" for="xero-cost">Cost account</label><select class="m-select" id="xero-cost">'+opt(cache.costs,c.costAcct,function(a){return a.Code+' · '+a.Name;},function(a){return a.Code;})+'</select></div>'+
+        '<div><label class="m-label" for="xero-ptax">GST on purchases</label><select class="m-select" id="xero-ptax">'+opt(cache.purchaseTax,c.purchaseTax,function(t){return t.Name;},function(t){return t.TaxType;})+'</select></div></div>'):'')+
+        '<div class="m-row"><label class="m-label" for="xero-bills">Send expenses to Xero as</label><select class="m-select" id="xero-bills">'+
+          opt([{v:'DRAFT',l:'Draft bills (bookkeeper approves)'},{v:'AUTHORISED',l:'Approved bills'},{v:'off',l:'Don\u2019t send expenses'}],c.billMode,function(x){return x.l;},function(x){return x.v;})+'</select>'+
+          '<div class="settings-row-sub">If your supplier invoices already reach Xero (e.g. through Hubdoc), keep this on Draft or Off so costs aren\u2019t counted twice.</div></div>'+
+        '<div class="m-row xero-actions"><button class="btn" id="xero-sync">Check for payments now</button><button class="btn" id="xero-disconnect">Disconnect</button></div>'+
+        '<div class="settings-row-sub" id="xero-msg"></div>';
+      bind();
+      if(!acc) loadOptions().catch(function(e){ note('Couldn’t load Xero accounts: '+e.message); });
+      if(typeof EXPENSES!=='undefined') EXPENSES.render();
+    }
+    function bind(){
+      var g=function(id){ return document.getElementById(id); }, c=cfg();
+      if(g('xero-connect')) g('xero-connect').onclick=function(){ note('Opening Xero in your browser — sign in and click Allow access…'); this.disabled=true;
+        call('connect').then(function(s){ status=s; cache={accounts:null,taxRates:null,bank:null}; renderCard(); }).catch(function(e){ status.error=e.message; renderCard(); }); };
+      if(g('xero-disconnect')) g('xero-disconnect').onclick=function(){ if(!confirm('Disconnect WorkShopConnect from Xero? Invoices already in Xero stay there.')) return;
+        call('disconnect').then(function(s){ status=s; renderCard(); }); };
+      if(g('xero-sync')) g('xero-sync').onclick=function(){ note('Checking Xero…'); syncPaid().then(function(n){ note(n?n+' invoice'+(n===1?'':'s')+' marked paid from Xero.':'No new payments in Xero.'); }).catch(function(e){ note(e.message); }); };
+      if(g('xero-tenant')) g('xero-tenant').onchange=function(){ call('setTenant',this.value).then(function(s){ status=s; c.contacts={}; save(); cache={accounts:null,taxRates:null,bank:null}; renderCard(); }); };
+      [['xero-labour','labourAcct'],['xero-parts','partsAcct'],['xero-tax','taxType'],['xero-pay','payAcct'],['xero-status','invStatus'],['xero-cost','costAcct'],['xero-ptax','purchaseTax'],['xero-bills','billMode']].forEach(function(p){ if(g(p[0])) g(p[0]).onchange=function(){ c[p[1]]=this.value; save(); note('Saved.'); }; });
+      if(g('xero-auto')) g('xero-auto').onchange=function(){ c.auto=this.value==='1'; save(); note('Saved.'); };
+    }
+    function init(){
+      refreshStatus().then(function(){ if(connected()) syncPaid().catch(function(){}); });
+      setInterval(function(){ if(connected()) syncPaid().catch(function(){}); }, 10*60*1000);
+      var nav=document.querySelector('.nav-item[data-page="invoices"]'); if(nav) nav.addEventListener('click',function(){ if(connected()) syncPaid().catch(function(){}); });
+    }
+    return { init:init, send:function(id){ return pushInvoice(id).catch(function(e){ note(e.message); }); }, pushPayment:pushPayment,
+      sendBill:function(id){ return pushBill(id).catch(function(e){ note(e.message); }); }, onExpense:onExpense, billChip:billChip, _billBody:billBody, syncPaid:syncPaid, onStatus:onStatus, chip:chip,
+      connected:connected, refreshStatus:refreshStatus, _body:invoiceBody };
+  })();
+  window.XERO = XERO;
+
   var WODETAIL = (function(){
     var curId=null, backTo='openwo';
     function gE(id){ return document.getElementById(id); }
@@ -8703,6 +9745,15 @@ window.AI = AI;
   CLOSEDWO.init();
   PERF.init();
   INVOICE.init();
+  EXPENSES.init();
+  XERO.init();
+  MAIL.init();
+  DASH.init();
+  HUB.init();
+  (function(){   // show the workshop's name in the top bar
+    function upd(){ try{ var n=(JSON.parse(localStorage.getItem('wsc_settings_v1')||'{}')['set-name']||'').trim(); var el=document.getElementById('topbar-dealer-name'); if(el) el.textContent=n||'Your Workshop'; }catch(e){} }
+    upd(); var b=document.getElementById('set-save-btn'); if(b) b.addEventListener('click', function(){ setTimeout(upd,50); });
+  })();
   CUSTOMWO.init();
 
   /* WSC splash dismiss */
