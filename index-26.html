@@ -1281,6 +1281,94 @@ body{ background:var(--bg); -webkit-font-smoothing:antialiased; }
 .kpi-delta .up{ color:var(--ok); font-weight:600; } .kpi-delta .dn{ color:var(--bad); font-weight:600; }
 .settings-grid{ gap:16px; }
 
+/* ── hand-added parts on work orders ── */
+.pe-tbl{ width:100%; border-collapse:collapse; font-size:0.8125rem; }
+.pe-tbl th{ text-align:left; font-size:0.6875rem; text-transform:uppercase; letter-spacing:.05em; color:var(--text3); font-weight:600; padding:4px 6px; border-bottom:1px solid var(--line); }
+.pe-tbl td{ padding:4px 6px; border-bottom:1px solid var(--line); }
+.pe-tbl .m-input{ min-height:32px; padding:5px 8px; width:100%; }
+.pe-tbl tbody:empty + tfoot, .pe-tbl tbody:empty{ display:none; }
+.pe-amt{ text-align:right; font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.pe-foot{ display:flex; align-items:center; gap:12px; margin-top:8px; flex-wrap:wrap; }
+.pe-hint{ font-size:0.75rem; color:var(--text3); flex:1; min-width:180px; }
+.pe-tot{ font-weight:650; font-variant-numeric:tabular-nums; }
+.pe-ro .pe-add, .pe-ro .pe-del, .pe-ro .pe-hint{ display:none; }
+.wod-saved{ float:right; font-size:0.75rem; font-weight:600; color:var(--ok); }
+.pe{ container-type:inline-size; }
+
+.day-side{ display:flex; flex-direction:column; gap:14px; }
+.day-tech{ padding:9px 0; border-bottom:1px solid var(--line); }
+.day-tech:last-child{ border-bottom:none; }
+.day-tech-top{ display:flex; justify-content:space-between; font-size:0.8125rem; margin-bottom:6px; }
+.day-tech-top span:first-child{ font-weight:600; color:var(--text); }
+.day-tech-top span:last-child{ color:var(--text3); font-variant-numeric:tabular-nums; }
+.day-tech-sub{ font-size:0.75rem; color:var(--text3); margin-top:5px; }
+
+.wod-job-h{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.wod-job-del{ margin-left:auto; height:26px; font-size:0.75rem; color:var(--text3); }
+.wod-job-del:hover{ color:var(--bad); border-color:var(--bad); }
+.wod-addjob{ padding:12px 0; border-bottom:1px solid var(--line); }
+.wod-addjob-form{ background:var(--surface2); border-radius:10px; padding:12px 14px; }
+.wod-addjob-grid{ display:grid; grid-template-columns:1fr 100px; gap:10px; margin-bottom:10px; }
+.wod-addjob-acts{ display:flex; gap:8px; }
+.theme-switch:disabled{ cursor:not-allowed; }
+
+/* our cost + markup (internal) */
+.pe-amt-v{ display:block; }
+.pe-mu{ display:block; font-size:0.6875rem; font-weight:600; color:var(--ok); }
+.pe-mu-bad{ color:var(--bad); }
+.pe-nocost .pe-c-cost, .pe-nocost .pe-h-cost, .pe-nocost .pe-mu{ display:none !important; }
+
+.wod-job{ padding:12px 0 14px; border-bottom:1px solid var(--line); }
+.wod-job:last-child{ border-bottom:none; }
+.wod-job-h{ font-weight:650; margin-bottom:6px; }
+.wod-job-sub{ font-size:0.75rem; color:var(--text3); margin:-2px 0 6px; }
+.wod-job-other .wod-job-h{ color:var(--text2); }
+.wod-job-checks{ margin-top:8px; font-size:0.8125rem; color:var(--text2); }
+.wod-job-checks summary{ cursor:pointer; font-weight:600; color:var(--text3); }
+.pe-spec{ font-size:0.6875rem; color:var(--text3); margin:3px 2px 0; }
+.wod-parts-total{ display:flex; align-items:baseline; gap:10px; padding-top:12px; border-top:1px solid var(--line); margin-top:4px; }
+.wod-parts-total:empty{ display:none; }
+.wod-parts-total b{ font-size:1.0625rem; font-variant-numeric:tabular-nums; }
+.wod-pt-note{ font-size:0.75rem; color:var(--text3); margin-left:auto; }
+.wod-parts-total{ flex-wrap:wrap; }
+.wod-pt-cost{ flex-basis:100%; font-size:0.75rem; color:var(--text2); }
+@container (max-width: 600px){
+  .pe-tbl thead{ display:none; }
+  .pe-tbl, .pe-tbl tbody{ display:block; }
+  .pe-row{ display:grid; grid-template-columns:62px 1fr 1fr 82px 34px; gap:6px; padding:8px 0; border-bottom:1px solid var(--line); align-items:start; }
+  .pe-row td{ padding:0; border:none; display:block; }
+  .pe-c-no{ grid-column:1 / 3; grid-row:1; } .pe-c-name{ grid-column:3 / 6; grid-row:1; }
+  .pe-c-qty{ grid-column:1; grid-row:2; } .pe-c-cost{ grid-column:2; grid-row:2; } .pe-c-price{ grid-column:3; grid-row:2; }
+  .pe-amt{ grid-column:4; grid-row:2; align-self:end; text-align:right; padding-bottom:4px !important; }
+  .pe-c-del{ grid-column:5; grid-row:2; align-self:end; padding-bottom:2px !important; }
+  .pe-nocost .pe-row .pe-c-price{ grid-column:2 / 4; }
+  .pe-c-qty::before, .pe-c-price::before, .pe-c-cost::before, .pe-c-no::before, .pe-c-name::before{ display:block; font-size:0.6875rem; color:var(--text3); margin:0 0 3px 2px; }
+  .pe-c-no::before{ content:'Part no.'; } .pe-c-name::before{ content:'Description'; }
+  .pe-c-qty::before{ content:'Qty'; } .pe-c-cost::before{ content:'Our cost'; } .pe-c-price::before{ content:'Charge each'; }
+  .pe-hint{ display:none; }
+}
+
+/* ── website enquiries ── */
+.enq-list{ display:grid; grid-template-columns:repeat(auto-fill,minmax(420px,1fr)); gap:14px; max-width:1400px; }
+.enq-card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:16px 18px; box-shadow:var(--card-shadow); display:flex; flex-direction:column; gap:8px; }
+.enq-card.enq-new{ border-left:3px solid var(--accent); }
+.enq-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.enq-type{ font-size:0.75rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--accent-text); margin-right:8px; }
+.enq-when{ font-size:0.75rem; color:var(--text3); white-space:nowrap; }
+.enq-name{ font-size:1.0625rem; font-weight:650; color:var(--text); }
+.enq-facts{ display:flex; flex-wrap:wrap; gap:6px 16px; font-size:0.8125rem; color:var(--text2); }
+.enq-facts a{ color:var(--accent-text); text-decoration:none; } .enq-facts a:hover{ text-decoration:underline; }
+.enq-msg{ font-size:0.875rem; line-height:1.5; color:var(--text); background:var(--surface2); border-radius:8px; padding:10px 12px; white-space:pre-wrap; max-height:160px; overflow:auto; }
+.enq-match{ font-size:0.75rem; color:var(--text2); }
+.enq-acts{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; align-items:center; }
+.enq-acts .co-btn{ margin-left:auto; }
+.enq-empty{ grid-column:1/-1; padding:40px; text-align:center; color:var(--text3); background:var(--surface); border:1px dashed var(--line); border-radius:var(--radius); }
+.cwo-chip span:not(:empty){ margin-left:5px; font-size:0.75rem; opacity:.75; }
+.nav-badge{ margin-left:auto; min-width:18px; height:18px; padding:0 6px; border-radius:999px; background:var(--accent); color:#fff; font-size:0.6875rem; font-weight:700; display:inline-flex; align-items:center; justify-content:center; }
+.enq-code{ display:flex; gap:8px; align-items:center; }
+.enq-code code{ flex:1; font-size:0.75rem; background:var(--surface2); border:1px solid var(--line); border-radius:8px; padding:8px 10px; word-break:break-all; user-select:all; }
+.enq-state{ display:flex; align-items:center; gap:8px; font-size:0.8125rem; color:var(--text2); }
+
 /* ── purchase orders ── */
 textarea.m-input{ min-height:72px; line-height:1.45; resize:vertical; }
 textarea.m-input.mail-text{ min-height:150px; }
@@ -1705,9 +1793,6 @@ textarea.m-input.mail-text{ min-height:150px; }
     <div class="nav-item" data-page="bookings">
       <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div class="nav-text">Calendar</div>
     </div>
-    <div class="nav-item" data-page="today">
-      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></div><div class="nav-text">Today</div>
-    </div>
     <div class="nav-item" data-page="openwo">
       <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><div class="nav-text">Work Orders</div>
     </div>
@@ -1777,7 +1862,7 @@ textarea.m-input.mail-text{ min-height:150px; }
       <div><div class="page-title">Workshop</div><div class="page-sub">Everything on the workshop floor</div></div>
       <div class="page-actions"><button class="btn primary" data-go="planner">+ New Work Order</button></div>
     </div>
-    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="planner"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 11h6M9 15h4"/></svg></span><span class="hub-txt"><span class="hub-name">New Work Order</span><span class="hub-desc">Book a vehicle in</span></span><span class="hub-stat" id="hubst-planner"></span></button><button class="hub-tile" data-go="bookings"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span class="hub-txt"><span class="hub-name">Calendar</span><span class="hub-desc">Bookings and capacity by day</span></span><span class="hub-stat" id="hubst-bookings"></span></button><button class="hub-tile" data-go="today"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></span><span class="hub-txt"><span class="hub-name">Today</span><span class="hub-desc">Who is on what today</span></span><span class="hub-stat" id="hubst-today"></span></button><button class="hub-tile" data-go="openwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span><span class="hub-txt"><span class="hub-name">Work Orders</span><span class="hub-desc">Jobs in progress</span></span><span class="hub-stat" id="hubst-openwo"></span></button><button class="hub-tile" data-go="closedwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span><span class="hub-txt"><span class="hub-name">Closed Work Orders</span><span class="hub-desc">Finished jobs by date</span></span><span class="hub-stat" id="hubst-closedwo"></span></button><button class="hub-tile" data-go="clock"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="hub-txt"><span class="hub-name">Clocking</span><span class="hub-desc">Clock technicians on and off jobs</span></span><span class="hub-stat" id="hubst-clock"></span></button></div></div>
+    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="planner"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 11h6M9 15h4"/></svg></span><span class="hub-txt"><span class="hub-name">New Work Order</span><span class="hub-desc">Book a vehicle in</span></span><span class="hub-stat" id="hubst-planner"></span></button><button class="hub-tile" data-go="enquiries"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3.5 7v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"/></svg></span><span class="hub-txt"><span class="hub-name">Enquiries</span><span class="hub-desc">Website enquiries, ready to book</span></span><span class="hub-stat" id="hubst-enquiries"></span></button><button class="hub-tile" data-go="bookings"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span class="hub-txt"><span class="hub-name">Calendar</span><span class="hub-desc">Bookings by day — click a day for who’s on what</span></span><span class="hub-stat" id="hubst-bookings"></span></button><button class="hub-tile" data-go="openwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span><span class="hub-txt"><span class="hub-name">Work Orders</span><span class="hub-desc">Jobs in progress</span></span><span class="hub-stat" id="hubst-openwo"></span></button><button class="hub-tile" data-go="clock"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="hub-txt"><span class="hub-name">Clocking</span><span class="hub-desc">Clock technicians on and off jobs</span></span><span class="hub-stat" id="hubst-clock"></span></button></div></div>
   </div>
 
   <div class="page" id="page-hub-accounts">
@@ -1785,7 +1870,7 @@ textarea.m-input.mail-text{ min-height:150px; }
       <div><div class="page-title">Accounting</div><div class="page-sub">Billing, costs and how the month is tracking</div></div>
       <div class="page-actions"></div>
     </div>
-    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="invoices"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span><span class="hub-txt"><span class="hub-name">Invoices</span><span class="hub-desc">Bill customers and track payments</span></span><span class="hub-stat" id="hubst-invoices"></span></button><button class="hub-tile" data-go="expenses"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v12H3z"/><path d="M3 11h18M7 15h4"/><path d="M7 7V5h10v2"/></svg></span><span class="hub-txt"><span class="hub-name">Expenses</span><span class="hub-desc">Parts costs, sublet and other spend</span></span><span class="hub-stat" id="hubst-expenses"></span></button><button class="hub-tile" data-go="financials"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="hub-txt"><span class="hub-name">Financials</span><span class="hub-desc">Revenue, margin and trends</span></span><span class="hub-stat" id="hubst-financials"></span></button></div></div>
+    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="invoices"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span><span class="hub-txt"><span class="hub-name">Invoices</span><span class="hub-desc">Bill customers and track payments</span></span><span class="hub-stat" id="hubst-invoices"></span></button><button class="hub-tile" data-go="expenses"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v12H3z"/><path d="M3 11h18M7 15h4"/><path d="M7 7V5h10v2"/></svg></span><span class="hub-txt"><span class="hub-name">Expenses</span><span class="hub-desc">Parts costs, sublet and other spend</span></span><span class="hub-stat" id="hubst-expenses"></span></button><button class="hub-tile" data-go="financials"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="hub-txt"><span class="hub-name">Financials</span><span class="hub-desc">Revenue, margin and trends</span></span><span class="hub-stat" id="hubst-financials"></span></button><button class="hub-tile" data-go="closedwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span><span class="hub-txt"><span class="hub-name">Closed Work Orders</span><span class="hub-desc">Finished jobs by date</span></span><span class="hub-stat" id="hubst-closedwo"></span></button></div></div>
   </div>
 
   <div class="page" id="page-hub-people">
@@ -1825,7 +1910,7 @@ textarea.m-input.mail-text{ min-height:150px; }
       </div>
       <div class="dash-grid">
         <div class="panel">
-          <div class="panel-head"><div class="panel-title">Today’s jobs</div><div class="panel-link" data-nav="today">Open Today</div></div>
+          <div class="panel-head"><div class="panel-title">Today’s jobs</div><div class="panel-link" data-day="today">Open Today</div></div>
           <div class="panel-body" id="dash-jobs"></div>
         </div>
         <div class="panel">
@@ -1937,6 +2022,7 @@ textarea.m-input.mail-text{ min-height:150px; }
             <div id="cwo-lines"></div>
             <button type="button" class="btn" id="cwo-addline">Add job line</button>
           </div>
+          <div class="m-row"><label class="m-label">Parts</label><div id="cwo-parts"></div></div>
           <div class="m-row"><label class="m-label" for="cwo-notes">Notes</label><textarea class="m-textarea" id="cwo-notes" rows="2"></textarea></div>
           <div class="cwo-foot">
             <span class="cwo-total" id="cwo-total">0 h labour</span>
@@ -2051,6 +2137,7 @@ textarea.m-input.mail-text{ min-height:150px; }
             </select>
           </div>
         </div>
+        <div class="m-row"><label class="m-label">Parts</label><div id="f-parts"></div></div>
         <div class="m-row"><label class="m-label">Notes</label><textarea class="m-textarea" id="f-notes" placeholder="Customer notes, parts required, special instructions..."></textarea></div>
       </div>
       <div class="cap-warn" id="cap-warn-badge"></div>
@@ -2061,29 +2148,6 @@ textarea.m-input.mail-text{ min-height:150px; }
     </div>
   </div>
 
-  <!-- TODAY -->
-  <div class="page" id="page-today">
-    <div class="page-header">
-      <div><div class="page-title">Today</div><div class="page-sub" id="today-sub"></div></div>
-      <div class="page-actions"><button class="btn" id="today-refresh-btn">Refresh</button></div>
-    </div>
-    <div class="page-body">
-      <div class="stat-strip">
-        <div class="stat-cell"><div class="stat-cell-val" id="today-stat-count">0</div><div class="stat-cell-lbl">Booked In Today</div></div>
-        <div class="stat-cell"><div class="stat-cell-val" id="today-stat-hours">0h</div><div class="stat-cell-lbl">Labour Hours To Do</div></div>
-        <div class="stat-cell"><div class="stat-cell-val" id="today-stat-open">0</div><div class="stat-cell-lbl">Open / In Progress</div></div>
-        <div class="stat-cell"><div class="stat-cell-val" id="today-stat-done">0</div><div class="stat-cell-lbl">Completed</div></div>
-      </div>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr><th>Drop-off</th><th>Customer</th><th>Vehicle</th><th>Rego</th><th>Service Type</th><th>Technician</th><th>Hours</th><th>Status</th></tr></thead>
-          <tbody id="today-tbody">
-            <tr><td colspan="8" style="text-align:center;padding:36px 16px;color:var(--text3)">No customers booked in today.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
   <div class="page" id="page-technicians">
     <div class="page-header">
       <div><div class="page-title">Technicians</div><div class="page-sub" id="tech-sub"></div></div>
@@ -2441,6 +2505,17 @@ textarea.m-input.mail-text{ min-height:150px; }
     </div>
   </div>
 
+  <div class="page" id="page-enquiries">
+    <div class="page-header">
+      <div><div class="page-title">Enquiries</div><div class="page-sub" id="enq-sub"></div></div>
+      <div class="page-actions"><button class="btn" id="enq-refresh">Check now</button><button class="btn primary" data-go="planner">+ New Work Order</button></div>
+    </div>
+    <div class="page-body">
+      <div class="cwo-range" id="enq-range"><button class="cwo-chip active" data-f="new">New <span></span></button><button class="cwo-chip" data-f="contacted">Contacted <span></span></button><button class="cwo-chip" data-f="booked">Booked <span></span></button><button class="cwo-chip" data-f="archived">Archived <span></span></button><button class="cwo-chip" data-f="all">All <span></span></button></div>
+      <div class="enq-list" id="enq-list"></div>
+    </div>
+  </div>
+
   <div class="page" id="page-wodetail">
     <div class="page-header">
       <div><div class="page-title" id="wod-title">Work Order</div><div class="page-sub" id="wod-sub"></div></div>
@@ -2481,7 +2556,7 @@ textarea.m-input.mail-text{ min-height:150px; }
           </div>
         </div>
         <div class="wod-col">
-          <div class="wod-card"><div class="wod-card-title">Jobs &amp; Parts</div><div id="wod-jobs"></div></div>
+          <div class="wod-card"><div class="wod-card-title">Jobs &amp; Parts <span class="wod-saved" id="wod-parts-saved"></span></div><div id="wod-jobs"></div><div class="wod-parts-total" id="wod-parts-total"></div></div>
           <div class="wod-card"><div class="wod-card-title">Vehicle History (this rego)</div><div id="wod-history"></div></div>
         </div>
       </div>
@@ -2593,6 +2668,10 @@ textarea.m-input.mail-text{ min-height:150px; }
           <div class="settings-card-title">Email (Gmail / Outlook)</div>
           <div id="mail-card-body"></div>
         </div>
+        <div class="settings-card" id="enq-set-card">
+          <div class="settings-card-title">Website enquiries</div>
+          <div id="enq-set-body"></div>
+        </div>
         <div class="settings-card" id="po-set-card">
           <div class="settings-card-title">Purchase Orders &amp; Suppliers</div>
           <div id="po-set-body"></div>
@@ -2631,6 +2710,10 @@ textarea.m-input.mail-text{ min-height:150px; }
         <div class="settings-card">
           <div class="settings-card-title">Appearance</div>
           <div class="settings-row"><div><div class="settings-row-lbl" id="set-theme-lbl">Light mode</div></div><button type="button" class="theme-switch" id="set-theme" role="switch" aria-checked="false" aria-labelledby="set-theme-lbl"><span class="theme-switch-knob"></span></button></div>
+        </div>
+        <div class="settings-card">
+          <div class="settings-card-title">Work order permissions</div>
+          <div class="settings-row"><div><div class="settings-row-lbl" id="set-advjobs-lbl">Advisors can add and remove jobs on existing work orders</div><div class="settings-row-sub" id="set-advjobs-sub">Service Managers can always do this. Turn off to keep job changes with the Service Manager.</div></div><button type="button" class="theme-switch" id="set-advjobs" role="switch" aria-checked="true" aria-labelledby="set-advjobs-lbl"><span class="theme-switch-knob"></span></button></div>
         </div>
         <div class="settings-card">
           <div class="settings-card-title">Notifications</div>
@@ -2740,6 +2823,8 @@ function navTo(pageId) {
     if (pageId === 'financials' && typeof FIN !== 'undefined' && FIN.render) FIN.render();
     if (pageId === 'expenses' && typeof EXPENSES !== 'undefined') EXPENSES.render();
     if (pageId === 'purchaseorders' && typeof PO !== 'undefined') PO.render();
+    if (pageId === 'enquiries' && typeof ENQ !== 'undefined') ENQ.render();
+    if (pageId === 'settings' && window.__wscPermSync) window.__wscPermSync();
     if (pageId === 'parts' && typeof PARTS !== 'undefined' && PARTS.reload) PARTS.reload();
   } catch (e) {}
   if (typeof HUB !== 'undefined') HUB.onNav(pageId);
@@ -3090,6 +3175,7 @@ var CAL = (function() {
     wos.forEach(function(w){
       if(w.jobs && w.jobs.length){ w.jobs.forEach(function(j){ (j.parts||[]).forEach(addPart); }); }
       else if(w.parts && w.parts.length){ w.parts.forEach(addPart); }
+      (w.extraParts||[]).forEach(function(x){ for(var k=0;k<Math.max(1,Math.round(Number(x.qty)||1));k++) addPart({name:x.name}); });
     });
     return order.map(function(k){ return map[k]; }).sort(function(a,b){ return (b.qty-a.qty) || a.name.localeCompare(b.name); });
   }
@@ -3115,7 +3201,8 @@ var CAL = (function() {
     document.getElementById('day-title').textContent=fmtLongDate(ds);
     document.getElementById('day-sub').textContent=wos.length+' booking'+(wos.length===1?'':'s')+(isToday(+ds.slice(0,4),+ds.slice(5,7)-1,+ds.slice(8,10))?' \u00b7 Today':'');
     var fig=function(l,v,cls){ return '<div class="stat-cell"><div class="stat-cell-val'+(cls?' '+cls:'')+'">'+v+'</div><div class="stat-cell-lbl">'+l+'</div></div>'; };
-    var h='<div class="stat-strip">'+fig(ds<todayDs()?'Booked / capacity':'Hours to do / capacity', (Math.round(bk*10)/10)+' / '+cap+'h', bk>cap&&cap>0?'park-bad':'')+fig('Cars', String(wos.length))+fig('Technicians', String(techs));
+    var nDone=wos.filter(function(w){ return w.status==='done'||w.status==='closed'; }).length;
+    var h='<div class="stat-strip">'+fig(ds<todayDs()?'Booked / capacity':'Hours to do / capacity', (Math.round(bk*10)/10)+' / '+cap+'h', bk>cap&&cap>0?'park-bad':'')+fig('Cars', String(wos.length))+fig('Still to do', String(wos.length-nDone))+fig('Completed', String(nDone))+fig('Technicians', String(techs));
     if(planned){ h+=fig('Parking peak', pk.peak+' / '+pk.cfg.bays+' bays', pk.over?'park-bad':'')+fig('Last job finishes', wos.length?L(pk.lastFinish):'\u2014'); }
     h+='</div>';
     if(pk.enabled&&pk.noTechs) h+='<div class="day-note">No technicians rostered, so drop-offs can\'t be planned.</div>';
@@ -3147,15 +3234,29 @@ var CAL = (function() {
         +'</div>';
     };
     var parts=aggregatePartsForDay(wos);
+    // Each technician's hours on this day (what the old Today page was used for)
+    var techList=(typeof STAFF!=='undefined'&&STAFF.technicians)?STAFF.technicians().filter(function(t){ return t&&t.name&&t.onShift; }):[];
+    var techHtml=techList.map(function(t){
+      var off=(t.daysOff||[]).indexOf(ds)>=0, capT=off?0:(parseFloat(t.hours)||0), mine=wos.filter(function(w){ return w.tech===t.name; });
+      var b=mine.reduce(function(a,w){ return a+hoursOn(w,ds); },0), done=mine.filter(function(w){ return w.status==='done'||w.status==='closed'; }).length, pct=capT>0?Math.round(b/capT*100):0;
+      return '<div class="day-tech"><div class="day-tech-top"><span>'+escH(t.name)+'</span><span>'+(off?'Day off':(Math.round(b*10)/10)+' / '+capT+'h')+'</span></div>'+
+        (off?'':'<div class="dash-bar"><i class="'+(pct>110?'bad':pct>90?'warn':'')+'" style="width:'+Math.min(100,pct)+'%"></i></div>')+
+        (mine.length?'<div class="day-tech-sub">'+mine.length+' car'+(mine.length===1?'':'s')+(done?' \u00b7 '+done+' done':'')+'</div>':'')+'</div>';
+    }).join('');
+    var unassigned=wos.filter(function(w){ return !w.tech||w.tech==='Unassigned'; });
+    if(unassigned.length) techHtml+='<div class="day-tech"><div class="day-tech-top"><span>Unassigned</span><span>'+(Math.round(unassigned.reduce(function(a,w){ return a+hoursOn(w,ds); },0)*10)/10)+'h</span></div><div class="day-tech-sub park-bad">'+unassigned.length+' car'+(unassigned.length===1?' needs':'s need')+' a technician</div></div>';
     h+='<div class="day-layout"><div class="day-slots">';
     keys.forEach(function(k){
       var g=groups[k], sug=g.every(function(x){ return x.suggested; });
       h+='<div class="day-slot"><div class="day-slot-time">'+(k==='onsite'?'Already on site':k==='none'?'No drop-off time':L(+k))+'<span>'+g.length+' car'+(g.length===1?'':'s')+(k==='onsite'?' \u00b7 from earlier days':(k!=='none'&&sug?' \u00b7 suggested':''))+'</span></div><div class="day-slot-cars">'+g.map(box).join('')+'</div></div>';
     });
     h+='</div>';
+    if(techHtml||parts.length) h+='<div class="day-side">';
+    if(techHtml) h+='<div class="day-parts"><div class="day-parts-h">Technicians</div>'+techHtml+'</div>';
     if(parts.length){
       h+='<div class="day-parts"><div class="day-parts-h">Parts required</div>'+parts.map(function(p){ return '<div class="day-part"><span>'+escH(p.name)+(p.partNo?'<small>'+escH(p.partNo)+'</small>':'')+'</span><span>\u00d7'+p.qty+'</span></div>'; }).join('')+'</div>';
     }
+    if(techHtml||parts.length) h+='</div>';
     h+='</div>';
     body.innerHTML=h;
     bindDay();
@@ -3195,6 +3296,7 @@ var CAL = (function() {
     sel.innerHTML='<option value="Unassigned">Unassigned</option>'+names.map(function(n){ return '<option value="'+escH(n)+'">'+escH(n)+'</option>'; }).join('');
     sel.value=cur&&(cur==='Unassigned'||names.indexOf(cur)>=0)?cur:(names[0]||'Unassigned');
   }
+  var bookingParts=null;   // parts editor in the booking form (PARTSED)
   function openModal(ds,woId){
     editingId=woId||null;
     var dt=ds||panelDate||(viewYear+'-'+pad(viewMonth+1)+'-'+pad(today.getDate()));
@@ -3202,6 +3304,7 @@ var CAL = (function() {
     document.getElementById('modal-date-sub').textContent=dt?'Date: '+dt:'';
     document.getElementById('cap-warn-badge').classList.remove('visible');
     var _wo0=woId?WOS.find(function(w){return w.id===woId;}):null;
+    var _fp=document.getElementById('f-parts'); if(_fp && typeof PARTSED!=='undefined'){ if(!bookingParts) bookingParts=PARTSED.mount(_fp, []); bookingParts.set(_wo0?(_wo0.extraParts||[]):[]); }
     fillTechSelect(_wo0?_wo0.tech:((typeof STAFF!=='undefined'&&STAFF.firstTechName&&STAFF.firstTechName())||''));
     if(woId){
       var wo=WOS.find(function(w){return w.id===woId;});
@@ -3285,7 +3388,8 @@ var CAL = (function() {
     // whatever the planner staged for a brand-new booking.
     if(editingId && existingJobs && existingJobs.length) wo.jobs = existingJobs;
     else if(!editingId && pendingJobs && pendingJobs.length) wo.jobs = pendingJobs;
-    if(editingId && exObj){ ['story','odometer','buildYear','parts','checklist'].forEach(function(k){ if(typeof wo[k]==='undefined' && typeof exObj[k]!=='undefined') wo[k]=exObj[k]; }); }
+    if(bookingParts) wo.extraParts=bookingParts.get();
+    if(editingId && exObj){ ['story','odometer','buildYear','parts','checklist','extraParts'].forEach(function(k){ if(typeof wo[k]==='undefined' && typeof exObj[k]!=='undefined') wo[k]=exObj[k]; }); }
     if(editingId){var idx=WOS.findIndex(function(w){return w.id===editingId;});if(idx>=0)WOS[idx]=wo;}
     else WOS.push(wo);
     pendingJobs = null;
@@ -3300,6 +3404,7 @@ var CAL = (function() {
     if(d.odometer!=null&&d.odometer!=='') wo.odometer=d.odometer;
     if(d.buildYear) wo.buildYear=d.buildYear;
     if(d.jobs&&d.jobs.length) wo.jobs=d.jobs;
+    if(d.extraParts&&d.extraParts.length) wo.extraParts=d.extraParts;
     WOS.push(wo); saveWOs(); fireChange(); render();
     return wo.id;
   }
@@ -5990,104 +6095,6 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
 }
 
 
-  // ════════════════════════════════════════════════════════════
-  // TODAY — Customers booked in for the current date (live from CAL)
-  // ════════════════════════════════════════════════════════════
-  var TODAY = (function(){
-    function todayStr(){
-      var d = new Date();
-      var mm = String(d.getMonth()+1).padStart(2,'0');
-      var dd = String(d.getDate()).padStart(2,'0');
-      return d.getFullYear() + '-' + mm + '-' + dd;
-    }
-    function fmtLong(ds){
-      var d = new Date(ds + 'T00:00:00');
-      if(isNaN(d.getTime())) return ds;
-      var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    }
-    function sLabel(s){ return {open:'Open',wip:'In progress',done:'Complete',hold:'On hold',closed:'Closed'}[s]||(s||'').toUpperCase(); }
-    function sPill(s){ return {open:'sp-open',wip:'sp-wip',done:'sp-done',hold:'sp-hold',closed:'sp-closed'}[s]||'sp-open'; }
-
-    function render(){
-      var sub = document.getElementById('today-sub');
-      var tbody = document.getElementById('today-tbody');
-      if(!tbody) return;
-
-      var ds = todayStr();
-      if(sub) sub.textContent = 'Customers booked in — ' + fmtLong(ds);
-
-      var rows = [];
-      if(typeof CAL !== 'undefined' && CAL.getAll){
-        var all = CAL.getAll();
-        rows = CAL.dayJobs ? CAL.dayJobs(ds).slice() : all.filter(function(w){ return w && w.date === ds; });
-      }
-
-      var hours = 0, openCount = 0, doneCount = 0;
-      for(var j=0;j<rows.length;j++){
-        var w = rows[j];
-        hours += CAL.hoursOn ? CAL.hoursOn(w, ds) : (parseFloat(w.hours)||0);
-        if(w.status === 'done' || w.status === 'closed') doneCount++;
-        else openCount++;
-      }
-      var setStat = function(id, val){ var el = document.getElementById(id); if(el) el.textContent = val; };
-      setStat('today-stat-count', String(rows.length));
-      setStat('today-stat-hours', (Math.round(hours*10)/10) + 'h');
-      setStat('today-stat-open', String(openCount));
-      setStat('today-stat-done', String(doneCount));
-
-      if(!rows.length){
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:36px 16px;color:var(--text3)">No customers booked in today.</td></tr>';
-        return;
-      }
-
-      var pk = (typeof PARK!=='undefined') ? PARK.plan(ds) : null, pkOn = pk && pk.enabled && !pk.noTechs;
-      var at = function(w){ var t = PARK.toMin(w.time); if(t==null && pkOn && pk.byId[w.id]) t = pk.byId[w.id].arrive; return t; };
-      rows.forEach(function(w){ w.__t = w.date < ds ? -1 : at(w); });
-      rows.sort(function(a,b){ return ((a.__t==null?9999:a.__t)-(b.__t==null?9999:b.__t)) || (a.customer||'').localeCompare(b.customer||''); });
-
-      var html = '';
-      for(var k=0;k<rows.length;k++){
-        var r = rows[k];
-        var tot = parseFloat(r.hours)||0;
-        html += '<tr class="today-row" data-id="'+escH(r.id)+'" style="cursor:pointer">'
-          + '<td class="td-mono">'+(r.__t===-1?'On site':r.__t==null?'—':PARK.label(r.__t)+(r.time?'':' <span style="color:var(--text3)">(suggested)</span>'))+'</td>'
-          + '<td class="td-primary">'+escH(r.customer)+'</td>'
-          + '<td>'+escH(r.vehicle||'—')+'</td>'
-          + '<td class="td-mono">'+escH(r.rego||'—')+'</td>'
-          + '<td>'+escH(r.type||'—')+'</td>'
-          + '<td>'+escH(r.tech||'—')+'</td>'
-          + '<td class="td-mono">'+(tot ? (CAL.hoursLabel ? CAL.hoursLabel(r, ds) : tot+'h') : '—')+(r.date!==ds?' <span style="color:var(--text3)">(continued)</span>':'')+'</td>'
-          + '<td><span class="status-pill '+sPill(r.status)+'">'+sLabel(r.status)+'</span></td>'
-          + '</tr>';
-      }
-      tbody.innerHTML = html;
-      rows.forEach(function(w){ delete w.__t; });
-      Array.prototype.forEach.call(tbody.querySelectorAll('.today-row'), function(tr){ tr.addEventListener('click', function(){ if(typeof window.openWO==='function') window.openWO(tr.getAttribute('data-id')); }); });
-    }
-
-    function bindRefresh(){
-      var btn = document.getElementById('today-refresh-btn');
-      if(btn) btn.addEventListener('click', render);
-    }
-
-    function init(){
-      render();
-      bindRefresh();
-      if(typeof CAL !== 'undefined' && CAL.onChange) CAL.onChange(render);
-      // Recompute at local midnight so the page rolls over to the new day on its own.
-      function scheduleMidnightRefresh(){
-        var now = new Date();
-        var next = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 1, 0);
-        var ms = next.getTime() - now.getTime();
-        setTimeout(function(){ render(); scheduleMidnightRefresh(); }, ms);
-      }
-      scheduleMidnightRefresh();
-    }
-    return {init:init, render:render};
-  })();
-
 
   // ════════════════════════════════════════════════════════════
   // TECH — Technicians (dispatch + clock on/off)
@@ -6458,6 +6465,18 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
         }
         location.reload();
       });
+      // Work order permissions: only a Service Manager can change who may add/remove jobs
+      var ajs = document.getElementById('set-advjobs');
+      if(ajs){
+        var ajSync = function(){ var on=PERM.advisorJobs(), mgr=(typeof ROLE!=='undefined'&&ROLE.isManager)?ROLE.isManager():true;
+          ajs.setAttribute('aria-checked', on?'true':'false'); ajs.disabled=!mgr; ajs.style.opacity=mgr?'':'0.55';
+          var sub=document.getElementById('set-advjobs-sub'); if(sub) sub.textContent=mgr?'Service Managers can always do this. Turn off to keep job changes with the Service Manager.':'Only the Service Manager can change this.'; };
+        ajSync();
+        ajs.addEventListener('click', function(){ if(!(typeof ROLE!=='undefined'&&ROLE.isManager&&ROLE.isManager())){ ajSync(); return; } PERM.set({advisorJobs: ajs.getAttribute('aria-checked')!=='true'}); ajSync(); });
+        window.__wscPermSync = ajSync;
+        var sn=document.querySelector('.sidebar .nav-item[data-page="settings"]'); if(sn) sn.addEventListener('click', ajSync);
+        document.addEventListener('click', function(e){ if(e.target.closest&&e.target.closest('.role-opt')) setTimeout(ajSync,0); });
+      }
       var tsel = document.getElementById('set-theme');
       if(tsel){
         tsel.setAttribute('aria-checked', document.documentElement.getAttribute('data-theme')==='light' ? 'true' : 'false');
@@ -6701,6 +6720,17 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
   // ROLE — account role switch (Service Advisor / Service Manager)
   // Gates the manager-only Team Management section.
   // ════════════════════════════════════════════════════════════
+  // Shop permissions set by the Service Manager (Settings → Work order permissions). Storage: wsc_perm_v1.
+  var PERM = (function(){
+    var KEY='wsc_perm_v1';
+    function get(){ var p; try{ p=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ p={}; } if(p.advisorJobs==null) p.advisorJobs=true; return p; }
+    function set(patch){ var p=Object.assign(get(),patch); try{ localStorage.setItem(KEY, JSON.stringify(p)); }catch(e){} return p; }
+    // Who may add or remove jobs on a work order that already exists
+    function canEditJobs(){ var r=(typeof ROLE!=='undefined'&&ROLE.current)?ROLE.current():'manager'; return r==='manager' || (r==='advisor' && get().advisorJobs); }
+    return { advisorJobs:function(){ return get().advisorJobs; }, set:set, canEditJobs:canEditJobs };
+  })();
+  window.PERM = PERM;
+
   var ROLE = (function(){
     var KEY = 'wsc_role_v1';
     var ROLES = { advisor:{name:'Service Advisor', initials:'SA'}, manager:{name:'Service Manager', initials:'SM'}, controller:{name:'Workshop Controller', initials:'WC'} };
@@ -6708,6 +6738,7 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
 
     function load(){ try{ var r = localStorage.getItem(KEY); if(r && ROLES[r]) current = r; }catch(e){} }
     function apply(){
+      if(window.__wscPermSync) try{ window.__wscPermSync(); }catch(e){}
       var r = ROLES[current];
       var av = document.getElementById('role-avatar'); if(av) av.textContent = r.initials;
       var nm = document.getElementById('role-name'); if(nm) nm.textContent = r.name;
@@ -6748,7 +6779,7 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
       }
       apply();
     }
-    return { init: init, isManager: function(){ return current === 'manager'; }, canAccess: canAccess };
+    return { init: init, isManager: function(){ return current === 'manager'; }, current: function(){ return current; }, canAccess: canAccess };
   })();
 
 
@@ -6965,11 +6996,10 @@ var AI = (function() {
      keys:['carryover','carry','overdue','previous','old','past','unclosed','left'],
      text:'**Carryover** on the Calendar page lists jobs booked on past days that aren’t closed yet, oldest first, with how many days overdue. The first three show; click **Show all** for the rest. **Open** goes to the work order; **Close** works once its invoice is paid.\nUnfinished carryover jobs also appear on today’s calendar and day page under **Already on site**, with their remaining hours.'},
 
-    {id:'app-today', topic:'Today page', page:'today',
-     q:['what is on today','today page','who is coming in today','todays cars','list of todays bookings'],
-     keys:['today','todays','page','list','coming','cars','booked'],
-     text:'**Today** lists every car with work today, sorted by drop-off time: Drop-off (or **On site** for carried-over jobs, or a suggested time), customer, vehicle, rego, service, technician, today’s hours and status. Click a row to open the work order. The figure at the top is the labour hours still to do today.'},
-
+    {id:'app-today', topic:'What is on today', page:'bookings',
+     q:['what is on today','who is coming in today','todays cars','list of todays bookings','today page','where did today go'],
+     keys:['today','todays','day','coming','cars','booked','calendar'],
+     text:'**Today** is now the calendar\u2019s day view: Workshop \u2192 Calendar, then click today (or **Open Today** on the Home dashboard). It shows every car with work that day grouped by drop-off time (including jobs carried over), hours to do against capacity, how many are still to do and completed, each technician\u2019s load, parking, and the parts needed. Click a car to open its work order.'},
     {id:'app-clockon', topic:'Clocking on to a job', page:'clock',
      q:['how do i clock on','clock in to a job','start time on a job','how does clocking work','tech clock on','punch in'],
      keys:['clock','clocking','clockon','on','start','time','tech','number','punch'],
@@ -7039,6 +7069,18 @@ var AI = (function() {
      q:['how do i email an invoice','send invoice to customer','connect gmail','connect outlook','email invoices automatically','change the invoice email message','did the invoice get emailed'],
      keys:['email','emails','gmail','outlook','send','invoice','pdf','automatic','auto','template','message','hotmail','office'],
      text:'**Emailing invoices**\n• Settings → **Email (Gmail / Outlook)** → **Connect Gmail** or **Connect Outlook** and sign in on Google\u2019s or Microsoft\u2019s page. WorkShopConnect can only send, never read your mail.\n• Invoices go out from your own address with the **PDF attached**, and land in your Sent folder.\n• With **Email automatically when I bill a customer** ticked, clicking **Bill customer** emails the invoice straight away (if the customer has an email address).\n• The **Email** button on an invoice opens a window to check the address and message before sending.\n• Edit the subject and message in Settings; {customer}, {total}, {due}, {vehicle} and {payment} fill in automatically. **Send me a test** sends a sample to yourself.\n• An **Emailed** tag on the invoice shows when and where it went; **Email failed** shows why on hover.'},
+    {id:'app-wojobs', topic:'Adding or removing jobs on a work order', page:'settings',
+     q:['add a job to a work order','remove a job from a work order','change jobs after booking','why cant i add a job','stop advisors changing jobs'],
+     keys:['job','jobs','add','remove','delete','work','order','advisor','permission','switch'],
+     text:'**Adding and removing jobs**\n\u2022 Open the work order: **+ Add job** (operation, hours, optional instructions) and **Remove job** on each job are in Jobs & Parts.\n\u2022 Booked hours follow the jobs, so the invoice labour stays right; a draft invoice updates itself. Closed work orders can\u2019t be changed.\n\u2022 Service Managers can always do this. **Settings \u2192 Work order permissions \u2192 Advisors can add and remove jobs** decides whether Service Advisors can too; only the Service Manager can change that switch. Workshop Controllers can\u2019t.'},
+    {id:'app-woparts', topic:'Adding parts to a work order', page:'openwo',
+     q:['how do i add parts to a job','add a part to a work order','charge the customer for a part','part price on invoice','add parts when booking','change part price'],
+     keys:['part','parts','add','charge','price','pricing','work','order','job','invoice','booking'],
+     text:'**Parts on a work order**\n\u2022 When booking (New Booking or Generate Work Order) use **+ Add part** in the Parts section; on an existing job open the work order and use **Parts charged to customer**.\n\u2022 Type a part number or description; stocked parts fill in their sell price from Parts. Enter or change **Charge each** (ex GST) to set what the customer pays.\n\u2022 Changes on the work order save automatically.\n\u2022 When you invoice the job, each part is a line at that price and the total includes it. A draft invoice updates if the parts change; billed invoices don\u2019t change.\n\u2022 What the part cost you goes to Expenses when billed, never on the customer\u2019s invoice.'},
+    {id:'app-enq', topic:'Website enquiries', page:'enquiries',
+     q:['how do website enquiries get in','connect my website','where are website enquiries','turn an enquiry into a job card','link code','enquiry form to work order'],
+     keys:['enquiry','enquiries','website','form','contact','lead','leads','link','inbox','booking'],
+     text:'**Website enquiries** (Workshop \u2192 Enquiries)\n\u2022 Set up once in **Settings \u2192 Website enquiries**: enter your website address, copy the **link code** and paste it into your website\u2019s dashboard (\u2026/admin/ \u2192 WorkShopConnect \u2192 Link computer).\n\u2022 New enquiries arrive within a minute while WorkShopConnect is open; the Workshop menu shows a count.\n\u2022 **Make job card** opens a new booking with the customer, phone, email, rego, vehicle, job type, preferred date and their message filled in. Pick the time and technician and save.\n\u2022 If the customer or rego has been in before, the enquiry shows their last work order.\n\u2022 Mark enquiries **Contacted** or **Archive** them; booked ones link to their work order.'},
     {id:'app-po', topic:'Purchase orders to parts suppliers', page:'purchaseorders',
      q:['how do i order parts','create a purchase order','order from repco','order from burson','reorder low stock','receive a purchase order','add a supplier','where are purchase orders'],
      keys:['purchase','order','orders','po','supplier','suppliers','repco','burson','reorder','receive','received','backorder','stock'],
@@ -7217,7 +7259,7 @@ var AI = (function() {
   }
 
   /* ── references: [[page:id|Label]] and [[wo:id|Label]] become buttons ── */
-  var PAGE_NAMES={purchaseorders:'Purchase Orders','hub-workshop':'Workshop','hub-accounts':'Accounting','hub-parts':'Parts','hub-people':'People',dashboard:'Home',planner:'Generate Work Order',bookings:'Calendar',today:'Today',openwo:'Work Orders',closedwo:'Closed Work Orders',invoices:'Invoices',expenses:'Expenses',technicians:'Technicians',parts:'Parts',clock:'Clocking',team:'Team Management',performance:'Performance',financials:'Financials',settings:'Settings',ai:'AI Assistant'};
+  var PAGE_NAMES={enquiries:'Enquiries',purchaseorders:'Purchase Orders','hub-workshop':'Workshop','hub-accounts':'Accounting','hub-parts':'Parts','hub-people':'People',dashboard:'Home',planner:'Generate Work Order',bookings:'Calendar',openwo:'Work Orders',closedwo:'Closed Work Orders',invoices:'Invoices',expenses:'Expenses',technicians:'Technicians',parts:'Parts',clock:'Clocking',team:'Team Management',performance:'Performance',financials:'Financials',settings:'Settings',ai:'AI Assistant'};
   function pageRef(p){ return PAGE_NAMES[p]?'[[page:'+p+'|Open '+PAGE_NAMES[p]+']]':''; }
   function woRef(w){ return '[[wo:'+w.id+'|Open '+woNo(w)+']]'; }
   function dayRef(ds){ return '[[day:'+ds+'|Open '+fmtD(ds)+']]'; }
@@ -7404,7 +7446,6 @@ var AI = (function() {
     '(top level)':'Shared helpers and app start-up: navigation between pages (navTo), HTML escaping, parts pricing, the labour-rate and booking-efficiency settings readers, and the Generate Work Order service planner (rego lookup, make/chassis pickers and the manufacturer service schedules).',
     CAL:'Calendar, bookings and work orders — the core data module. Loads/saves work orders (wsc_wos_v3), works out remaining hours after clocked time, spreads long jobs across working days by each technician’s daily limit, computes day capacity, renders the month calendar, day pages and the booking form, and prints the repair order.',
     PARK:'Parking planner. Simulates each day car by car (technicians, job length, check-in, overrun, invoicing/QC and collection time) to find the parking peak and suggest staggered drop-off times within the bays and slot limits set in Settings.',
-    TODAY:'Today page: lists cars with work today, including jobs continued from earlier days, sorted by drop-off time, and refreshes at midnight.',
     TECH:'Technicians page: each technician’s status today, daily hours, efficiency and current job.',
     PARTS:'Parts inventory page: add parts, stock levels against reorder levels, and the parts table.',
     FIN:'Financials page: 6-month revenue trend and top services.',
@@ -7422,6 +7463,7 @@ var AI = (function() {
     PERF:'Performance page: per-technician available (clocked) hours, billed hours, productivity, efficiency and labour GP.',
     INVOICE:'Invoices: builds invoice lines from a work order (labour, parts, GST), draft → billed → paid (paying closes the job), email, print and labour-hour totals (wsc_invoices_v1).',
     WODETAIL:'Work order page: edit a job, technician’s story, vehicle history by rego, print, invoice, close/reopen (closing needs a paid invoice).',
+    ENQ:'Website enquiries: linking the workshop website, collecting contact-form enquiries about once a minute, matching them to past customers, and turning them into a pre-filled booking.',
     PO:'Purchase orders: suppliers and their order emails, creating and editing orders to parts suppliers, sending them as a PDF, reordering low stock, and receiving deliveries into Parts stock.',
     MAIL:'Email: connecting Gmail or Outlook, emailing customers their invoice as a PDF from the workshop\u2019s own address, automatic emailing when an invoice is billed, the editable message template, and the test email.',
     EXPENSES:'Expenses: internal job costs never shown to customers — parts costs recorded per supplier when an invoice is billed (with parts margin), manual expenses such as sublet or consumables, and sending them to Xero as supplier bills.',
@@ -7647,7 +7689,7 @@ var AI = (function() {
   // Rank functions for a question. Rare words weigh more (IDF over all functions); a word can match a
   // function's name parts, its everyday keywords, its description, or its module; action words map to
   // the verbs code uses (shows → render, adds → save/add, switches → set …).
-  var MODALIAS={CAL:'calendar bookings booking form day page',PARK:'parking park drop off dropoff bays',TODAY:'today',TECH:'technicians technician page',PARTS:'parts inventory stock',FIN:'financials revenue',SET:'settings',STAFF:'team staff management technician days off roster',ROLE:'role roles advisor manager controller permission permissions access',AI:'assistant ai chat knowledge',DEV:'self edit customise',LOCALM:'model download install wscm local',ENGINE:'engine model server',CLOCK:'clocking clock clocked sessions',OPENWO:'work orders list active',CARRY:'carryover overdue',CLOSEDWO:'closed archive',PERF:'performance productivity efficiency',INVOICE:'invoice invoices billing bill',EXPENSES:'expenses expense costs cost markup margin supplier bills sublet',MAIL:'email gmail outlook send pdf invoice automatic template',PO:'purchase order orders po supplier suppliers repco burson reorder receive stock',WODETAIL:'work order page detail history story',CUSTOMWO:'custom work order form','(top level)':'planner service schedule schedules generate rego navigation'};
+  var MODALIAS={CAL:'calendar bookings booking form day page',PARK:'parking park drop off dropoff bays',TECH:'technicians technician page',PARTS:'parts inventory stock',FIN:'financials revenue',SET:'settings',STAFF:'team staff management technician days off roster',ROLE:'role roles advisor manager controller permission permissions access',AI:'assistant ai chat knowledge',DEV:'self edit customise',LOCALM:'model download install wscm local',ENGINE:'engine model server',CLOCK:'clocking clock clocked sessions',OPENWO:'work orders list active',CARRY:'carryover overdue',CLOSEDWO:'closed archive',PERF:'performance productivity efficiency',INVOICE:'invoice invoices billing bill',EXPENSES:'expenses expense costs cost markup margin supplier bills sublet',MAIL:'email gmail outlook send pdf invoice automatic template',PO:'purchase order orders po supplier suppliers repco burson reorder receive stock',ENQ:'enquiry enquiries website form contact lead link booking',WODETAIL:'work order page detail history story',CUSTOMWO:'custom work order form','(top level)':'planner service schedule schedules generate rego navigation'};
   var VERBS={add:'add save create new openadd',adds:'add save create new openadd',create:'create add new build',creates:'create add new build',make:'create build',makes:'create build',generate:'create generate build',generates:'create generate build',
     show:'render open view',shows:'render open view',draw:'render',draws:'render',display:'render',displays:'render',list:'render',lists:'render',
     remember:'save persist load',remembers:'save persist load',store:'save persist',stores:'save persist',load:'load getitem parse',
@@ -7709,7 +7751,7 @@ var AI = (function() {
   }
   // Users never see the source: no code, function or variable names, storage keys or line numbers.
   // The assistant still reads its own code (above) to explain in plain English how the app behaves.
-  var MODPLAIN={PO:'purchase orders',MAIL:'email',EXPENSES:'expenses',CAL:'Calendar',PARK:'Calendar',TODAY:'today',TECH:'technicians',PARTS:'parts',FIN:'financials',SET:'settings',STAFF:'team',ROLE:'dashboard',AI:'ai',DEV:'ai',LOCALM:'ai',ENGINE:'ai',CLOCK:'clock',OPENWO:'openwo',CARRY:'bookings',CLOSEDWO:'closedwo',PERF:'performance',INVOICE:'invoices',WODETAIL:'openwo',CUSTOMWO:'planner','(top level)':'planner'};
+  var MODPLAIN={ENQ:'website enquiries',PO:'purchase orders',MAIL:'email',EXPENSES:'expenses',CAL:'Calendar',PARK:'Calendar',TECH:'technicians',PARTS:'parts',FIN:'financials',SET:'settings',STAFF:'team',ROLE:'dashboard',AI:'ai',DEV:'ai',LOCALM:'ai',ENGINE:'ai',CLOCK:'clock',OPENWO:'openwo',CARRY:'bookings',CLOSEDWO:'closedwo',PERF:'performance',INVOICE:'invoices',WODETAIL:'openwo',CUSTOMWO:'planner','(top level)':'planner'};
   function sanitize(t){
     return String(t||'')
       .replace(/`[^`]*`/g,'')
@@ -8886,9 +8928,17 @@ window.AI = AI;
       function labour(desc,h){ if(h>0) lines.push({kind:'labour', desc:desc+' — Labour', qty:r2(h), unit:r2(r), amount:r2(h*r)}); }
       function part(p){
         var nm=(p&&p.name)||String(p||''); if(!nm) return;
-        var no=p&&(p.partNo||p.sku||p.code), q=Math.max(1, parseFloat(p&&p.qty)||1), up=r2(priceOf(nm));
-        var c=partCostFor(nm);
+        var no=p&&(p.partNo||p.sku||p.code), q=Math.max(0, parseFloat(p&&p.qty)||1), set=p&&p.price!=null&&p.price!==''&&!isNaN(parseFloat(p.price)), up=r2(set?parseFloat(p.price):priceOf(nm));
+        var c=partCostFor(nm); if(set && c.est) c.cost=r2(up/(1+partMarkupPct()/100));
+        if(p && parseFloat(p.cost)>0){ c.cost=parseFloat(p.cost); c.est=false; }
         lines.push({kind:'part', name:nm, desc:nm+(no?' ('+no+')':''), qty:r2(q), unit:up, amount:r2(q*up), cost:r2(c.cost), supplier:c.supplier, costEst:c.est});
+      }
+      // Parts added by hand: charged at the price entered on the work order
+      function extra(x){
+        var nm=String((x&&x.name)||'').trim(); if(!nm) return;
+        var q=Math.max(0, parseFloat(x.qty)||1), up=r2(parseFloat(x.price)||0), rec=partInvRecord(nm), c=parseFloat(x.cost)>0?parseFloat(x.cost):(rec?parseFloat(rec.cost):NaN);
+        var cost=c>0?c:r2(up/(1+partMarkupPct()/100));
+        lines.push({kind:'part', name:nm, desc:nm+(x.partNo?' ('+x.partNo+')':''), qty:r2(q), unit:up, amount:r2(q*up), cost:r2(cost), supplier:rec&&rec.supplier&&rec.supplier!=='\u2014'?String(rec.supplier):'', costEst:!(c>0), manual:true});
       }
       if(perJob){
         jobs.forEach(function(j){ labour(j.title||w.type||'Labour', parseFloat(j.hours)||0); (j.parts||[]).forEach(part); });
@@ -8897,7 +8947,19 @@ window.AI = AI;
         if(jobs.length) jobs.forEach(function(j){ (j.parts||[]).forEach(part); });
         else (w.parts||[]).forEach(part);
       }
+      (w.extraParts||[]).forEach(extra);
       return lines;
+    }
+    // Draft invoices follow their work order (parts or hours changed); billed invoices never change.
+    function syncDrafts(){
+      var changed=false;
+      invoices.forEach(function(iv){
+        if(iv.status!=='draft'||!iv.woId) return;
+        var w=wos().find(function(x){ return x.id===iv.woId; }); if(!w) return;
+        var ls=buildLines(w); if(JSON.stringify(ls)===JSON.stringify(iv.lines)) return;
+        var t=totalsOf(ls); iv.lines=ls; iv.subtotal=t.subtotal; iv.gstRate=t.gstRate; iv.gst=t.gst; iv.total=t.total; changed=true;
+      });
+      if(changed) save();
     }
     function totalsOf(lines){
       var sub=lines.reduce(function(a,l){return a+(l.amount||0);},0), g=gstRate(), gst=r2(sub*(g/100));
@@ -9036,7 +9098,7 @@ window.AI = AI;
       var sel=document.getElementById('inv-wo'); if(sel) sel.addEventListener('change', function(){ renderPreview(sel.value); });
       var ov=document.getElementById('inv-modal'); if(ov) ov.addEventListener('click', function(e){ if(e.target===ov) closeModal(); });
       var nav=document.querySelector('.nav-item[data-page="invoices"]'); if(nav) nav.addEventListener('click', render);
-      if(typeof CAL!=='undefined'&&CAL.onChange) CAL.onChange(render);
+      if(typeof CAL!=='undefined'&&CAL.onChange) CAL.onChange(function(){ syncDrafts(); render(); });
     }
     return { init:init, render:render, fromWO:fromWO, view:view, docHtml:docHtml, email:email, isPaid:isPaid, setStatus:setStatus, del:del,
       list:function(){ return invoices; }, get:function(id){ return invoices.find(function(x){ return x.id===id; })||null; }, saveAll:save };
@@ -9371,7 +9433,7 @@ window.AI = AI;
           '<div class="dash-main"><div class="dash-cust">'+escH(w.customer||'—')+' <span style="font-weight:400;color:var(--text3)">· WO-'+escH(w.num)+'</span></div>'+
           '<div class="dash-meta">'+escH([w.vehicle, w.rego, w.type, w.tech||'Unassigned', r1(hrsToday(w))+'h'].filter(Boolean).join(' · '))+'</div></div>'+
           '<span class="status-pill '+stPill(w.status)+'">'+stLabel(w.status)+'</span></div>'; }).join('')+
-          (today.length>9?'<div class="dash-row" data-nav="today" style="grid-template-columns:1fr;color:var(--accent-text);font-weight:600">+ '+(today.length-9)+' more today</div>':'')
+          (today.length>9?'<div class="dash-row" data-day="today" style="grid-template-columns:1fr;color:var(--accent-text);font-weight:600">+ '+(today.length-9)+' more today</div>':'')
         : '<div class="empty-state" style="padding:34px 16px;text-align:center">Nothing booked in today.<br><span class="panel-link" data-nav="planner" style="cursor:pointer">Create a work order</span></div>');
 
       // Technician load
@@ -9396,6 +9458,7 @@ window.AI = AI;
         if(w.createdAt) ev.push({t:w.createdAt, c:'', a:'WO-'+w.num+' booked in', w:(w.customer||'')+' · '+(w.vehicle||'')});
         if(w.status==='hold' && (w.updatedAt||w.createdAt)) ev.push({t:w.updatedAt||w.createdAt, c:'bad', a:'WO-'+w.num+' on hold', w:(w.customer||'')+' · '+(w.vehicle||'')});
       });
+      if(typeof ENQ!=='undefined') ENQ.list().forEach(function(q){ if(q.state==='new') ev.push({t:new Date(q.receivedAt).toISOString(), c:'warn', a:'Website enquiry: '+q.type, w:q.name+(q.vehicle?' \u00b7 '+q.vehicle:'')}); });
       ev=ev.filter(function(e){ var t=Date.parse(e.t); return t && t<=Date.now()+6e4; }).sort(function(a,b){ return Date.parse(b.t)-Date.parse(a.t); }).slice(0,8);
       setHtml('dash-activity', ev.length? ev.map(function(e){ return '<div class="dash-act"><span class="dash-dot '+e.c+'"></span><div><div class="dash-act-t">'+escH(e.a)+'</div><div class="dash-act-w">'+escH(e.w)+' · '+escH(ago(e.t))+'</div></div></div>'; }).join('')
         : '<div class="empty-state" style="padding:34px 16px;text-align:center">No recent activity.</div>');
@@ -9405,6 +9468,7 @@ window.AI = AI;
       var page=g('page-dashboard'); if(!page) return;
       page.addEventListener('click', function(e){
         var row=e.target.closest('[data-wo]'); if(row){ if(typeof WODETAIL!=='undefined'&&WODETAIL.open) WODETAIL.open(row.getAttribute('data-wo'),'dashboard'); return; }
+        var dy=e.target.closest('[data-day]'); if(dy && typeof CAL!=='undefined' && CAL.openDay){ var t=new Date(); CAL.openDay(t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2)); return; }
         var nv=e.target.closest('[data-nav]'); if(nv) HUB.go(nv.getAttribute('data-nav'));
       });
       var nav=document.querySelector('.nav-item[data-page="dashboard"]'); if(nav) nav.addEventListener('click', render);
@@ -9421,7 +9485,7 @@ window.AI = AI;
   // icon tiles for its sub-pages; sub-pages get a breadcrumb back and keep their section lit.
   // ════════════════════════════════════════════════════════════
   var HUB = (function(){
-    var OF={planner:'hub-workshop',bookings:'hub-workshop',day:'hub-workshop',today:'hub-workshop',openwo:'hub-workshop',closedwo:'hub-workshop',clock:'hub-workshop',wodetail:'hub-workshop',
+    var OF={enquiries:'hub-workshop',planner:'hub-workshop',bookings:'hub-workshop',day:'hub-workshop',openwo:'hub-workshop',closedwo:'hub-accounts',clock:'hub-workshop',wodetail:'hub-workshop',
       invoices:'hub-accounts',expenses:'hub-accounts',financials:'hub-accounts', parts:'hub-parts',purchaseorders:'hub-parts', technicians:'hub-people',team:'hub-people',performance:'hub-people'};
     var NAME={'hub-workshop':'Workshop','hub-accounts':'Accounting','hub-people':'People','hub-parts':'Parts'};
     function go(pg){ var it=document.querySelector('.sidebar .nav-item[data-page="'+pg+'"]'); if(it) it.click(); else if(typeof navTo==='function') navTo(pg); }
@@ -9440,7 +9504,6 @@ window.AI = AI;
         var wk=new Date(now); wk.setDate(now.getDate()+6); var we=ymd(wk);
         var open=wos.filter(function(w){ return w && w.status!=='closed'; });
         set('bookings', open.filter(function(w){ return w.date>=ds && w.date<=we; }).length+' booked next 7 days');
-        set('today', (CAL.dayJobs?CAL.dayJobs(ds).filter(function(w){ return w&&w.status!=='closed'; }).length:0)+' jobs today');
         set('openwo', open.length+' open'+(open.filter(function(w){ return w.status==='hold'; }).length?' · '+open.filter(function(w){ return w.status==='hold'; }).length+' on hold':''));
         set('closedwo', wos.filter(function(w){ var d=new Date(w&&w.closedAt||''); return w&&w.status==='closed'&&!isNaN(d)&&ymd(d).slice(0,7)===ym; }).length+' closed this month');
         var clk=json('wsc_clock_v1',{}), on=clk&&clk.active?Object.keys(clk.active).length:0; set('clock', on?on+' clocked on now':'Nobody clocked on');
@@ -9452,6 +9515,7 @@ window.AI = AI;
         set('technicians', techs.length+' technician'+(techs.length===1?'':'s')+' · '+techs.filter(function(x){ return x.onShift&&(x.daysOff||[]).indexOf(ds)<0; }).length+' in today');
         set('team', st.length+' staff');
         set('planner',''); set('performance','');
+        if(typeof ENQ!=='undefined'){ var en=ENQ.newCount(); set('enquiries', en?en+' new':(ENQ.list().length?'Nothing new':'')); }
         var pl=json('wsc_parts_v1',[]); var lowN=pl.filter(function(x){ return (Number(x.qty)||0)<=(Number(x.reorder)||0) && (Number(x.reorder)||0)>0; }).length;
         set('parts', pl.length+' part'+(pl.length===1?'':'s')+(lowN?' · '+lowN+' low':''));
         var pos=(typeof PO!=='undefined'&&PO.list)?PO.list():[], onO=pos.filter(function(o){ return o.status==='sent'||o.status==='part'; }).length, dr=pos.filter(function(o){ return o.status==='draft'; }).length;
@@ -9780,6 +9844,168 @@ window.AI = AI;
   })();
   window.PO = PO;
 
+  // ════════════════════════════════════════════════════════════
+  // ENQ — website enquiries. The workshop's website keeps form enquiries until WorkShopConnect
+  // collects them (about once a minute while open); each becomes a ready-to-book job card here.
+  // WSC makes its own random key; only its fingerprint (the link code) is pasted into the website.
+  // Storage: wsc_enq_cfg_v1 (site + key), wsc_enquiries_v1 (collected enquiries).
+  // ════════════════════════════════════════════════════════════
+  var ENQ = (function(){
+    var CKEY='wsc_enq_cfg_v1', KEY='wsc_enquiries_v1', list=[], filter='new', timer=null, busy=false, pending=null;
+    // A starting estimate so the booking can be saved straight away; the advisor adjusts it.
+    var HOURS={'Logbook service':2,'General service':1.5,'Repair work':1,'Diagnostics':1,'EV repair work':1,'Consignment sales':1,'Cars for sale':0.5,'Other':1};
+    var TYPEMAP={'Logbook service':'Standard Service','General service':'Minor Service','Repair work':'Other','Diagnostics':'Diagnostics','EV repair work':'Other','Consignment sales':'Other','Cars for sale':'Other','Other':'Other'};
+    function g(id){ return document.getElementById(id); }
+    function cfg(){ try{ return JSON.parse(localStorage.getItem(CKEY)||'{}')||{}; }catch(e){ return {}; } }
+    function setCfg(p){ var c=Object.assign(cfg(),p); try{ localStorage.setItem(CKEY, JSON.stringify(c)); }catch(e){} return c; }
+    function load(){ try{ list=JSON.parse(localStorage.getItem(KEY)||'[]')||[]; }catch(e){ list=[]; } }
+    function save(){ try{ localStorage.setItem(KEY, JSON.stringify(list)); }catch(e){} }
+    function get(id){ return list.find(function(x){ return x.id===id; })||null; }
+    function newCount(){ return list.filter(function(x){ return x.state==='new'; }).length; }
+    function b64url(bytes){ var s=''; bytes.forEach(function(b){ s+=String.fromCharCode(b); }); return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+    function sha256Hex(t){ return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)).then(function(buf){ return Array.from(new Uint8Array(buf)).map(function(b){ return ('0'+b.toString(16)).slice(-2); }).join(''); }); }
+    function siteUrl(){ var s=String(cfg().site||'').trim().replace(/\/+$/,''); if(s && !/^https?:\/\//i.test(s)) s='https://'+s; return s; }
+    function ensureKey(){
+      var c=cfg(); if(c.key && c.linkCode) return Promise.resolve(c);
+      var key=b64url(crypto.getRandomValues(new Uint8Array(32)));
+      return sha256Hex(key).then(function(h){ return setCfg({key:key, linkCode:'WSC-LINK-'+h, linked:false, lastError:null}); });
+    }
+    function ago(t){ var m=Math.round((Date.now()-t)/60000); if(m<1) return 'just now'; if(m<60) return m+' min ago'; var h=Math.round(m/60); if(h<24) return h+'h ago'; var d=Math.round(h/24); return d===1?'yesterday':d+' days ago'; }
+    function auDate(ds){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(ds||'')); return m?new Date(+m[1],+m[2]-1,+m[3]).toLocaleDateString('en-AU',{weekday:'short', day:'numeric', month:'short'}):''; }
+    function toast(msg){ var el=g('mail-toast'); if(!el){ el=document.createElement('div'); el.id='mail-toast'; el.className='mail-toast'; document.body.appendChild(el); }
+      el.textContent=msg; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(function(){ el.classList.remove('show'); },6000); }
+
+    // ── collect from the website ──
+    function poll(manual){
+      var site=siteUrl(), c=cfg(); if(!site||!c.key||busy) return Promise.resolve();
+      busy=true;
+      return fetch(site+'/api/wsc/enquiries',{ headers:{ Authorization:'Bearer '+c.key, Accept:'application/json' }, cache:'no-store' })
+        .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){
+          if(r.status===401){ setCfg({linked:false, lastError:'Not linked yet — paste the link code into your website’s dashboard.', lastCheck:Date.now()}); return null; }
+          if(!r.ok) throw new Error(j.error||('The website answered '+r.status));
+          return j; }); })
+        .then(function(j){
+          if(!j){ return; }
+          var got=(j.enquiries||[]).filter(function(e){ return e && /^web-/.test(e.id) && !get(e.id); }), fresh=[];
+          got.forEach(function(e){ var rec={ id:e.id, receivedAt:Number(e.created_at)||Date.now(), type:String(e.type||'Other'), name:String(e.name||''), phone:String(e.phone||''), email:String(e.email||''),
+            vehicle:String(e.vehicle||''), rego:String(e.rego||''), prefDate:String(e.pref_date||''), message:String(e.message||''), page:String(e.page||''), source:site.replace(/^https?:\/\//,''), state:'new' };
+            list.push(rec); fresh.push(rec); });
+          save();
+          setCfg({linked:true, lastError:null, lastCheck:Date.now()});
+          var ids=(j.enquiries||[]).map(function(e){ return e.id; }).filter(function(id){ return !!get(id); });   // only what's safely stored here
+          if(ids.length) fetch(site+'/api/wsc/enquiries/ack',{ method:'POST', headers:{ Authorization:'Bearer '+c.key, 'Content-Type':'application/json' }, body:JSON.stringify({ids:ids}) }).catch(function(){});
+          if(fresh.length){ toast(fresh.length===1?'New website enquiry from '+fresh[0].name:fresh.length+' new website enquiries'); }
+          if(fresh.length||manual) refreshAll();
+        })
+        .catch(function(err){ setCfg({lastError:'Couldn’t reach '+site.replace(/^https?:\/\//,'')+': '+err.message, lastCheck:Date.now()}); if(manual) refreshAll(); })
+        .then(function(){ busy=false; renderSettings(); });
+    }
+    function start(){ clearInterval(timer); if(siteUrl()&&cfg().key){ timer=setInterval(function(){ poll(false); }, 60000); setTimeout(function(){ poll(false); }, 1500); } }
+
+    // ── matching an enquiry to someone already in WSC ──
+    function match(e){
+      var digits=function(s){ return String(s||'').replace(/\D/g,'').slice(-9); }, ph=digits(e.phone), em=String(e.email||'').toLowerCase(), rg=String(e.rego||'').replace(/\s/g,'').toUpperCase();
+      var wos=(typeof CAL!=='undefined'&&CAL.getAll)?CAL.getAll():[], hit=null;
+      wos.forEach(function(w){ if(!w) return; var ok=(rg&&String(w.rego||'').replace(/\s/g,'').toUpperCase()===rg)||(em&&String(w.email||'').toLowerCase()===em)||(ph&&ph.length>=8&&digits(w.phone)===ph);
+        if(ok && (!hit || (w.num||0)>(hit.num||0))) hit=w; });
+      return hit;
+    }
+
+    // ── make a job card: open New Booking filled in ──
+    function book(id){
+      var e=get(id); if(!e||typeof CAL==='undefined'||!CAL.openModal) return;
+      var before=CAL.getAll().map(function(w){ return w.id; }), prior=match(e);
+      pending={ id:id, before:before };
+      var ds=/^\d{4}-\d{2}-\d{2}$/.test(e.prefDate)?e.prefDate:null;
+      if(typeof HUB!=='undefined') HUB.go('bookings'); else navTo('bookings');
+      CAL.openModal(ds||undefined);
+      setTimeout(function(){
+        var set=function(f,v){ var el=g(f); if(el && v!=null && v!=='') el.value=v; };
+        set('f-customer', e.name); set('f-phone', e.phone); set('f-email', e.email); set('f-rego', e.rego);
+        set('f-vehicle', e.vehicle || (prior&&prior.vehicle) || ''); if(prior&&prior.chassis) set('f-chassis', prior.chassis);
+        var t=g('f-type'); if(t){ var want=TYPEMAP[e.type]||'Other'; if([].some.call(t.options,function(o){ return o.text===want; })) t.value=want; }
+        set('f-notes', 'Website enquiry ('+e.type+', '+new Date(e.receivedAt).toLocaleDateString('en-AU')+'): '+e.message);
+        var h=g('f-hours'); if(h){ if(!parseFloat(h.value)) h.value=HOURS[e.type]||1; if(typeof h.oninput==='function') h.oninput(); }
+      }, 200);
+    }
+    function onWOChange(){
+      if(!pending) return;
+      var p=pending, e=get(p.id); if(!e){ pending=null; return; }
+      var w=CAL.getAll().find(function(x){ return x && p.before.indexOf(x.id)<0; });
+      if(w){ e.state='booked'; e.woId=w.id; e.woNum=w.num; e.bookedAt=new Date().toISOString(); pending=null; save(); refreshAll(); }
+    }
+    function setState(id, st){ var e=get(id); if(!e) return; e.state=st; e[st+'At']=new Date().toISOString(); save(); refreshAll(); }
+    function del(id){ var e=get(id); if(!e||!confirm('Delete the enquiry from '+e.name+'? This can’t be undone.')) return; list=list.filter(function(x){ return x.id!==id; }); save(); refreshAll(); }
+
+    // ── page ──
+    function render(){
+      var box=g('enq-list'); if(!box) return;
+      var counts={new:0, contacted:0, booked:0, archived:0}; list.forEach(function(e){ counts[e.state]=(counts[e.state]||0)+1; });
+      document.querySelectorAll('#enq-range .cwo-chip').forEach(function(b){ var f=b.getAttribute('data-f'); b.classList.toggle('active', f===filter); var n=b.querySelector('span'); if(n) n.textContent=f==='all'?list.length:(counts[f]||0); });
+      var c=cfg(), sub=g('enq-sub');
+      if(sub) sub.textContent=!siteUrl()?'Not connected to a website yet — set it up in Settings → Website enquiries':(c.linked?'From '+siteUrl().replace(/^https?:\/\//,'')+(c.lastCheck?' · checked '+ago(c.lastCheck):''):(c.lastError||'Waiting for the website link'));
+      var rows=list.filter(function(e){ return filter==='all'||e.state===filter; }).sort(function(a,b){ return b.receivedAt-a.receivedAt; });
+      box.innerHTML=rows.length?rows.map(function(e){
+        var m=match(e), stPill={new:'sp-open', contacted:'sp-wip', booked:'sp-done', archived:'sp-closed'}[e.state]||'sp-open', stTxt={new:'New', contacted:'Contacted', booked:'Booked', archived:'Archived'}[e.state]||e.state;
+        var acts=(e.state!=='booked'?'<button class="btn primary" data-enq-book="'+e.id+'">Make job card</button>':(e.woNum!=null?'<button class="btn" data-enq-wo="'+escH(e.woId)+'">Open WO-'+escH(e.woNum)+'</button>':''))+
+          (e.state==='new'?'<button class="btn" data-enq-st="contacted" data-id="'+e.id+'">Mark contacted</button>':'')+
+          (e.state!=='archived'?'<button class="btn" data-enq-st="archived" data-id="'+e.id+'">Archive</button>':'<button class="btn" data-enq-st="new" data-id="'+e.id+'">Move to new</button>')+
+          '<button class="co-btn" data-enq-del="'+e.id+'" title="Delete">Delete</button>';
+        return '<div class="enq-card'+(e.state==='new'?' enq-new':'')+'"><div class="enq-top"><div><span class="enq-type">'+escH(e.type)+'</span><span class="status-pill '+stPill+'">'+stTxt+'</span></div><div class="enq-when" title="'+escH(new Date(e.receivedAt).toLocaleString('en-AU'))+'">'+escH(ago(e.receivedAt))+'</div></div>'+
+          '<div class="enq-name">'+escH(e.name)+'</div>'+
+          '<div class="enq-facts">'+(e.phone?'<a href="tel:'+escH(e.phone.replace(/[^\d+]/g,''))+'">'+escH(e.phone)+'</a>':'')+(e.email?'<a href="mailto:'+escH(e.email)+'">'+escH(e.email)+'</a>':'')+
+            (e.vehicle?'<span>'+escH(e.vehicle)+'</span>':'')+(e.rego?'<span class="td-mono">'+escH(e.rego)+'</span>':'')+(e.prefDate?'<span>Wants '+escH(auDate(e.prefDate))+'</span>':'')+'</div>'+
+          (e.message?'<div class="enq-msg">'+escH(e.message)+'</div>':'')+
+          (m?'<div class="enq-match">Seen before: WO-'+escH(m.num)+' · '+escH(m.customer||'')+(m.vehicle?' · '+escH(m.vehicle):'')+'</div>':'')+
+          '<div class="enq-acts">'+acts+'</div></div>';
+      }).join(''):'<div class="enq-empty">'+(siteUrl()?(filter==='new'?'No new enquiries. New ones from your website appear here within a minute.':'Nothing here.'):'Connect your website in Settings → Website enquiries and new enquiries will appear here, ready to book.')+'</div>';
+    }
+    function badge(){
+      var n=newCount();
+      document.querySelectorAll('.sidebar > .sidebar-section .nav-item[data-page="hub-workshop"]').forEach(function(it){
+        var bd=it.querySelector('.nav-badge'); if(!bd){ bd=document.createElement('span'); bd.className='nav-badge'; it.appendChild(bd); }
+        bd.textContent=n; bd.style.display=n?'':'none'; });
+      var hs=g('hubst-enquiries'); if(hs) hs.textContent=n?n+' new':(list.length?'Nothing new':'');
+    }
+    function refreshAll(){ render(); badge(); if(typeof DASH!=='undefined') DASH.render(); }
+
+    // ── Settings → Website enquiries ──
+    function renderSettings(){
+      var box=g('enq-set-body'); if(!box) return;
+      var c=cfg(), site=siteUrl();
+      box.innerHTML='<div class="settings-row-sub">Enquiries from your website’s contact form arrive in WorkShopConnect ready to turn into a job card. Your website keeps each one only until WorkShopConnect collects it.</div>'+
+        '<div class="m-row"><label class="m-label" for="enq-site">Website address</label><input class="m-input" id="enq-site" value="'+escH(c.site||'')+'" placeholder="e.g. thomsonautoworks.com"></div>'+
+        (site&&c.linkCode?(
+        '<div class="m-row"><label class="m-label">Link code for this computer</label><div class="enq-code"><code id="enq-code">'+escH(c.linkCode)+'</code><button class="co-btn" id="enq-copy">Copy</button></div>'+
+        '<div class="settings-row-sub">Paste it into your website’s dashboard ('+escH(site.replace(/^https?:\/\//,''))+'/admin/ → WorkShopConnect → Link computer). It isn’t a password: it only lets the website recognise this computer.</div></div>'+
+        '<div class="m-row enq-state">'+(c.linked?'<span class="xero-chip xero-ok">Linked</span> Collecting enquiries'+(c.lastCheck?' · checked '+ago(c.lastCheck):''):(c.lastError?'<span class="xero-chip xero-bad">Not linked</span> '+escH(c.lastError):'<span class="xero-chip">Checking…</span>'))+'</div>'+
+        '<div class="m-row xero-actions"><button class="btn" id="enq-check">Check now</button> <button class="btn" id="enq-reset">New link code</button></div>'):'');
+      var si=g('enq-site'); if(si) si.addEventListener('change', function(){ setCfg({site:si.value.trim(), linked:false, lastError:null}); (si.value.trim()?ensureKey():Promise.resolve()).then(function(){ renderSettings(); start(); render(); }); });
+      var cp=g('enq-copy'); if(cp) cp.addEventListener('click', function(){ var t=cfg().linkCode; (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(t):Promise.reject()).then(function(){ cp.textContent='Copied'; setTimeout(function(){ cp.textContent='Copy'; },1500); }, function(){ var r=document.createRange(); r.selectNodeContents(g('enq-code')); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }); });
+      var ck=g('enq-check'); if(ck) ck.addEventListener('click', function(){ ck.disabled=true; poll(true).then(function(){ ck.disabled=false; }); });
+      var rs=g('enq-reset'); if(rs) rs.addEventListener('click', function(){ if(!confirm('Make a new link code? The old one stops working, so you’ll need to link this computer on the website again.')) return; setCfg({key:null, linkCode:null, linked:false}); ensureKey().then(function(){ renderSettings(); start(); }); });
+    }
+
+    function init(){
+      load();
+      var page=g('page-enquiries');
+      if(page) page.addEventListener('click', function(ev){
+        var b=ev.target.closest('button'); if(!b) return; var id;
+        if((id=b.getAttribute('data-enq-book'))) book(id);
+        else if(b.hasAttribute('data-enq-st')) setState(b.getAttribute('data-id'), b.getAttribute('data-enq-st'));
+        else if((id=b.getAttribute('data-enq-del'))) del(id);
+        else if((id=b.getAttribute('data-enq-wo'))){ if(typeof WODETAIL!=='undefined'&&WODETAIL.open) WODETAIL.open(id,'enquiries'); }
+        else if(b.classList.contains('cwo-chip')){ filter=b.getAttribute('data-f'); render(); }
+        else if(b.id==='enq-refresh'){ poll(true); }
+      });
+      if(typeof CAL!=='undefined'&&CAL.onChange) CAL.onChange(onWOChange);
+      var sn=document.querySelector('.sidebar .nav-item[data-page="settings"]'); if(sn) sn.addEventListener('click', renderSettings);
+      (siteUrl()?ensureKey():Promise.resolve()).then(function(){ renderSettings(); start(); refreshAll(); });
+    }
+    return { init:init, render:render, poll:poll, list:function(){ return list; }, newCount:newCount, refresh:refreshAll, _match:match };
+  })();
+  window.ENQ = ENQ;
+
   var XERO = (function(){
     var KEY='wsc_xero_v1', st=null, cache={accounts:null, taxRates:null, bank:null}, syncing=false;
     var bridge=function(){ return (typeof window!=='undefined' && window.wscXero) || null; };
@@ -9992,6 +10218,117 @@ window.AI = AI;
   })();
   window.XERO = XERO;
 
+  // ════════════════════════════════════════════════════════════
+  // PARTSED — parts added by hand to a work order, each with the price the customer is charged.
+  // Used in New Booking, the custom work order form and the work order page. Stored on the
+  // work order as extraParts:[{name, partNo, qty, price, partId}] and invoiced line by line.
+  // ════════════════════════════════════════════════════════════
+  var PARTSED = (function(){
+    // Parts on a work order, each with the price the customer is charged. Used in New Booking,
+    // the custom work order form and every job on the work order page.
+    // Each part: {partNo, name, qty, price, partId, ...anything else it already had (e.g. spec)}.
+    var DL='partsed-dl', DLN='partsed-dl-no';
+    function inv(){ try{ return JSON.parse(localStorage.getItem('wsc_parts_v1')||'[]')||[]; }catch(e){ return []; } }
+    function r2(n){ return Math.round((Number(n)||0)*100)/100; }
+    function money(n){ return '$'+(Number(n)||0).toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function ensureList(){
+      var mk=function(id){ var dl=document.getElementById(id); if(!dl){ dl=document.createElement('datalist'); dl.id=id; document.body.appendChild(dl); } return dl; };
+      var all=inv();
+      mk(DL).innerHTML=all.map(function(p){ return '<option value="'+escH(p.desc||p.name||'')+'">'+escH((p.num?p.num+' · ':'')+(Number(p.qty)||0)+' in stock')+'</option>'; }).join('');
+      mk(DLN).innerHTML=all.filter(function(p){ return p.num; }).map(function(p){ return '<option value="'+escH(p.num)+'">'+escH((p.desc||p.name||'')+' · '+(Number(p.qty)||0)+' in stock')+'</option>'; }).join('');
+    }
+    function byNo(v){ v=String(v||'').trim().toLowerCase(); return v?inv().find(function(p){ return p.num && String(p.num).toLowerCase()===v; })||null:null; }
+    function byName(v){ v=String(v||'').trim().toLowerCase(); return v?inv().find(function(p){ return String(p.desc||p.name||'').toLowerCase()===v; })||null:null; }
+    function markup(){ return (typeof partMarkupPct==='function')?partMarkupPct():30; }
+    function costOf(p){ var c=Number(p&&p.cost)||0; return c>0?c:0; }
+    // Our cost is internal: shown to managers and service advisors, never to workshop controllers or customers.
+    function showCost(){ try{ return (localStorage.getItem('wsc_role_v1')||'manager')!=='controller'; }catch(e){ return true; } }
+    function sellOf(p){ var pr=Number(p.price)||0; if(pr>0) return pr; var c=Number(p.cost)||0; return c>0?r2(c*(1+(typeof partMarkupPct==='function'?partMarkupPct():30)/100)):0; }
+    function row(x, o){
+      x=x||{}; o=o||{};
+      var hintNo=!x.partNo&&o.partNoFor&&x.name?(o.partNoFor(x)||''):'';
+      var price=(x.price!=null&&x.price!=='')?x.price:(o.priceFor&&x.name?o.priceFor(x):'');
+      var extra={}; Object.keys(x).forEach(function(k){ if(['name','partNo','qty','price','partId','cost'].indexOf(k)<0) extra[k]=x[k]; });
+      var cost=(x.cost!=null&&x.cost!=='')?x.cost:(o.costFor&&x.name?(o.costFor(x)||''):'');
+      return '<tr class="pe-row" data-extra="'+escH(JSON.stringify(extra))+'">'+
+        '<td class="pe-c-no"><input class="m-input pe-no" list="'+DLN+'" value="'+escH(x.partNo||'')+'" placeholder="'+escH(hintNo?hintNo.split(' — ')[0]:'Part no.')+'" title="'+escH(hintNo||'Part number')+'" aria-label="Part number"></td>'+
+        '<td class="pe-c-name"><input class="m-input pe-part" list="'+DL+'" value="'+escH(x.name||'')+'" placeholder="Description" aria-label="Description">'+(extra.spec?'<div class="pe-spec">'+escH(extra.spec)+'</div>':'')+'</td>'+
+        '<td class="pe-c-qty"><input class="m-input pe-qty" type="number" min="0" step="1" aria-label="Quantity" title="Quantity" value="'+escH(x.qty!=null&&x.qty!==''?x.qty:1)+'"></td>'+
+        '<td class="pe-c-cost"><input class="m-input pe-cost" type="number" min="0" step="0.01" aria-label="Our cost each (ex GST)" title="What the part costs the workshop, ex GST (internal only)" value="'+escH(cost===''?'':Number(cost))+'" placeholder="Our cost"></td>'+
+        '<td class="pe-c-price"><input class="m-input pe-price" type="number" min="0" step="0.01" aria-label="Charge each (ex GST)" title="Charge each (ex GST)" value="'+escH(price===''?'':Number(price))+'" placeholder="Charge each $"></td>'+
+        '<td class="pe-amt"><span class="pe-amt-v"></span><span class="pe-mu"></span></td><td class="pe-c-del"><button type="button" class="co-btn pe-del" title="Remove part" aria-label="Remove part">×</button></td></tr>';
+    }
+    // mount(box, parts, {onChange, priceFor, partNoFor, hint, addLabel}) → { get(), set(parts), disable(bool) }
+    function mount(box, parts, opts){
+      opts=opts||{}; ensureList();
+      box.classList.add('pe'); box.classList.toggle('pe-nocost', !showCost());
+      var hint=opts.hint===false?'':'<span class="pe-hint">Prices are what the customer pays, ex GST. Stocked parts fill in from Parts.</span>';
+      box.innerHTML='<table class="pe-tbl"><thead><tr><th style="width:120px">Part no.</th><th>Description</th><th style="width:64px">Qty</th><th class="pe-h-cost" style="width:104px">Our cost</th><th style="width:108px">Charge each</th><th style="width:92px;text-align:right">Total</th><th style="width:36px"></th></tr></thead><tbody></tbody></table>'+
+        '<div class="pe-foot"><button type="button" class="co-btn pe-add">'+(opts.addLabel||'+ Add part')+'</button>'+hint+'<span class="pe-tot"></span></div>';
+      var tb=box.querySelector('tbody'), disabled=false, timer=null;
+      function fill(tr, from){
+        var noEl=tr.querySelector('.pe-no'), nmEl=tr.querySelector('.pe-part'), pr=tr.querySelector('.pe-price');
+        var p=from==='no'?byNo(noEl.value):(from==='name'?byName(nmEl.value):(byNo(noEl.value)||byName(nmEl.value)));
+        if(!p) return;
+        if(!noEl.value.trim() && p.num) noEl.value=p.num;
+        if(!nmEl.value.trim()) nmEl.value=p.desc||p.name||'';
+        var co=tr.querySelector('.pe-cost'); if(co && co.value==='' && costOf(p)>0) co.value=costOf(p).toFixed(2);
+        if(pr.value==='' && sellOf(p)>0) pr.value=sellOf(p).toFixed(2);
+      }
+      // Cost entered and no price of our own yet: price = cost + default markup (Settings).
+      function priceFromCost(tr){
+        var co=tr.querySelector('.pe-cost'), pr=tr.querySelector('.pe-price'), c=parseFloat(co.value);
+        if(!(c>0)) return;
+        if(pr.value==='' || pr.getAttribute('data-auto')==='1'){ pr.value=r2(c*(1+markup()/100)).toFixed(2); pr.setAttribute('data-auto','1'); }
+      }
+      function recalc(){
+        var sum=0, any=false;
+        tb.querySelectorAll('.pe-row').forEach(function(tr){
+          any=true;
+          var up=parseFloat(tr.querySelector('.pe-price').value)||0, a=r2((parseFloat(tr.querySelector('.pe-qty').value)||0)*up); sum+=a;
+          tr.querySelector('.pe-amt-v').textContent=money(a);
+          var c=parseFloat(tr.querySelector('.pe-cost').value), mu=tr.querySelector('.pe-mu');
+          if(showCost() && c>0 && up>0){ var pct=Math.round((up-c)/c*100); mu.textContent=(pct>=0?'+':'')+pct+'%'; mu.title='Markup on our cost \u00b7 margin '+money((up-c)*(parseFloat(tr.querySelector('.pe-qty').value)||0)); mu.className='pe-mu'+(pct<0?' pe-mu-bad':''); }
+          else { mu.textContent=''; mu.title=''; }
+        });
+        box.querySelector('.pe-tot').textContent=any?'Total '+money(sum):'';
+        box.querySelector('.pe-tbl').style.display=any?'':'none';
+      }
+      function changed(){ recalc(); if(opts.onChange){ clearTimeout(timer); timer=setTimeout(function(){ opts.onChange(get()); }, 400); } }
+      function set(list){ tb.innerHTML=(list||[]).map(function(x){ return row(x, opts); }).join(''); recalc(); }
+      function get(){
+        var out=[];
+        tb.querySelectorAll('.pe-row').forEach(function(tr){
+          var no=tr.querySelector('.pe-no').value.trim(), nm=tr.querySelector('.pe-part').value.trim(); if(!no && !nm) return;
+          var p=byNo(no)||byName(nm), q=parseFloat(tr.querySelector('.pe-qty').value), pr=parseFloat(tr.querySelector('.pe-price').value);
+          if(!(q>=0) || tr.querySelector('.pe-qty').value==='') q=1;
+          var extra={}; try{ extra=JSON.parse(tr.getAttribute('data-extra')||'{}')||{}; }catch(err){ extra={}; }
+          var co=parseFloat(tr.querySelector('.pe-cost').value);
+          var item=Object.assign(extra, { name:nm||(p?(p.desc||p.name||''):no), partNo:no||(p&&p.num)||'', qty:q, price:isNaN(pr)?(p?sellOf(p):0):r2(pr), partId:p?p.id:null });
+          if(co>0) item.cost=r2(co); else delete item.cost;
+          out.push(item);
+        });
+        return out;
+      }
+      box.addEventListener('input', function(e){ var tr=e.target.closest('.pe-row'); if(!tr) return;
+        if(e.target.classList.contains('pe-price')) e.target.removeAttribute('data-auto');
+        if(e.target.classList.contains('pe-cost')) priceFromCost(tr);
+        changed(); });
+      box.addEventListener('change', function(e){ var tr=e.target.closest('.pe-row'); if(!tr) return;
+        if(e.target.classList.contains('pe-no')) fill(tr,'no'); else if(e.target.classList.contains('pe-part')) fill(tr,'name'); changed(); });
+      box.addEventListener('click', function(e){
+        if(disabled) return;
+        if(e.target.closest('.pe-add')){ ensureList(); tb.insertAdjacentHTML('beforeend', row({qty:1}, opts)); var ins=tb.querySelectorAll('.pe-no'); ins[ins.length-1].focus(); recalc(); return; }
+        var d=e.target.closest('.pe-del'); if(d){ d.closest('tr').remove(); changed(); }
+      });
+      set(parts||[]);
+      return { get:get, set:set, disable:function(ro){ disabled=!!ro; box.querySelectorAll('input,button').forEach(function(el){ el.disabled=!!ro; }); box.classList.toggle('pe-ro', !!ro); } };
+    }
+    function total(list){ return r2((list||[]).reduce(function(a,x){ return a+(Number(x.qty)||0)*(Number(x.price)||0); },0)); }
+    return { mount:mount, total:total, refreshList:ensureList };
+  })();
+  window.PARTSED = PARTSED;
+
   var WODETAIL = (function(){
     var curId=null, backTo='openwo';
     function gE(id){ return document.getElementById(id); }
@@ -10002,19 +10339,95 @@ window.AI = AI;
     function sLabel(s){ return {open:'Open',wip:'In progress',done:'Complete',hold:'On hold',closed:'Closed'}[s]||String(s||'').toUpperCase(); }
     function flash(m){ var e=gE('wod-flash'); if(e){ e.textContent=m; e.style.opacity='1'; setTimeout(function(){ e.style.opacity='0'; },2500); } }
 
+    // Jobs & Parts: every job lists its parts (part no., qty, price to the customer), all editable at any time.
+    // Parts not tied to a job sit under "Other parts". Changes save straight away.
+    var partEds=[];
+    function defaultPrice(x){ return (typeof partPriceFor==='function'&&x&&x.name)?(partPriceFor(x.name)||0):0; }
+    function defaultCost(x){ var r=(typeof partInvRecord==='function'&&x&&x.name)?partInvRecord(x.name):null; return r&&Number(r.cost)>0?Number(r.cost):''; }
+    function defaultNo(x){ return (typeof partNoFor==='function'&&x&&x.name)?partNoFor(x.name):''; }
+    function savedTick(){ var t=gE('wod-parts-saved'); if(t){ t.textContent='Saved ✓'; clearTimeout(t._t); t._t=setTimeout(function(){ t.textContent=''; },2000); } }
+    function partsTotal(){
+      var sum=partEds.reduce(function(a,e){ return a+PARTSED.total(e.ed.get()); },0), el=gE('wod-parts-total');
+      var m2=function(n){ return '$'+n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2}); };
+      var cost=0, sold=0, missing=0; partEds.forEach(function(e){ e.ed.get().forEach(function(x){ var c=parseFloat(x.cost), q=Number(x.qty)||0; if(c>0){ cost+=c*q; sold+=(Number(x.price)||0)*q; } else if(Number(x.price)>0) missing++; }); });
+      var internal=(sold>0 && cost>0 && (localStorage.getItem('wsc_role_v1')||'manager')!=='controller')?'<div class="wod-pt-cost">Our cost '+m2(cost)+' \u00b7 margin '+m2(sold-cost)+' ('+Math.round((sold-cost)/sold*100)+'%)'+(missing?' on parts with a cost \u00b7 '+missing+' without':'')+' \u00b7 internal only</div>':'';
+      if(el) el.innerHTML=sum>0?'<span>All parts</span><b>'+m2(sum)+'</b><span class="wod-pt-note">ex GST \u00b7 charged on the invoice</span>'+internal:'';
+    }
+    function saveParts(which, list){
+      if(!curId) return; var w=CAL.getWO(curId); if(!w||w.status==='closed') return;
+      if(which==='other'){
+        var patch={extraParts:list}; if(!(w.jobs&&w.jobs.length) && w.parts&&w.parts.length) patch.parts=[];   // old-style list now lives here
+        CAL.updateWO(curId, patch);
+      } else {
+        var jobs=(w.jobs||[]).map(function(jb,k){ return k===which?Object.assign({}, jb, {parts:list}):jb; });
+        CAL.updateWO(curId, {jobs:jobs});
+      }
+      savedTick(); partsTotal();
+    }
+    // Jobs added or removed after the work order was made. Booked hours follow the jobs, so the
+    // invoice labour stays right (a draft invoice updates itself).
+    function setJobs(w, jobs, msg){
+      var hrs=Math.round(jobs.reduce(function(a,j){ return a+(parseFloat(j.hours)||0); },0)*100)/100;
+      CAL.updateWO(w.id, {jobs:jobs, hours:hrs});
+      setV('wod-hours', hrs);
+      var fresh=CAL.getWO(w.id); if(fresh){ renderJobs(fresh); partEds.forEach(function(e){ e.ed.disable(fresh.status==='closed'); }); }
+      flash(msg);
+    }
+    function bindJobEdits(w){
+      var box=gE('wod-jobs'); if(!box) return;
+      box.querySelectorAll('[data-del-job]').forEach(function(b){ b.addEventListener('click', function(){
+        if(!PERM.canEditJobs()){ flash('You don\u2019t have permission to change jobs.'); return; }
+        var cur=CAL.getWO(curId); if(!cur) return; var i=parseInt(b.getAttribute('data-del-job'),10), j=(cur.jobs||[])[i]; if(!j) return;
+        var np=(j.parts||[]).length;
+        if(!confirm('Remove Job '+(i+1)+': '+(j.title||'')+(np?' and its '+np+' part'+(np===1?'':'s'):'')+'?\n\nIts '+(parseFloat(j.hours)||0)+'h comes off the booked hours.')) return;
+        setJobs(cur, cur.jobs.filter(function(x,k){ return k!==i; }), 'Job removed \u2713');
+      }); });
+      var form=gE('wod-addjob-form'), btn=gE('wod-addjob-btn');
+      if(btn) btn.addEventListener('click', function(){ form.hidden=false; btn.hidden=true; gE('wod-nj-title').focus(); });
+      var cancel=gE('wod-nj-cancel'); if(cancel) cancel.addEventListener('click', function(){ form.hidden=true; btn.hidden=false; });
+      var save=gE('wod-nj-save'); if(save) save.addEventListener('click', function(){
+        if(!PERM.canEditJobs()){ flash('You don\u2019t have permission to change jobs.'); return; }
+        var t=getV('wod-nj-title').trim(), h=parseFloat(getV('wod-nj-hours'));
+        if(!t){ gE('wod-nj-title').focus(); return; }
+        if(!(h>=0) || getV('wod-nj-hours')===''){ gE('wod-nj-hours').focus(); return; }
+        var cur=CAL.getWO(curId); if(!cur) return;
+        var jobs=(cur.jobs||[]).slice();
+        // A work order made without job lines: its existing booked hours become Job 1 so its labour is kept
+        if(!jobs.length && (parseFloat(cur.hours)||0)>0) jobs.push({title:cur.type||'Workshop', hours:parseFloat(cur.hours)||0, subtitle:'', parts:[], checklist:[]});
+        jobs.push({title:t, hours:Math.round(h*100)/100, subtitle:getV('wod-nj-ins').trim(), parts:[], checklist:[]});
+        setJobs(cur, jobs, 'Job added \u2713');
+      });
+    }
     function renderJobs(w){
       var box=gE('wod-jobs'); if(!box) return;
-      if(w.jobs && w.jobs.length){
-        box.innerHTML=w.jobs.map(function(j,i){
-          var parts=(j.parts||[]).length? (j.parts||[]).map(function(p){ return '<div class="wod-part">'+escH(p.name||'')+(p.spec?' <span class="wod-part-spec">'+escH(p.spec)+'</span>':'')+'</div>'; }).join('') : '<div class="wod-empty">No parts</div>';
-          var checks=(j.checklist||[]).length? '<ul class="wod-checks">'+(j.checklist||[]).map(function(c){ return '<li>'+escH(c)+'</li>'; }).join('')+'</ul>' : '<div class="wod-empty">None</div>';
-          return '<div class="wod-job"><div class="wod-job-h">Job '+(i+1)+': '+escH(j.title||('Job '+(i+1)))+(j.hours?' <span class="wod-job-hrs">'+escH(j.hours)+'h</span>':'')+'</div><div class="wod-job-cols"><div><div class="wod-sub-h">Parts</div>'+parts+'</div><div><div class="wod-sub-h">Checks</div>'+checks+'</div></div></div>';
-        }).join('');
-      } else if(w.parts && w.parts.length){
-        box.innerHTML='<div class="wod-sub-h">Parts</div>'+w.parts.map(function(p){ return '<div class="wod-part">'+escH(p.name||'')+(p.spec?' <span class="wod-part-spec">'+escH(p.spec)+'</span>':'')+'</div>'; }).join('');
-      } else {
-        box.innerHTML='<div class="wod-empty">No jobs or parts attached. Create the work order from Generate Work Order to attach structured jobs and parts.</div>';
-      }
+      var hasJobs=!!(w.jobs&&w.jobs.length);
+      var canJobs=w.status!=='closed' && typeof PERM!=='undefined' && PERM.canEditJobs();
+      var html=hasJobs?w.jobs.map(function(j,i){
+        var checks=(j.checklist||[]).length? '<ul class="wod-checks">'+(j.checklist||[]).map(function(c){ return '<li>'+escH(c)+'</li>'; }).join('')+'</ul>' : '';
+        return '<div class="wod-job"><div class="wod-job-h">Job '+(i+1)+': '+escH(j.title||('Job '+(i+1)))+(j.hours?' <span class="wod-job-hrs">'+escH(j.hours)+'h</span>':'')+
+          (canJobs?'<button type="button" class="co-btn wod-job-del" data-del-job="'+i+'" title="Remove this job">Remove job</button>':'')+'</div>'+
+          (j.subtitle?'<div class="wod-job-sub">'+escH(j.subtitle)+'</div>':'')+
+          '<div class="wod-job-parts" data-job="'+i+'"></div>'+
+          (checks?'<details class="wod-job-checks"><summary>Checks ('+j.checklist.length+')</summary>'+checks+'</details>':'')+'</div>';
+      }).join(''):'';
+      if(canJobs) html+='<div class="wod-addjob" id="wod-addjob"><button type="button" class="btn" id="wod-addjob-btn">+ Add job</button>'+
+        '<div class="wod-addjob-form" id="wod-addjob-form" hidden>'+
+          '<div class="wod-addjob-grid"><div><label class="m-label" for="wod-nj-title">Operation</label><input class="m-input" id="wod-nj-title" placeholder="e.g. Replace rear brake pads"></div>'+
+          '<div><label class="m-label" for="wod-nj-hours">Hours</label><input class="m-input" id="wod-nj-hours" type="number" min="0" step="0.1" placeholder="1.0"></div></div>'+
+          '<div class="m-row"><label class="m-label" for="wod-nj-ins">Instructions for the technician (optional)</label><input class="m-input" id="wod-nj-ins"></div>'+
+          '<div class="wod-addjob-acts"><button type="button" class="btn primary" id="wod-nj-save">Add job</button> <button type="button" class="btn" id="wod-nj-cancel">Cancel</button></div>'+
+        '</div></div>';
+      html+='<div class="wod-job wod-job-other"><div class="wod-job-h">'+(hasJobs?'Other parts':'Parts')+'</div><div class="wod-job-parts" data-job="other"></div></div>';
+      box.innerHTML=html;
+      if(canJobs) bindJobEdits(w);
+      partEds=[];
+      box.querySelectorAll('.wod-job-parts').forEach(function(el){
+        var k=el.getAttribute('data-job'), idx=k==='other'?'other':parseInt(k,10);
+        var list=idx==='other'?(hasJobs?(w.extraParts||[]):(w.parts||[]).concat(w.extraParts||[])):((w.jobs[idx].parts)||[]);
+        var ed=PARTSED.mount(el, list, { hint:false, priceFor:defaultPrice, partNoFor:defaultNo, costFor:defaultCost, onChange:function(l){ saveParts(idx, l); } });
+        partEds.push({idx:idx, ed:ed});
+      });
+      partsTotal();
     }
     function renderHistory(w){
       var box=gE('wod-history'); if(!box) return;
@@ -10047,6 +10460,7 @@ window.AI = AI;
       renderJobs(w); renderHistory(w);
       backTo = (w.status==='closed') ? 'closedwo' : 'openwo';
       applyReadOnly(w.status==='closed');
+      partEds.forEach(function(e){ e.ed.disable(w.status==='closed'); });
       if(typeof window.navTo==='function') window.navTo('wodetail');
     }
     function buildPatch(status){
@@ -10127,6 +10541,7 @@ window.AI = AI;
     function clear(){
       ['cwo-time','cwo-customer','cwo-phone','cwo-email','cwo-rego','cwo-vehicle','cwo-year','cwo-chassis','cwo-odo','cwo-notes'].forEach(function(id){ el(id).value=''; });
       el('cwo-type').value='Other'; el('cwo-date').value=today(); el('cwo-lines').innerHTML=''; addLine(); techOptions();
+      if(cwoParts) cwoParts.set([]);
     }
     function create(){
       var ls=lines(), d={ date:el('cwo-date').value, customer:el('cwo-customer').value.trim() };
@@ -10141,11 +10556,14 @@ window.AI = AI;
       var y=parseInt(el('cwo-year').value,10); if(y) d.buildYear=y;
       var o=parseInt(el('cwo-odo').value,10); if(!isNaN(o)) d.odometer=o;
       d.time=el('cwo-time').value; d.notes=el('cwo-notes').value.trim(); d.hours=hrs; d.jobs=ls;
+      if(cwoParts) d.extraParts=cwoParts.get();
       var id=CAL.createWO(d); clear();
       if(typeof window.openWO==='function') window.openWO(id);
     }
+    var cwoParts=null;
     function init(){
       if(!el('cwo')) return;
+      if(el('cwo-parts') && typeof PARTSED!=='undefined') cwoParts=PARTSED.mount(el('cwo-parts'), []);
       el('cwo-addline').addEventListener('click', function(){ addLine().querySelector('.cwo-op').focus(); });
       el('cwo-clear').addEventListener('click', clear);
       el('cwo-create').addEventListener('click', create);
@@ -10158,7 +10576,6 @@ window.AI = AI;
 
 
   STAFF.init();
-  TODAY.init();
   TECH.init();
   PARTS.init();
   FIN.init();
@@ -10179,6 +10596,7 @@ window.AI = AI;
   MAIL.init();
   DASH.init();
   PO.init();
+  ENQ.init();
   HUB.init();
   (function(){   // show the workshop's name in the top bar
     function upd(){ try{ var n=(JSON.parse(localStorage.getItem('wsc_settings_v1')||'{}')['set-name']||'').trim(); var el=document.getElementById('topbar-dealer-name'); if(el) el.textContent=n||'Your Workshop'; }catch(e){} }
