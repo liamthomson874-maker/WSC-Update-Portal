@@ -1,8 +1,8 @@
 {
-  "version": 27,
-  "file": "index-27.html",
-  "sha256": "8820fd035aeb5972e972e59f538e8e15aea0abb8ea8c6b923b3692640c6fd358",
+  "version": 28,
+  "file": "index-28.html",
+  "sha256": "ff48ba911e541f49858ae4d31d3c88f048500214f0732b68840ed0af4201a379",
   "minShellApi": 1,
-  "publishedAt": "2026-11-25T01:39:17.521Z",
-  "commit": "3443a5a888b5d15a05b61cd19b139d5643163bbb"
+  "publishedAt": "2026-11-27T03:59:37.903Z",
+  "commit": "869e3e17ffed93ff746530c0bcd38477aa3edf1e"
 }

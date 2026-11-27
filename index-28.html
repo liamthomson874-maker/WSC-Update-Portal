@@ -1294,6 +1294,31 @@ body{ background:var(--bg); -webkit-font-smoothing:antialiased; }
 .pe-ro .pe-add, .pe-ro .pe-del, .pe-ro .pe-hint{ display:none; }
 .wod-saved{ float:right; font-size:0.75rem; font-weight:600; color:var(--ok); }
 .pe{ container-type:inline-size; }
+.inv-story-prev{ background:var(--surface2); border-radius:8px; padding:10px 12px; margin:10px 0 12px; font-size:0.8125rem; line-height:1.5; white-space:pre-wrap; }
+.inv-story-none{ color:var(--text3); }
+
+.day-side{ display:flex; flex-direction:column; gap:14px; }
+.day-tech{ padding:9px 0; border-bottom:1px solid var(--line); }
+.day-tech:last-child{ border-bottom:none; }
+.day-tech-top{ display:flex; justify-content:space-between; font-size:0.8125rem; margin-bottom:6px; }
+.day-tech-top span:first-child{ font-weight:600; color:var(--text); }
+.day-tech-top span:last-child{ color:var(--text3); font-variant-numeric:tabular-nums; }
+.day-tech-sub{ font-size:0.75rem; color:var(--text3); margin-top:5px; }
+
+.wod-job-h{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.wod-job-del{ margin-left:auto; height:26px; font-size:0.75rem; color:var(--text3); }
+.wod-job-del:hover{ color:var(--bad); border-color:var(--bad); }
+.wod-addjob{ padding:12px 0; border-bottom:1px solid var(--line); }
+.wod-addjob-form{ background:var(--surface2); border-radius:10px; padding:12px 14px; }
+.wod-addjob-grid{ display:grid; grid-template-columns:1fr 100px; gap:10px; margin-bottom:10px; }
+.wod-addjob-acts{ display:flex; gap:8px; }
+.theme-switch:disabled{ cursor:not-allowed; }
+
+/* our cost + markup (internal) */
+.pe-amt-v{ display:block; }
+.pe-mu{ display:block; font-size:0.6875rem; font-weight:600; color:var(--ok); }
+.pe-mu-bad{ color:var(--bad); }
+.pe-nocost .pe-c-cost, .pe-nocost .pe-h-cost, .pe-nocost .pe-mu{ display:none !important; }
 
 .wod-job{ padding:12px 0 14px; border-bottom:1px solid var(--line); }
 .wod-job:last-child{ border-bottom:none; }
@@ -1307,19 +1332,21 @@ body{ background:var(--bg); -webkit-font-smoothing:antialiased; }
 .wod-parts-total:empty{ display:none; }
 .wod-parts-total b{ font-size:1.0625rem; font-variant-numeric:tabular-nums; }
 .wod-pt-note{ font-size:0.75rem; color:var(--text3); margin-left:auto; }
+.wod-parts-total{ flex-wrap:wrap; }
+.wod-pt-cost{ flex-basis:100%; font-size:0.75rem; color:var(--text2); }
 @container (max-width: 600px){
   .pe-tbl thead{ display:none; }
   .pe-tbl, .pe-tbl tbody{ display:block; }
-  .pe-row{ display:grid; grid-template-columns:100px 1fr 86px 34px; gap:6px; padding:8px 0; border-bottom:1px solid var(--line); align-items:start; }
+  .pe-row{ display:grid; grid-template-columns:62px 1fr 1fr 82px 34px; gap:6px; padding:8px 0; border-bottom:1px solid var(--line); align-items:start; }
   .pe-row td{ padding:0; border:none; display:block; }
-  .pe-c-no{ grid-column:1; grid-row:1; } .pe-c-name{ grid-column:2 / 5; grid-row:1; }
-  .pe-c-qty{ grid-column:1; grid-row:2; } .pe-c-price{ grid-column:2; grid-row:2; }
-  .pe-amt{ grid-column:3; grid-row:2; } .pe-c-del{ grid-column:4; grid-row:2; }
-  .pe-c-qty::before, .pe-c-price::before, .pe-c-no::before, .pe-c-name::before{ display:block; font-size:0.6875rem; color:var(--text3); margin:0 0 3px 2px; }
+  .pe-c-no{ grid-column:1 / 3; grid-row:1; } .pe-c-name{ grid-column:3 / 6; grid-row:1; }
+  .pe-c-qty{ grid-column:1; grid-row:2; } .pe-c-cost{ grid-column:2; grid-row:2; } .pe-c-price{ grid-column:3; grid-row:2; }
+  .pe-amt{ grid-column:4; grid-row:2; align-self:end; text-align:right; padding-bottom:4px !important; }
+  .pe-c-del{ grid-column:5; grid-row:2; align-self:end; padding-bottom:2px !important; }
+  .pe-nocost .pe-row .pe-c-price{ grid-column:2 / 4; }
+  .pe-c-qty::before, .pe-c-price::before, .pe-c-cost::before, .pe-c-no::before, .pe-c-name::before{ display:block; font-size:0.6875rem; color:var(--text3); margin:0 0 3px 2px; }
   .pe-c-no::before{ content:'Part no.'; } .pe-c-name::before{ content:'Description'; }
-  .pe-c-qty::before{ content:'Qty'; } .pe-c-price::before{ content:'Charge each (ex GST)'; }
-  .pe-amt, .pe-c-del{ align-self:end; padding-bottom:7px !important; }
-  .pe-c-del{ padding-bottom:2px !important; }
+  .pe-c-qty::before{ content:'Qty'; } .pe-c-cost::before{ content:'Our cost'; } .pe-c-price::before{ content:'Charge each'; }
   .pe-hint{ display:none; }
 }
 
@@ -1349,6 +1376,12 @@ textarea.m-input{ min-height:72px; line-height:1.45; resize:vertical; }
 textarea.m-input.mail-text{ min-height:150px; }
 #po-notes, #po-notes-def{ min-height:72px !important; }
 .po-modal{ width:min(860px,94vw); max-width:none; }
+.q-row-4{ display:grid; grid-template-columns:2fr 1fr 1.4fr 1fr; gap:12px; margin-bottom:14px; }
+.q-sec{ font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; color:var(--text2); margin:6px 0 8px; }
+.q-job{ border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:10px; background:var(--surface2); }
+.q-job-h{ display:grid; grid-template-columns:1fr 100px auto; gap:8px; margin-bottom:8px; }
+.q-job .q-sub{ margin-bottom:8px; }
+@media (max-width:700px){ .q-row-4{ grid-template-columns:1fr 1fr; } .q-job-h{ grid-template-columns:1fr 80px; } .q-job-h .q-del-job{ grid-column:1/-1; } }
 .po-row-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:14px; }
 .po-lines-tbl{ width:100%; border-collapse:collapse; font-size:0.8125rem; }
 .po-lines-tbl th{ text-align:left; font-size:0.6875rem; text-transform:uppercase; letter-spacing:.05em; color:var(--text3); font-weight:600; padding:6px 6px; border-bottom:1px solid var(--line); }
@@ -1768,9 +1801,6 @@ textarea.m-input.mail-text{ min-height:150px; }
     <div class="nav-item" data-page="bookings">
       <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div><div class="nav-text">Calendar</div>
     </div>
-    <div class="nav-item" data-page="today">
-      <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></div><div class="nav-text">Today</div>
-    </div>
     <div class="nav-item" data-page="openwo">
       <div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><div class="nav-text">Work Orders</div>
     </div>
@@ -1840,7 +1870,7 @@ textarea.m-input.mail-text{ min-height:150px; }
       <div><div class="page-title">Workshop</div><div class="page-sub">Everything on the workshop floor</div></div>
       <div class="page-actions"><button class="btn primary" data-go="planner">+ New Work Order</button></div>
     </div>
-    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="planner"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 11h6M9 15h4"/></svg></span><span class="hub-txt"><span class="hub-name">New Work Order</span><span class="hub-desc">Book a vehicle in</span></span><span class="hub-stat" id="hubst-planner"></span></button><button class="hub-tile" data-go="enquiries"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3.5 7v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"/></svg></span><span class="hub-txt"><span class="hub-name">Enquiries</span><span class="hub-desc">Website enquiries, ready to book</span></span><span class="hub-stat" id="hubst-enquiries"></span></button><button class="hub-tile" data-go="bookings"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span class="hub-txt"><span class="hub-name">Calendar</span><span class="hub-desc">Bookings and capacity by day</span></span><span class="hub-stat" id="hubst-bookings"></span></button><button class="hub-tile" data-go="today"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></span><span class="hub-txt"><span class="hub-name">Today</span><span class="hub-desc">Who is on what today</span></span><span class="hub-stat" id="hubst-today"></span></button><button class="hub-tile" data-go="openwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span><span class="hub-txt"><span class="hub-name">Work Orders</span><span class="hub-desc">Jobs in progress</span></span><span class="hub-stat" id="hubst-openwo"></span></button><button class="hub-tile" data-go="closedwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span><span class="hub-txt"><span class="hub-name">Closed Work Orders</span><span class="hub-desc">Finished jobs by date</span></span><span class="hub-stat" id="hubst-closedwo"></span></button><button class="hub-tile" data-go="clock"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="hub-txt"><span class="hub-name">Clocking</span><span class="hub-desc">Clock technicians on and off jobs</span></span><span class="hub-stat" id="hubst-clock"></span></button></div></div>
+    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="planner"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M9 11h6M9 15h4"/></svg></span><span class="hub-txt"><span class="hub-name">New Work Order</span><span class="hub-desc">Book a vehicle in</span></span><span class="hub-stat" id="hubst-planner"></span></button><button class="hub-tile" data-go="enquiries"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3.5 7v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"/></svg></span><span class="hub-txt"><span class="hub-name">Enquiries</span><span class="hub-desc">Website enquiries, ready to book</span></span><span class="hub-stat" id="hubst-enquiries"></span></button><button class="hub-tile" data-go="bookings"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span class="hub-txt"><span class="hub-name">Calendar</span><span class="hub-desc">Bookings by day — click a day for who’s on what</span></span><span class="hub-stat" id="hubst-bookings"></span></button><button class="hub-tile" data-go="openwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></span><span class="hub-txt"><span class="hub-name">Work Orders</span><span class="hub-desc">Jobs in progress</span></span><span class="hub-stat" id="hubst-openwo"></span></button><button class="hub-tile" data-go="clock"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="hub-txt"><span class="hub-name">Clocking</span><span class="hub-desc">Clock technicians on and off jobs</span></span><span class="hub-stat" id="hubst-clock"></span></button></div></div>
   </div>
 
   <div class="page" id="page-hub-accounts">
@@ -1848,7 +1878,7 @@ textarea.m-input.mail-text{ min-height:150px; }
       <div><div class="page-title">Accounting</div><div class="page-sub">Billing, costs and how the month is tracking</div></div>
       <div class="page-actions"></div>
     </div>
-    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="invoices"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span><span class="hub-txt"><span class="hub-name">Invoices</span><span class="hub-desc">Bill customers and track payments</span></span><span class="hub-stat" id="hubst-invoices"></span></button><button class="hub-tile" data-go="expenses"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v12H3z"/><path d="M3 11h18M7 15h4"/><path d="M7 7V5h10v2"/></svg></span><span class="hub-txt"><span class="hub-name">Expenses</span><span class="hub-desc">Parts costs, sublet and other spend</span></span><span class="hub-stat" id="hubst-expenses"></span></button><button class="hub-tile" data-go="financials"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="hub-txt"><span class="hub-name">Financials</span><span class="hub-desc">Revenue, margin and trends</span></span><span class="hub-stat" id="hubst-financials"></span></button></div></div>
+    <div class="page-body"><div class="hub-grid"><button class="hub-tile" data-go="quotes"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg></span><span class="hub-txt"><span class="hub-name">Quotes</span><span class="hub-desc">Price up work before it’s booked</span></span><span class="hub-stat" id="hubst-quotes"></span></button><button class="hub-tile" data-go="invoices"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span><span class="hub-txt"><span class="hub-name">Invoices</span><span class="hub-desc">Bill customers and track payments</span></span><span class="hub-stat" id="hubst-invoices"></span></button><button class="hub-tile" data-go="expenses"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v12H3z"/><path d="M3 11h18M7 15h4"/><path d="M7 7V5h10v2"/></svg></span><span class="hub-txt"><span class="hub-name">Expenses</span><span class="hub-desc">Parts costs, sublet and other spend</span></span><span class="hub-stat" id="hubst-expenses"></span></button><button class="hub-tile" data-go="financials"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="hub-txt"><span class="hub-name">Financials</span><span class="hub-desc">Revenue, margin and trends</span></span><span class="hub-stat" id="hubst-financials"></span></button><button class="hub-tile" data-go="closedwo"><span class="hub-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></span><span class="hub-txt"><span class="hub-name">Closed Work Orders</span><span class="hub-desc">Finished jobs by date</span></span><span class="hub-stat" id="hubst-closedwo"></span></button></div></div>
   </div>
 
   <div class="page" id="page-hub-people">
@@ -1888,7 +1918,7 @@ textarea.m-input.mail-text{ min-height:150px; }
       </div>
       <div class="dash-grid">
         <div class="panel">
-          <div class="panel-head"><div class="panel-title">Today’s jobs</div><div class="panel-link" data-nav="today">Open Today</div></div>
+          <div class="panel-head"><div class="panel-title">Today’s jobs</div><div class="panel-link" data-day="today">Open Today</div></div>
           <div class="panel-body" id="dash-jobs"></div>
         </div>
         <div class="panel">
@@ -2126,29 +2156,6 @@ textarea.m-input.mail-text{ min-height:150px; }
     </div>
   </div>
 
-  <!-- TODAY -->
-  <div class="page" id="page-today">
-    <div class="page-header">
-      <div><div class="page-title">Today</div><div class="page-sub" id="today-sub"></div></div>
-      <div class="page-actions"><button class="btn" id="today-refresh-btn">Refresh</button></div>
-    </div>
-    <div class="page-body">
-      <div class="stat-strip">
-        <div class="stat-cell"><div class="stat-cell-val" id="today-stat-count">0</div><div class="stat-cell-lbl">Booked In Today</div></div>
-        <div class="stat-cell"><div class="stat-cell-val" id="today-stat-hours">0h</div><div class="stat-cell-lbl">Labour Hours To Do</div></div>
-        <div class="stat-cell"><div class="stat-cell-val" id="today-stat-open">0</div><div class="stat-cell-lbl">Open / In Progress</div></div>
-        <div class="stat-cell"><div class="stat-cell-val" id="today-stat-done">0</div><div class="stat-cell-lbl">Completed</div></div>
-      </div>
-      <div class="table-wrap">
-        <table class="data-table">
-          <thead><tr><th>Drop-off</th><th>Customer</th><th>Vehicle</th><th>Rego</th><th>Service Type</th><th>Technician</th><th>Hours</th><th>Status</th></tr></thead>
-          <tbody id="today-tbody">
-            <tr><td colspan="8" style="text-align:center;padding:36px 16px;color:var(--text3)">No customers booked in today.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
   <div class="page" id="page-technicians">
     <div class="page-header">
       <div><div class="page-title">Technicians</div><div class="page-sub" id="tech-sub"></div></div>
@@ -2517,6 +2524,59 @@ textarea.m-input.mail-text{ min-height:150px; }
     </div>
   </div>
 
+  <div class="page" id="page-quotes">
+    <div class="page-header">
+      <div><div class="page-title">Quotes</div><div class="page-sub" id="q-sub"></div></div>
+      <div class="page-actions"><button class="btn primary" id="q-new-btn">+ New Quote</button></div>
+    </div>
+    <div class="page-body">
+      <div class="stat-strip">
+        <div class="stat-cell"><div class="stat-cell-val" id="q-stat-open">0</div><div class="stat-cell-lbl">Open quotes</div></div>
+        <div class="stat-cell"><div class="stat-cell-val" id="q-stat-value">$0.00</div><div class="stat-cell-lbl">Value open (incl. GST)</div></div>
+        <div class="stat-cell"><div class="stat-cell-val" id="q-stat-won">0</div><div class="stat-cell-lbl">Won this month</div></div>
+        <div class="stat-cell"><div class="stat-cell-val" id="q-stat-rate">—</div><div class="stat-cell-lbl">Win rate</div></div>
+      </div>
+      <div class="cwo-range" id="q-range"><button class="cwo-chip active" data-f="open">Open</button><button class="cwo-chip" data-f="draft">Drafts</button><button class="cwo-chip" data-f="sent">Sent</button><button class="cwo-chip" data-f="accepted">Accepted</button><button class="cwo-chip" data-f="closed">Closed</button><button class="cwo-chip" data-f="all">All</button></div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Quote</th><th>Date</th><th>Customer</th><th>Vehicle</th><th>Labour</th><th>Total</th><th>Valid until</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="q-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="q-modal">
+    <div class="modal po-modal">
+      <div class="modal-header"><div><div class="modal-title" id="q-modal-title">New quote</div><div class="modal-sub">Prices are what the customer pays, ex GST. Labour uses your hourly rate.</div></div><div class="modal-close" id="q-modal-close">&#215;</div></div>
+      <div class="modal-body">
+        <div class="po-row-3">
+          <div><label class="m-label" for="q-customer">Customer</label><input class="m-input" id="q-customer" placeholder="Full name"></div>
+          <div><label class="m-label" for="q-phone">Phone</label><input class="m-input" id="q-phone"></div>
+          <div><label class="m-label" for="q-email">Email</label><input class="m-input" id="q-email" type="email"></div>
+        </div>
+        <div class="q-row-4">
+          <div><label class="m-label" for="q-vehicle">Vehicle</label><input class="m-input" id="q-vehicle" placeholder="e.g. 2019 Toyota Hilux"></div>
+          <div><label class="m-label" for="q-rego">Rego</label><input class="m-input" id="q-rego"></div>
+          <div><label class="m-label" for="q-chassis">VIN</label><input class="m-input" id="q-chassis"></div>
+          <div><label class="m-label" for="q-odometer">Odometer (km)</label><input class="m-input" id="q-odometer" type="number" min="0"></div>
+        </div>
+        <div class="q-sec">Work quoted</div>
+        <div id="q-jobs"></div>
+        <button class="co-btn" id="q-add-job" style="margin-top:8px">+ Add job</button>
+        <div class="po-foot">
+          <div class="po-foot-l">
+            <div class="m-row"><label class="m-label" for="q-valid">Valid until</label><input class="m-input" id="q-valid" type="date"></div>
+            <div class="m-row"><label class="m-label" for="q-notes">Notes to the customer</label><textarea class="m-input mail-text" id="q-notes" rows="2" style="min-height:60px"></textarea></div>
+          </div>
+          <div class="po-tot" id="q-tot"></div>
+        </div>
+        <div class="xero-err" id="q-err"></div>
+      </div>
+      <div class="modal-footer"><button class="m-cancel" id="q-del" style="margin-right:auto">Delete quote</button><button class="m-cancel" id="q-cancel">Cancel</button><button class="m-cancel" id="q-save">Save</button><button class="m-save" id="q-save-send">Save &amp; send</button></div>
+    </div>
+  </div>
+
   <div class="page" id="page-wodetail">
     <div class="page-header">
       <div><div class="page-title" id="wod-title">Work Order</div><div class="page-sub" id="wod-sub"></div></div>
@@ -2677,6 +2737,11 @@ textarea.m-input.mail-text{ min-height:150px; }
           <div class="settings-card-title">Purchase Orders &amp; Suppliers</div>
           <div id="po-set-body"></div>
         </div>
+        <div class="settings-card" id="q-set-card">
+          <div class="settings-card-title">Quotes</div>
+          <div class="m-row"><label class="m-label" for="q-set-valid">Quotes are valid for (days)</label><input class="m-input" id="q-set-valid" type="number" min="1" step="1" style="max-width:140px"></div>
+          <div class="m-row"><label class="m-label" for="q-set-note">Note printed on every quote</label><textarea class="m-input mail-text" id="q-set-note" rows="3" style="min-height:70px"></textarea></div>
+        </div>
         <div class="settings-card" id="xero-card">
           <div class="settings-card-title">Xero</div>
           <div id="xero-card-body"></div>
@@ -2711,6 +2776,10 @@ textarea.m-input.mail-text{ min-height:150px; }
         <div class="settings-card">
           <div class="settings-card-title">Appearance</div>
           <div class="settings-row"><div><div class="settings-row-lbl" id="set-theme-lbl">Light mode</div></div><button type="button" class="theme-switch" id="set-theme" role="switch" aria-checked="false" aria-labelledby="set-theme-lbl"><span class="theme-switch-knob"></span></button></div>
+        </div>
+        <div class="settings-card">
+          <div class="settings-card-title">Work order permissions</div>
+          <div class="settings-row"><div><div class="settings-row-lbl" id="set-advjobs-lbl">Advisors can add and remove jobs on existing work orders</div><div class="settings-row-sub" id="set-advjobs-sub">Service Managers can always do this. Turn off to keep job changes with the Service Manager.</div></div><button type="button" class="theme-switch" id="set-advjobs" role="switch" aria-checked="true" aria-labelledby="set-advjobs-lbl"><span class="theme-switch-knob"></span></button></div>
         </div>
         <div class="settings-card">
           <div class="settings-card-title">Notifications</div>
@@ -2820,7 +2889,9 @@ function navTo(pageId) {
     if (pageId === 'financials' && typeof FIN !== 'undefined' && FIN.render) FIN.render();
     if (pageId === 'expenses' && typeof EXPENSES !== 'undefined') EXPENSES.render();
     if (pageId === 'purchaseorders' && typeof PO !== 'undefined') PO.render();
+    if (pageId === 'quotes' && typeof QUOTES !== 'undefined') QUOTES.render();
     if (pageId === 'enquiries' && typeof ENQ !== 'undefined') ENQ.render();
+    if (pageId === 'settings' && window.__wscPermSync) window.__wscPermSync();
     if (pageId === 'parts' && typeof PARTS !== 'undefined' && PARTS.reload) PARTS.reload();
   } catch (e) {}
   if (typeof HUB !== 'undefined') HUB.onNav(pageId);
@@ -3197,7 +3268,8 @@ var CAL = (function() {
     document.getElementById('day-title').textContent=fmtLongDate(ds);
     document.getElementById('day-sub').textContent=wos.length+' booking'+(wos.length===1?'':'s')+(isToday(+ds.slice(0,4),+ds.slice(5,7)-1,+ds.slice(8,10))?' \u00b7 Today':'');
     var fig=function(l,v,cls){ return '<div class="stat-cell"><div class="stat-cell-val'+(cls?' '+cls:'')+'">'+v+'</div><div class="stat-cell-lbl">'+l+'</div></div>'; };
-    var h='<div class="stat-strip">'+fig(ds<todayDs()?'Booked / capacity':'Hours to do / capacity', (Math.round(bk*10)/10)+' / '+cap+'h', bk>cap&&cap>0?'park-bad':'')+fig('Cars', String(wos.length))+fig('Technicians', String(techs));
+    var nDone=wos.filter(function(w){ return w.status==='done'||w.status==='closed'; }).length;
+    var h='<div class="stat-strip">'+fig(ds<todayDs()?'Booked / capacity':'Hours to do / capacity', (Math.round(bk*10)/10)+' / '+cap+'h', bk>cap&&cap>0?'park-bad':'')+fig('Cars', String(wos.length))+fig('Still to do', String(wos.length-nDone))+fig('Completed', String(nDone))+fig('Technicians', String(techs));
     if(planned){ h+=fig('Parking peak', pk.peak+' / '+pk.cfg.bays+' bays', pk.over?'park-bad':'')+fig('Last job finishes', wos.length?L(pk.lastFinish):'\u2014'); }
     h+='</div>';
     if(pk.enabled&&pk.noTechs) h+='<div class="day-note">No technicians rostered, so drop-offs can\'t be planned.</div>';
@@ -3229,15 +3301,29 @@ var CAL = (function() {
         +'</div>';
     };
     var parts=aggregatePartsForDay(wos);
+    // Each technician's hours on this day (what the old Today page was used for)
+    var techList=(typeof STAFF!=='undefined'&&STAFF.technicians)?STAFF.technicians().filter(function(t){ return t&&t.name&&t.onShift; }):[];
+    var techHtml=techList.map(function(t){
+      var off=(t.daysOff||[]).indexOf(ds)>=0, capT=off?0:(parseFloat(t.hours)||0), mine=wos.filter(function(w){ return w.tech===t.name; });
+      var b=mine.reduce(function(a,w){ return a+hoursOn(w,ds); },0), done=mine.filter(function(w){ return w.status==='done'||w.status==='closed'; }).length, pct=capT>0?Math.round(b/capT*100):0;
+      return '<div class="day-tech"><div class="day-tech-top"><span>'+escH(t.name)+'</span><span>'+(off?'Day off':(Math.round(b*10)/10)+' / '+capT+'h')+'</span></div>'+
+        (off?'':'<div class="dash-bar"><i class="'+(pct>110?'bad':pct>90?'warn':'')+'" style="width:'+Math.min(100,pct)+'%"></i></div>')+
+        (mine.length?'<div class="day-tech-sub">'+mine.length+' car'+(mine.length===1?'':'s')+(done?' \u00b7 '+done+' done':'')+'</div>':'')+'</div>';
+    }).join('');
+    var unassigned=wos.filter(function(w){ return !w.tech||w.tech==='Unassigned'; });
+    if(unassigned.length) techHtml+='<div class="day-tech"><div class="day-tech-top"><span>Unassigned</span><span>'+(Math.round(unassigned.reduce(function(a,w){ return a+hoursOn(w,ds); },0)*10)/10)+'h</span></div><div class="day-tech-sub park-bad">'+unassigned.length+' car'+(unassigned.length===1?' needs':'s need')+' a technician</div></div>';
     h+='<div class="day-layout"><div class="day-slots">';
     keys.forEach(function(k){
       var g=groups[k], sug=g.every(function(x){ return x.suggested; });
       h+='<div class="day-slot"><div class="day-slot-time">'+(k==='onsite'?'Already on site':k==='none'?'No drop-off time':L(+k))+'<span>'+g.length+' car'+(g.length===1?'':'s')+(k==='onsite'?' \u00b7 from earlier days':(k!=='none'&&sug?' \u00b7 suggested':''))+'</span></div><div class="day-slot-cars">'+g.map(box).join('')+'</div></div>';
     });
     h+='</div>';
+    if(techHtml||parts.length) h+='<div class="day-side">';
+    if(techHtml) h+='<div class="day-parts"><div class="day-parts-h">Technicians</div>'+techHtml+'</div>';
     if(parts.length){
       h+='<div class="day-parts"><div class="day-parts-h">Parts required</div>'+parts.map(function(p){ return '<div class="day-part"><span>'+escH(p.name)+(p.partNo?'<small>'+escH(p.partNo)+'</small>':'')+'</span><span>\u00d7'+p.qty+'</span></div>'; }).join('')+'</div>';
     }
+    if(techHtml||parts.length) h+='</div>';
     h+='</div>';
     body.innerHTML=h;
     bindDay();
@@ -6076,104 +6162,6 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
 }
 
 
-  // ════════════════════════════════════════════════════════════
-  // TODAY — Customers booked in for the current date (live from CAL)
-  // ════════════════════════════════════════════════════════════
-  var TODAY = (function(){
-    function todayStr(){
-      var d = new Date();
-      var mm = String(d.getMonth()+1).padStart(2,'0');
-      var dd = String(d.getDate()).padStart(2,'0');
-      return d.getFullYear() + '-' + mm + '-' + dd;
-    }
-    function fmtLong(ds){
-      var d = new Date(ds + 'T00:00:00');
-      if(isNaN(d.getTime())) return ds;
-      var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    }
-    function sLabel(s){ return {open:'Open',wip:'In progress',done:'Complete',hold:'On hold',closed:'Closed'}[s]||(s||'').toUpperCase(); }
-    function sPill(s){ return {open:'sp-open',wip:'sp-wip',done:'sp-done',hold:'sp-hold',closed:'sp-closed'}[s]||'sp-open'; }
-
-    function render(){
-      var sub = document.getElementById('today-sub');
-      var tbody = document.getElementById('today-tbody');
-      if(!tbody) return;
-
-      var ds = todayStr();
-      if(sub) sub.textContent = 'Customers booked in — ' + fmtLong(ds);
-
-      var rows = [];
-      if(typeof CAL !== 'undefined' && CAL.getAll){
-        var all = CAL.getAll();
-        rows = CAL.dayJobs ? CAL.dayJobs(ds).slice() : all.filter(function(w){ return w && w.date === ds; });
-      }
-
-      var hours = 0, openCount = 0, doneCount = 0;
-      for(var j=0;j<rows.length;j++){
-        var w = rows[j];
-        hours += CAL.hoursOn ? CAL.hoursOn(w, ds) : (parseFloat(w.hours)||0);
-        if(w.status === 'done' || w.status === 'closed') doneCount++;
-        else openCount++;
-      }
-      var setStat = function(id, val){ var el = document.getElementById(id); if(el) el.textContent = val; };
-      setStat('today-stat-count', String(rows.length));
-      setStat('today-stat-hours', (Math.round(hours*10)/10) + 'h');
-      setStat('today-stat-open', String(openCount));
-      setStat('today-stat-done', String(doneCount));
-
-      if(!rows.length){
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:36px 16px;color:var(--text3)">No customers booked in today.</td></tr>';
-        return;
-      }
-
-      var pk = (typeof PARK!=='undefined') ? PARK.plan(ds) : null, pkOn = pk && pk.enabled && !pk.noTechs;
-      var at = function(w){ var t = PARK.toMin(w.time); if(t==null && pkOn && pk.byId[w.id]) t = pk.byId[w.id].arrive; return t; };
-      rows.forEach(function(w){ w.__t = w.date < ds ? -1 : at(w); });
-      rows.sort(function(a,b){ return ((a.__t==null?9999:a.__t)-(b.__t==null?9999:b.__t)) || (a.customer||'').localeCompare(b.customer||''); });
-
-      var html = '';
-      for(var k=0;k<rows.length;k++){
-        var r = rows[k];
-        var tot = parseFloat(r.hours)||0;
-        html += '<tr class="today-row" data-id="'+escH(r.id)+'" style="cursor:pointer">'
-          + '<td class="td-mono">'+(r.__t===-1?'On site':r.__t==null?'—':PARK.label(r.__t)+(r.time?'':' <span style="color:var(--text3)">(suggested)</span>'))+'</td>'
-          + '<td class="td-primary">'+escH(r.customer)+'</td>'
-          + '<td>'+escH(r.vehicle||'—')+'</td>'
-          + '<td class="td-mono">'+escH(r.rego||'—')+'</td>'
-          + '<td>'+escH(r.type||'—')+'</td>'
-          + '<td>'+escH(r.tech||'—')+'</td>'
-          + '<td class="td-mono">'+(tot ? (CAL.hoursLabel ? CAL.hoursLabel(r, ds) : tot+'h') : '—')+(r.date!==ds?' <span style="color:var(--text3)">(continued)</span>':'')+'</td>'
-          + '<td><span class="status-pill '+sPill(r.status)+'">'+sLabel(r.status)+'</span></td>'
-          + '</tr>';
-      }
-      tbody.innerHTML = html;
-      rows.forEach(function(w){ delete w.__t; });
-      Array.prototype.forEach.call(tbody.querySelectorAll('.today-row'), function(tr){ tr.addEventListener('click', function(){ if(typeof window.openWO==='function') window.openWO(tr.getAttribute('data-id')); }); });
-    }
-
-    function bindRefresh(){
-      var btn = document.getElementById('today-refresh-btn');
-      if(btn) btn.addEventListener('click', render);
-    }
-
-    function init(){
-      render();
-      bindRefresh();
-      if(typeof CAL !== 'undefined' && CAL.onChange) CAL.onChange(render);
-      // Recompute at local midnight so the page rolls over to the new day on its own.
-      function scheduleMidnightRefresh(){
-        var now = new Date();
-        var next = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, 0, 1, 0);
-        var ms = next.getTime() - now.getTime();
-        setTimeout(function(){ render(); scheduleMidnightRefresh(); }, ms);
-      }
-      scheduleMidnightRefresh();
-    }
-    return {init:init, render:render};
-  })();
-
 
   // ════════════════════════════════════════════════════════════
   // TECH — Technicians (dispatch + clock on/off)
@@ -6544,6 +6532,18 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
         }
         location.reload();
       });
+      // Work order permissions: only a Service Manager can change who may add/remove jobs
+      var ajs = document.getElementById('set-advjobs');
+      if(ajs){
+        var ajSync = function(){ var on=PERM.advisorJobs(), mgr=(typeof ROLE!=='undefined'&&ROLE.isManager)?ROLE.isManager():true;
+          ajs.setAttribute('aria-checked', on?'true':'false'); ajs.disabled=!mgr; ajs.style.opacity=mgr?'':'0.55';
+          var sub=document.getElementById('set-advjobs-sub'); if(sub) sub.textContent=mgr?'Service Managers can always do this. Turn off to keep job changes with the Service Manager.':'Only the Service Manager can change this.'; };
+        ajSync();
+        ajs.addEventListener('click', function(){ if(!(typeof ROLE!=='undefined'&&ROLE.isManager&&ROLE.isManager())){ ajSync(); return; } PERM.set({advisorJobs: ajs.getAttribute('aria-checked')!=='true'}); ajSync(); });
+        window.__wscPermSync = ajSync;
+        var sn=document.querySelector('.sidebar .nav-item[data-page="settings"]'); if(sn) sn.addEventListener('click', ajSync);
+        document.addEventListener('click', function(e){ if(e.target.closest&&e.target.closest('.role-opt')) setTimeout(ajSync,0); });
+      }
       var tsel = document.getElementById('set-theme');
       if(tsel){
         tsel.setAttribute('aria-checked', document.documentElement.getAttribute('data-theme')==='light' ? 'true' : 'false');
@@ -6787,6 +6787,17 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
   // ROLE — account role switch (Service Advisor / Service Manager)
   // Gates the manager-only Team Management section.
   // ════════════════════════════════════════════════════════════
+  // Shop permissions set by the Service Manager (Settings → Work order permissions). Storage: wsc_perm_v1.
+  var PERM = (function(){
+    var KEY='wsc_perm_v1';
+    function get(){ var p; try{ p=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ p={}; } if(p.advisorJobs==null) p.advisorJobs=true; return p; }
+    function set(patch){ var p=Object.assign(get(),patch); try{ localStorage.setItem(KEY, JSON.stringify(p)); }catch(e){} return p; }
+    // Who may add or remove jobs on a work order that already exists
+    function canEditJobs(){ var r=(typeof ROLE!=='undefined'&&ROLE.current)?ROLE.current():'manager'; return r==='manager' || (r==='advisor' && get().advisorJobs); }
+    return { advisorJobs:function(){ return get().advisorJobs; }, set:set, canEditJobs:canEditJobs };
+  })();
+  window.PERM = PERM;
+
   var ROLE = (function(){
     var KEY = 'wsc_role_v1';
     var ROLES = { advisor:{name:'Service Advisor', initials:'SA'}, manager:{name:'Service Manager', initials:'SM'}, controller:{name:'Workshop Controller', initials:'WC'} };
@@ -6794,6 +6805,7 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
 
     function load(){ try{ var r = localStorage.getItem(KEY); if(r && ROLES[r]) current = r; }catch(e){} }
     function apply(){
+      if(window.__wscPermSync) try{ window.__wscPermSync(); }catch(e){}
       var r = ROLES[current];
       var av = document.getElementById('role-avatar'); if(av) av.textContent = r.initials;
       var nm = document.getElementById('role-name'); if(nm) nm.textContent = r.name;
@@ -6834,7 +6846,7 @@ function getPorscheSchedule(code, buildYear, regYear, odo) {
       }
       apply();
     }
-    return { init: init, isManager: function(){ return current === 'manager'; }, canAccess: canAccess };
+    return { init: init, isManager: function(){ return current === 'manager'; }, current: function(){ return current; }, canAccess: canAccess };
   })();
 
 
@@ -7051,11 +7063,10 @@ var AI = (function() {
      keys:['carryover','carry','overdue','previous','old','past','unclosed','left'],
      text:'**Carryover** on the Calendar page lists jobs booked on past days that aren’t closed yet, oldest first, with how many days overdue. The first three show; click **Show all** for the rest. **Open** goes to the work order; **Close** works once its invoice is paid.\nUnfinished carryover jobs also appear on today’s calendar and day page under **Already on site**, with their remaining hours.'},
 
-    {id:'app-today', topic:'Today page', page:'today',
-     q:['what is on today','today page','who is coming in today','todays cars','list of todays bookings'],
-     keys:['today','todays','page','list','coming','cars','booked'],
-     text:'**Today** lists every car with work today, sorted by drop-off time: Drop-off (or **On site** for carried-over jobs, or a suggested time), customer, vehicle, rego, service, technician, today’s hours and status. Click a row to open the work order. The figure at the top is the labour hours still to do today.'},
-
+    {id:'app-today', topic:'What is on today', page:'bookings',
+     q:['what is on today','who is coming in today','todays cars','list of todays bookings','today page','where did today go'],
+     keys:['today','todays','day','coming','cars','booked','calendar'],
+     text:'**Today** is now the calendar\u2019s day view: Workshop \u2192 Calendar, then click today (or **Open Today** on the Home dashboard). It shows every car with work that day grouped by drop-off time (including jobs carried over), hours to do against capacity, how many are still to do and completed, each technician\u2019s load, parking, and the parts needed. Click a car to open its work order.'},
     {id:'app-clockon', topic:'Clocking on to a job', page:'clock',
      q:['how do i clock on','clock in to a job','start time on a job','how does clocking work','tech clock on','punch in'],
      keys:['clock','clocking','clockon','on','start','time','tech','number','punch'],
@@ -7125,6 +7136,10 @@ var AI = (function() {
      q:['how do i email an invoice','send invoice to customer','connect gmail','connect outlook','email invoices automatically','change the invoice email message','did the invoice get emailed'],
      keys:['email','emails','gmail','outlook','send','invoice','pdf','automatic','auto','template','message','hotmail','office'],
      text:'**Emailing invoices**\n• Settings → **Email (Gmail / Outlook)** → **Connect Gmail** or **Connect Outlook** and sign in on Google\u2019s or Microsoft\u2019s page. WorkShopConnect can only send, never read your mail.\n• Invoices go out from your own address with the **PDF attached**, and land in your Sent folder.\n• With **Email automatically when I bill a customer** ticked, clicking **Bill customer** emails the invoice straight away (if the customer has an email address).\n• The **Email** button on an invoice opens a window to check the address and message before sending.\n• Edit the subject and message in Settings; {customer}, {total}, {due}, {vehicle} and {payment} fill in automatically. **Send me a test** sends a sample to yourself.\n• An **Emailed** tag on the invoice shows when and where it went; **Email failed** shows why on hover.'},
+    {id:'app-wojobs', topic:'Adding or removing jobs on a work order', page:'settings',
+     q:['add a job to a work order','remove a job from a work order','change jobs after booking','why cant i add a job','stop advisors changing jobs'],
+     keys:['job','jobs','add','remove','delete','work','order','advisor','permission','switch'],
+     text:'**Adding and removing jobs**\n\u2022 Open the work order: **+ Add job** (operation, hours, optional instructions) and **Remove job** on each job are in Jobs & Parts.\n\u2022 Booked hours follow the jobs, so the invoice labour stays right; a draft invoice updates itself. Closed work orders can\u2019t be changed.\n\u2022 Service Managers can always do this. **Settings \u2192 Work order permissions \u2192 Advisors can add and remove jobs** decides whether Service Advisors can too; only the Service Manager can change that switch. Workshop Controllers can\u2019t.'},
     {id:'app-woparts', topic:'Adding parts to a work order', page:'openwo',
      q:['how do i add parts to a job','add a part to a work order','charge the customer for a part','part price on invoice','add parts when booking','change part price'],
      keys:['part','parts','add','charge','price','pricing','work','order','job','invoice','booking'],
@@ -7133,6 +7148,10 @@ var AI = (function() {
      q:['how do website enquiries get in','connect my website','where are website enquiries','turn an enquiry into a job card','link code','enquiry form to work order'],
      keys:['enquiry','enquiries','website','form','contact','lead','leads','link','inbox','booking'],
      text:'**Website enquiries** (Workshop \u2192 Enquiries)\n\u2022 Set up once in **Settings \u2192 Website enquiries**: enter your website address, copy the **link code** and paste it into your website\u2019s dashboard (\u2026/admin/ \u2192 WorkShopConnect \u2192 Link computer).\n\u2022 New enquiries arrive within a minute while WorkShopConnect is open; the Workshop menu shows a count.\n\u2022 **Make job card** opens a new booking with the customer, phone, email, rego, vehicle, job type, preferred date and their message filled in. Pick the time and technician and save.\n\u2022 If the customer or rego has been in before, the enquiry shows their last work order.\n\u2022 Mark enquiries **Contacted** or **Archive** them; booked ones link to their work order.'},
+    {id:'app-quotes', topic:'Quotes for customers', page:'quotes',
+     q:['how do i make a quote','create a quote','send a quote','quote a customer','turn a quote into a work order','convert quote to job','how long is a quote valid','where are quotes'],
+     keys:['quote','quotes','quoting','estimate','estimates','price','pricing','accepted','declined','convert','valid'],
+     text:'**Quotes** (Accounting \u2192 Quotes)\n\u2022 **+ New Quote**: enter the customer and vehicle, then add each job with its labour hours and any parts (with the price the customer pays). Labour uses your hourly rate and totals include GST.\n\u2022 **Save & send** emails the quote as a PDF from your connected Gmail/Outlook, or opens it to print with an email in your mail app.\n\u2022 Mark a quote **Accepted** or **Declined** when the customer answers. Quotes past their valid-until date show as Expired.\n\u2022 **Make work order** opens New Booking with the customer, vehicle, every job and its parts already filled in \u2014 just pick the date and technician and save. The quote then links to that work order.\n\u2022 How long quotes stay valid, and the note printed on every quote, are set in **Settings \u2192 Quotes**.'},
     {id:'app-po', topic:'Purchase orders to parts suppliers', page:'purchaseorders',
      q:['how do i order parts','create a purchase order','order from repco','order from burson','reorder low stock','receive a purchase order','add a supplier','where are purchase orders'],
      keys:['purchase','order','orders','po','supplier','suppliers','repco','burson','reorder','receive','received','backorder','stock'],
@@ -7311,7 +7330,7 @@ var AI = (function() {
   }
 
   /* ── references: [[page:id|Label]] and [[wo:id|Label]] become buttons ── */
-  var PAGE_NAMES={enquiries:'Enquiries',purchaseorders:'Purchase Orders','hub-workshop':'Workshop','hub-accounts':'Accounting','hub-parts':'Parts','hub-people':'People',dashboard:'Home',planner:'Generate Work Order',bookings:'Calendar',today:'Today',openwo:'Work Orders',closedwo:'Closed Work Orders',invoices:'Invoices',expenses:'Expenses',technicians:'Technicians',parts:'Parts',clock:'Clocking',team:'Team Management',performance:'Performance',financials:'Financials',settings:'Settings',ai:'AI Assistant'};
+  var PAGE_NAMES={quotes:'Quotes',enquiries:'Enquiries',purchaseorders:'Purchase Orders','hub-workshop':'Workshop','hub-accounts':'Accounting','hub-parts':'Parts','hub-people':'People',dashboard:'Home',planner:'Generate Work Order',bookings:'Calendar',openwo:'Work Orders',closedwo:'Closed Work Orders',invoices:'Invoices',expenses:'Expenses',technicians:'Technicians',parts:'Parts',clock:'Clocking',team:'Team Management',performance:'Performance',financials:'Financials',settings:'Settings',ai:'AI Assistant'};
   function pageRef(p){ return PAGE_NAMES[p]?'[[page:'+p+'|Open '+PAGE_NAMES[p]+']]':''; }
   function woRef(w){ return '[[wo:'+w.id+'|Open '+woNo(w)+']]'; }
   function dayRef(ds){ return '[[day:'+ds+'|Open '+fmtD(ds)+']]'; }
@@ -7498,7 +7517,6 @@ var AI = (function() {
     '(top level)':'Shared helpers and app start-up: navigation between pages (navTo), HTML escaping, parts pricing, the labour-rate and booking-efficiency settings readers, and the Generate Work Order service planner (rego lookup, make/chassis pickers and the manufacturer service schedules).',
     CAL:'Calendar, bookings and work orders — the core data module. Loads/saves work orders (wsc_wos_v3), works out remaining hours after clocked time, spreads long jobs across working days by each technician’s daily limit, computes day capacity, renders the month calendar, day pages and the booking form, and prints the repair order.',
     PARK:'Parking planner. Simulates each day car by car (technicians, job length, check-in, overrun, invoicing/QC and collection time) to find the parking peak and suggest staggered drop-off times within the bays and slot limits set in Settings.',
-    TODAY:'Today page: lists cars with work today, including jobs continued from earlier days, sorted by drop-off time, and refreshes at midnight.',
     TECH:'Technicians page: each technician’s status today, daily hours, efficiency and current job.',
     PARTS:'Parts inventory page: add parts, stock levels against reorder levels, and the parts table.',
     FIN:'Financials page: 6-month revenue trend and top services.',
@@ -7517,6 +7535,7 @@ var AI = (function() {
     INVOICE:'Invoices: builds invoice lines from a work order (labour, parts, GST), draft → billed → paid (paying closes the job), email, print and labour-hour totals (wsc_invoices_v1).',
     WODETAIL:'Work order page: edit a job, technician’s story, vehicle history by rego, print, invoice, close/reopen (closing needs a paid invoice).',
     ENQ:'Website enquiries: linking the workshop website, collecting contact-form enquiries about once a minute, matching them to past customers, and turning them into a pre-filled booking.',
+    QUOTES:'Quotes: pricing up jobs and parts for a customer before booking, sending the quote as a PDF, tracking accepted, declined and expired quotes, and turning an accepted quote into a work order with everything filled in.',
     PO:'Purchase orders: suppliers and their order emails, creating and editing orders to parts suppliers, sending them as a PDF, reordering low stock, and receiving deliveries into Parts stock.',
     MAIL:'Email: connecting Gmail or Outlook, emailing customers their invoice as a PDF from the workshop\u2019s own address, automatic emailing when an invoice is billed, the editable message template, and the test email.',
     EXPENSES:'Expenses: internal job costs never shown to customers — parts costs recorded per supplier when an invoice is billed (with parts margin), manual expenses such as sublet or consumables, and sending them to Xero as supplier bills.',
@@ -7742,7 +7761,7 @@ var AI = (function() {
   // Rank functions for a question. Rare words weigh more (IDF over all functions); a word can match a
   // function's name parts, its everyday keywords, its description, or its module; action words map to
   // the verbs code uses (shows → render, adds → save/add, switches → set …).
-  var MODALIAS={CAL:'calendar bookings booking form day page',PARK:'parking park drop off dropoff bays',TODAY:'today',TECH:'technicians technician page',PARTS:'parts inventory stock',FIN:'financials revenue',SET:'settings',STAFF:'team staff management technician days off roster',ROLE:'role roles advisor manager controller permission permissions access',AI:'assistant ai chat knowledge',DEV:'self edit customise',LOCALM:'model download install wscm local',ENGINE:'engine model server',CLOCK:'clocking clock clocked sessions',OPENWO:'work orders list active',CARRY:'carryover overdue',CLOSEDWO:'closed archive',PERF:'performance productivity efficiency',INVOICE:'invoice invoices billing bill',EXPENSES:'expenses expense costs cost markup margin supplier bills sublet',MAIL:'email gmail outlook send pdf invoice automatic template',PO:'purchase order orders po supplier suppliers repco burson reorder receive stock',ENQ:'enquiry enquiries website form contact lead link booking',WODETAIL:'work order page detail history story',CUSTOMWO:'custom work order form','(top level)':'planner service schedule schedules generate rego navigation'};
+  var MODALIAS={QUOTES:'quote quotes quoting estimate estimates convert accepted declined',CAL:'calendar bookings booking form day page',PARK:'parking park drop off dropoff bays',TECH:'technicians technician page',PARTS:'parts inventory stock',FIN:'financials revenue',SET:'settings',STAFF:'team staff management technician days off roster',ROLE:'role roles advisor manager controller permission permissions access',AI:'assistant ai chat knowledge',DEV:'self edit customise',LOCALM:'model download install wscm local',ENGINE:'engine model server',CLOCK:'clocking clock clocked sessions',OPENWO:'work orders list active',CARRY:'carryover overdue',CLOSEDWO:'closed archive',PERF:'performance productivity efficiency',INVOICE:'invoice invoices billing bill',EXPENSES:'expenses expense costs cost markup margin supplier bills sublet',MAIL:'email gmail outlook send pdf invoice automatic template',PO:'purchase order orders po supplier suppliers repco burson reorder receive stock',ENQ:'enquiry enquiries website form contact lead link booking',WODETAIL:'work order page detail history story',CUSTOMWO:'custom work order form','(top level)':'planner service schedule schedules generate rego navigation'};
   var VERBS={add:'add save create new openadd',adds:'add save create new openadd',create:'create add new build',creates:'create add new build',make:'create build',makes:'create build',generate:'create generate build',generates:'create generate build',
     show:'render open view',shows:'render open view',draw:'render',draws:'render',display:'render',displays:'render',list:'render',lists:'render',
     remember:'save persist load',remembers:'save persist load',store:'save persist',stores:'save persist',load:'load getitem parse',
@@ -7804,7 +7823,7 @@ var AI = (function() {
   }
   // Users never see the source: no code, function or variable names, storage keys or line numbers.
   // The assistant still reads its own code (above) to explain in plain English how the app behaves.
-  var MODPLAIN={ENQ:'website enquiries',PO:'purchase orders',MAIL:'email',EXPENSES:'expenses',CAL:'Calendar',PARK:'Calendar',TODAY:'today',TECH:'technicians',PARTS:'parts',FIN:'financials',SET:'settings',STAFF:'team',ROLE:'dashboard',AI:'ai',DEV:'ai',LOCALM:'ai',ENGINE:'ai',CLOCK:'clock',OPENWO:'openwo',CARRY:'bookings',CLOSEDWO:'closedwo',PERF:'performance',INVOICE:'invoices',WODETAIL:'openwo',CUSTOMWO:'planner','(top level)':'planner'};
+  var MODPLAIN={QUOTES:'quotes',ENQ:'website enquiries',PO:'purchase orders',MAIL:'email',EXPENSES:'expenses',CAL:'Calendar',PARK:'Calendar',TECH:'technicians',PARTS:'parts',FIN:'financials',SET:'settings',STAFF:'team',ROLE:'dashboard',AI:'ai',DEV:'ai',LOCALM:'ai',ENGINE:'ai',CLOCK:'clock',OPENWO:'openwo',CARRY:'bookings',CLOSEDWO:'closedwo',PERF:'performance',INVOICE:'invoices',WODETAIL:'openwo',CUSTOMWO:'planner','(top level)':'planner'};
   function sanitize(t){
     return String(t||'')
       .replace(/`[^`]*`/g,'')
@@ -8983,12 +9002,13 @@ window.AI = AI;
         var nm=(p&&p.name)||String(p||''); if(!nm) return;
         var no=p&&(p.partNo||p.sku||p.code), q=Math.max(0, parseFloat(p&&p.qty)||1), set=p&&p.price!=null&&p.price!==''&&!isNaN(parseFloat(p.price)), up=r2(set?parseFloat(p.price):priceOf(nm));
         var c=partCostFor(nm); if(set && c.est) c.cost=r2(up/(1+partMarkupPct()/100));
+        if(p && parseFloat(p.cost)>0){ c.cost=parseFloat(p.cost); c.est=false; }
         lines.push({kind:'part', name:nm, desc:nm+(no?' ('+no+')':''), qty:r2(q), unit:up, amount:r2(q*up), cost:r2(c.cost), supplier:c.supplier, costEst:c.est});
       }
       // Parts added by hand: charged at the price entered on the work order
       function extra(x){
         var nm=String((x&&x.name)||'').trim(); if(!nm) return;
-        var q=Math.max(0, parseFloat(x.qty)||1), up=r2(parseFloat(x.price)||0), rec=partInvRecord(nm), c=rec?parseFloat(rec.cost):NaN;
+        var q=Math.max(0, parseFloat(x.qty)||1), up=r2(parseFloat(x.price)||0), rec=partInvRecord(nm), c=parseFloat(x.cost)>0?parseFloat(x.cost):(rec?parseFloat(rec.cost):NaN);
         var cost=c>0?c:r2(up/(1+partMarkupPct()/100));
         lines.push({kind:'part', name:nm, desc:nm+(x.partNo?' ('+x.partNo+')':''), qty:r2(q), unit:up, amount:r2(q*up), cost:r2(cost), supplier:rec&&rec.supplier&&rec.supplier!=='\u2014'?String(rec.supplier):'', costEst:!(c>0), manual:true});
       }
@@ -9008,6 +9028,7 @@ window.AI = AI;
       invoices.forEach(function(iv){
         if(iv.status!=='draft'||!iv.woId) return;
         var w=wos().find(function(x){ return x.id===iv.woId; }); if(!w) return;
+        var st=String(w.story||'').trim(); if(iv.story!==st){ iv.story=st; changed=true; }
         var ls=buildLines(w); if(JSON.stringify(ls)===JSON.stringify(iv.lines)) return;
         var t=totalsOf(ls); iv.lines=ls; iv.subtotal=t.subtotal; iv.gstRate=t.gstRate; iv.gst=t.gst; iv.total=t.total; changed=true;
       });
@@ -9035,6 +9056,7 @@ window.AI = AI;
       if(!w){ box.innerHTML='<div class="inv-empty">Select a work order to preview the invoice.</div>'; return; }
       var lines=buildLines(w), t=totalsOf(lines);
       box.innerHTML='<div class="inv-billto"><div class="inv-billto-h">Bill to</div><div class="inv-billto-name">'+escH(w.customer||'—')+'</div><div class="inv-billto-sub">'+escH(w.vehicle||'')+(w.rego?(' · '+escH(w.rego)):'')+(w.email?(' · '+escH(w.email)):'')+'</div></div>'
+        +(String(w.story||'').trim()?'<div class="inv-story-prev"><div class="inv-billto-h">Technician\u2019s report</div><div>'+escH(String(w.story).trim())+'</div></div>':'<div class="inv-story-prev inv-story-none">No technician\u2019s report on this work order yet \u2014 add it on the work order and it will show on the invoice.</div>')
         +'<table class="inv-tbl"><thead><tr><th>Description</th><th>Qty</th><th>Unit</th><th>Amount</th></tr></thead><tbody>'
         +(lines.length? lines.map(function(l){ return '<tr><td>'+escH(l.desc)+'</td><td>'+l.qty+'</td><td>'+money(l.unit)+'</td><td>'+money(l.amount)+'</td></tr>'; }).join('') : '<tr><td colspan="4" class="inv-empty">No billable lines on this work order.</td></tr>')
         +'</tbody></table>'
@@ -9046,7 +9068,7 @@ window.AI = AI;
       var lines=buildLines(w), t=totalsOf(lines), created=todayStr();
       var inv={ id:'inv-'+Date.now()+'-'+Math.floor(Math.random()*1000), num:nextNum(), woId:w.id, woNum:(w.num!=null?w.num:null),
         date:created, due:addDays(created,terms()), customer:w.customer||'', phone:w.phone||'', email:w.email||'', rego:w.rego||'', vehicle:w.vehicle||'', chassis:w.chassis||'', tech:w.tech||'',
-        lines:lines, subtotal:t.subtotal, gstRate:t.gstRate, gst:t.gst, total:t.total, status:'draft', issuedAt:null, paidAt:null };
+        lines:lines, subtotal:t.subtotal, gstRate:t.gstRate, gst:t.gst, total:t.total, status:'draft', issuedAt:null, paidAt:null, story:String(w.story||'').trim(), odometer:w.odometer||'' };
       invoices.push(inv); save(); closeModal(); render(); view(inv.id);
     }
     function statusPill(s){ var m={draft:'inv-draft',issued:'inv-issued',paid:'inv-paid'}, L={draft:'Draft',issued:'Issued',paid:'Paid'}; return '<span class="status-pill '+(m[s]||'inv-draft')+'">'+(L[s]||String(s||'').toUpperCase())+'</span>'; }
@@ -9080,6 +9102,10 @@ window.AI = AI;
       win.document.open(); win.document.write(docHtml(iv,false)); win.document.close();
     }
     // The customer's invoice document. forPdf drops the on-screen Print/Close buttons.
+    function storyOf(iv){
+      if(iv && iv.story!=null && iv.story!=='') return String(iv.story);
+      var w=iv&&iv.woId?wos().find(function(x){ return x.id===iv.woId; }):null; return w?String(w.story||'').trim():'';
+    }
     function docHtml(iv, forPdf){
       var s=settings(), biz=s['set-name']||'WorkShopConnect';
       var rows=iv.lines.map(function(l){ return '<tr><td>'+escH(l.desc)+'</td><td class="num">'+l.qty+'</td><td class="num">'+money(l.unit)+'</td><td class="num">'+money(l.amount)+'</td></tr>'; }).join('');
@@ -9100,6 +9126,7 @@ window.AI = AI;
         +'.inv-parties{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:20px;}.inv-party .h{font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:#777;margin-bottom:4px;}.inv-party .v{font-size:13px;line-height:1.5;}'
         +'table.inv-items{width:100%;border-collapse:collapse;margin-bottom:16px;}.inv-items th,.inv-items td{padding:8px 10px;border-bottom:1px solid #ddd;font-size:12px;text-align:left;}.inv-items th{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:#777;background:#f6f6f6;}.inv-items td.num,.inv-items th.num{text-align:right;}'
         +'.inv-sum{width:280px;margin-left:auto;}.inv-sum div{display:flex;justify-content:space-between;padding:5px 10px;font-size:13px;}.inv-sum .grand{border-top:2px solid #1a1a1a;font-weight:800;font-size:16px;margin-top:4px;}'
+        +'.inv-story{border:1px solid #ddd;border-left:3px solid #1a1a1a;border-radius:4px;padding:10px 14px;margin-bottom:18px;page-break-inside:avoid;}.inv-story .h{font-size:10px;text-transform:uppercase;letter-spacing:0.6px;color:#777;margin-bottom:5px;font-weight:700;}.inv-story .h .who{text-transform:none;letter-spacing:0;font-weight:400;font-size:11px;}.inv-story .v{font-size:12.5px;line-height:1.55;white-space:pre-wrap;}'
         +'.inv-terms{margin-top:26px;font-size:11px;color:#555;border-top:1px solid #ccc;padding-top:10px;line-height:1.5;}'
         +'.paid-stamp{position:absolute;top:150px;right:60px;border:4px solid #16a34a;color:#16a34a;font-size:38px;font-weight:800;letter-spacing:4px;padding:6px 20px;border-radius:8px;transform:rotate(-14deg);opacity:0.85;}'
         +'.pay-box{margin-top:22px;border:1px solid #ccc;border-radius:6px;padding:14px 16px;}.pay-h{font-size:11px;text-transform:uppercase;letter-spacing:0.6px;color:#777;font-weight:800;margin-bottom:10px;}.pay-btn{display:inline-block;background:#16a34a;color:#fff;text-decoration:none;font-weight:800;font-size:14px;padding:10px 24px;border-radius:6px;margin-bottom:12px;}.pay-rows div{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid #eee;}.pay-rows span{color:#777;}.pay-rows b{color:#1a1a1a;}'+'@media print{body{margin:14mm;}.inv-noprint{display:none;}}'
@@ -9108,6 +9135,7 @@ window.AI = AI;
         +paid
         +'<div class="inv-head"><div><div class="inv-biz">'+escH(biz)+'</div><div class="inv-biz-sub">'+escH(bizsub)+'</div></div><div class="inv-meta"><div class="t">TAX INVOICE</div><div class="n">INV-'+iv.num+'</div><div class="d">Issued: '+escH(iv.date||'—')+'<br>Due: '+escH(iv.due||'—')+(iv.woNum!=null?('<br>Work Order: WO-'+escH(iv.woNum)):'')+'</div></div></div>'
         +'<div class="inv-parties"><div class="inv-party"><div class="h">Bill To</div><div class="v"><b>'+escH(iv.customer||'—')+'</b>'+(iv.phone?('<br>'+escH(iv.phone)):'')+(iv.email?('<br>'+escH(iv.email)):'')+'</div></div><div class="inv-party"><div class="h">Vehicle</div><div class="v">'+escH(iv.vehicle||'—')+(iv.rego?('<br>Rego: '+escH(iv.rego)):'')+(iv.chassis?('<br>VIN: '+escH(iv.chassis)):'')+'</div></div></div>'
+        +(storyOf(iv)?'<div class="inv-story"><div class="h">Technician\u2019s report<span class="who">'+(iv.tech&&iv.tech!=='Unassigned'?' \u00b7 '+escH(iv.tech):'')+(iv.odometer&&!isNaN(parseFloat(iv.odometer))?' \u00b7 Odometer '+escH(Math.round(parseFloat(iv.odometer)).toLocaleString('en-AU'))+' km':'')+'</span></div><div class="v">'+escH(storyOf(iv))+'</div></div>':'')
         +'<table class="inv-items"><thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Amount</th></tr></thead><tbody>'+rows+'</tbody></table>'
         +'<div class="inv-sum"><div><span>Total labour hours</span><span>'+labourHrs(iv.lines)+'h</span></div><div><span>Subtotal</span><span>'+money(iv.subtotal)+'</span></div><div><span>GST ('+iv.gstRate+'%)</span><span>'+money(iv.gst)+'</span></div><div class="grand"><span>Total Due</span><span>'+money(iv.total)+'</span></div></div>'
         +paySection
@@ -9119,6 +9147,7 @@ window.AI = AI;
       var iv=invoices.find(function(x){return x.id===id;}); if(!iv) return;
       if(typeof MAIL!=='undefined' && MAIL.ready()){ MAIL.compose(id); return; }      // send from the workshop's Gmail/Outlook with the PDF attached
       var s=settings(), biz=s['set-name']||'WorkShopConnect', NL='\r\n';
+      var rep=storyOf(iv);
       var lineTxt=iv.lines.map(function(l){ return '  - '+l.desc+(l.qty>1?(' x'+l.qty):'')+' : '+money(l.amount); }).join(NL);
       var pay=[];
       if(s['set-paylink']) pay.push('- Pay now (card): '+s['set-paylink']);
@@ -9127,6 +9156,7 @@ window.AI = AI;
       if(!pay.length) pay.push('- Payment details available on request.');
       var body='Hi '+(iv.customer||'there')+','+NL+NL
         +'Please find your invoice INV-'+iv.num+' from '+biz+' for work on your '+(iv.vehicle||'vehicle')+(iv.rego?(' ('+iv.rego+')'):'')+'.'+NL+NL
+        +(rep?'Technician\u2019s report:'+NL+rep+NL+NL:'')
         +'Invoice INV-'+iv.num+'   Date '+iv.date+'   Due '+iv.due+NL
         +lineTxt+NL
         +'  Total labour hours: '+labourHrs(iv.lines)+'h'+NL
@@ -9485,7 +9515,7 @@ window.AI = AI;
           '<div class="dash-main"><div class="dash-cust">'+escH(w.customer||'—')+' <span style="font-weight:400;color:var(--text3)">· WO-'+escH(w.num)+'</span></div>'+
           '<div class="dash-meta">'+escH([w.vehicle, w.rego, w.type, w.tech||'Unassigned', r1(hrsToday(w))+'h'].filter(Boolean).join(' · '))+'</div></div>'+
           '<span class="status-pill '+stPill(w.status)+'">'+stLabel(w.status)+'</span></div>'; }).join('')+
-          (today.length>9?'<div class="dash-row" data-nav="today" style="grid-template-columns:1fr;color:var(--accent-text);font-weight:600">+ '+(today.length-9)+' more today</div>':'')
+          (today.length>9?'<div class="dash-row" data-day="today" style="grid-template-columns:1fr;color:var(--accent-text);font-weight:600">+ '+(today.length-9)+' more today</div>':'')
         : '<div class="empty-state" style="padding:34px 16px;text-align:center">Nothing booked in today.<br><span class="panel-link" data-nav="planner" style="cursor:pointer">Create a work order</span></div>');
 
       // Technician load
@@ -9520,6 +9550,7 @@ window.AI = AI;
       var page=g('page-dashboard'); if(!page) return;
       page.addEventListener('click', function(e){
         var row=e.target.closest('[data-wo]'); if(row){ if(typeof WODETAIL!=='undefined'&&WODETAIL.open) WODETAIL.open(row.getAttribute('data-wo'),'dashboard'); return; }
+        var dy=e.target.closest('[data-day]'); if(dy && typeof CAL!=='undefined' && CAL.openDay){ var t=new Date(); CAL.openDay(t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2)); return; }
         var nv=e.target.closest('[data-nav]'); if(nv) HUB.go(nv.getAttribute('data-nav'));
       });
       var nav=document.querySelector('.nav-item[data-page="dashboard"]'); if(nav) nav.addEventListener('click', render);
@@ -9536,7 +9567,7 @@ window.AI = AI;
   // icon tiles for its sub-pages; sub-pages get a breadcrumb back and keep their section lit.
   // ════════════════════════════════════════════════════════════
   var HUB = (function(){
-    var OF={enquiries:'hub-workshop',planner:'hub-workshop',bookings:'hub-workshop',day:'hub-workshop',today:'hub-workshop',openwo:'hub-workshop',closedwo:'hub-workshop',clock:'hub-workshop',wodetail:'hub-workshop',
+    var OF={enquiries:'hub-workshop',planner:'hub-workshop',bookings:'hub-workshop',day:'hub-workshop',openwo:'hub-workshop',closedwo:'hub-accounts',quotes:'hub-accounts',clock:'hub-workshop',wodetail:'hub-workshop',
       invoices:'hub-accounts',expenses:'hub-accounts',financials:'hub-accounts', parts:'hub-parts',purchaseorders:'hub-parts', technicians:'hub-people',team:'hub-people',performance:'hub-people'};
     var NAME={'hub-workshop':'Workshop','hub-accounts':'Accounting','hub-people':'People','hub-parts':'Parts'};
     function go(pg){ var it=document.querySelector('.sidebar .nav-item[data-page="'+pg+'"]'); if(it) it.click(); else if(typeof navTo==='function') navTo(pg); }
@@ -9555,7 +9586,6 @@ window.AI = AI;
         var wk=new Date(now); wk.setDate(now.getDate()+6); var we=ymd(wk);
         var open=wos.filter(function(w){ return w && w.status!=='closed'; });
         set('bookings', open.filter(function(w){ return w.date>=ds && w.date<=we; }).length+' booked next 7 days');
-        set('today', (CAL.dayJobs?CAL.dayJobs(ds).filter(function(w){ return w&&w.status!=='closed'; }).length:0)+' jobs today');
         set('openwo', open.length+' open'+(open.filter(function(w){ return w.status==='hold'; }).length?' · '+open.filter(function(w){ return w.status==='hold'; }).length+' on hold':''));
         set('closedwo', wos.filter(function(w){ var d=new Date(w&&w.closedAt||''); return w&&w.status==='closed'&&!isNaN(d)&&ymd(d).slice(0,7)===ym; }).length+' closed this month');
         var clk=json('wsc_clock_v1',{}), on=clk&&clk.active?Object.keys(clk.active).length:0; set('clock', on?on+' clocked on now':'Nobody clocked on');
@@ -9572,6 +9602,7 @@ window.AI = AI;
         set('parts', pl.length+' part'+(pl.length===1?'':'s')+(lowN?' · '+lowN+' low':''));
         var pos=(typeof PO!=='undefined'&&PO.list)?PO.list():[], onO=pos.filter(function(o){ return o.status==='sent'||o.status==='part'; }).length, dr=pos.filter(function(o){ return o.status==='draft'; }).length;
         set('purchaseorders', onO+' on order'+(dr?' · '+dr+' draft':''));
+        if(typeof QUOTES!=='undefined') QUOTES.render();
       }catch(e){}
     }
     function crumb(pageId){
@@ -10058,6 +10089,226 @@ window.AI = AI;
   })();
   window.ENQ = ENQ;
 
+  // ════════════════════════════════════════════════════════════
+  // QUOTES — quotes for customers (Accounting → Quotes). Same jobs + parts structure as a work
+  // order, so an accepted quote becomes a work order in one click with everything carried over.
+  // Storage: wsc_quotes_v1 (quotes), wsc_quote_cfg_v1 (validity, note).
+  // ════════════════════════════════════════════════════════════
+  var QUOTES = (function(){
+    var KEY='wsc_quotes_v1', CKEY='wsc_quote_cfg_v1', quotes=[], filter='open', editId=null, eds=[], pending=null;
+    function g(id){ return document.getElementById(id); }
+    function r2(n){ return Math.round((Number(n)||0)*100)/100; }
+    function money(n){ return '$'+(Number(n)||0).toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+    function ymd(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+    function today(){ return ymd(new Date()); }
+    function addDays(ds,n){ var d=new Date(ds+'T12:00:00'); d.setDate(d.getDate()+n); return ymd(d); }
+    function auDate(ds){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(ds||'')); return m?(+m[3])+'/'+m[2]+'/'+m[1]:''; }
+    function sett(){ try{ return JSON.parse(localStorage.getItem('wsc_settings_v1')||'{}')||{}; }catch(e){ return {}; } }
+    function rate(){ return parseFloat(sett()['set-rate'])||0; }
+    function gstRate(){ var v=parseFloat(sett()['set-gst']); return isNaN(v)?10:v; }
+    function cfg(){ var c; try{ c=JSON.parse(localStorage.getItem(CKEY)||'{}')||{}; }catch(e){ c={}; } c.valid=parseInt(c.valid,10)||30; c.note=c.note!=null?c.note:'Prices include parts and labour as listed. Any extra work found will be discussed with you before we go ahead.'; return c; }
+    function setCfg(p){ var c=Object.assign(cfg(),p); try{ localStorage.setItem(CKEY, JSON.stringify(c)); }catch(e){} return c; }
+    function load(){ try{ quotes=JSON.parse(localStorage.getItem(KEY)||'[]')||[]; }catch(e){ quotes=[]; } }
+    function save(){ try{ localStorage.setItem(KEY, JSON.stringify(quotes)); }catch(e){} }
+    function get(id){ return quotes.find(function(q){ return q.id===id; })||null; }
+    function nextNum(){ return quotes.reduce(function(m,q){ return Math.max(m, q.num||1000); },1000)+1; }
+
+    // ── totals ──
+    function calc(q){
+      var hrs=0, lab=0, parts=0, rt=q.rate!=null?q.rate:rate();
+      (q.jobs||[]).forEach(function(j){ var h=parseFloat(j.hours)||0; hrs+=h; lab+=h*rt; (j.parts||[]).forEach(function(p){ parts+=(Number(p.qty)||0)*(Number(p.price)||0); }); });
+      var sub=r2(lab+parts), gr=gstRate(), gst=r2(sub*gr/100);
+      return { hours:r2(hrs), labour:r2(lab), parts:r2(parts), subtotal:sub, gstRate:gr, gst:gst, total:r2(sub+gst), rate:rt };
+    }
+    function state(q){ if((q.status==='sent'||q.status==='draft') && q.validUntil && q.validUntil<today()) return 'expired'; return q.status; }
+    var LBL={draft:'Draft', sent:'Sent', accepted:'Accepted', declined:'Declined', converted:'Work order made', expired:'Expired'};
+    var PILL={draft:'sp-closed', sent:'sp-open', accepted:'sp-done', declined:'sp-hold', converted:'sp-done', expired:'sp-hold'};
+
+    // ── the quote the customer sees ──
+    function docHtml(q){
+      var s=sett(), c=cfg(), t=calc(q), biz=s['set-name']||'WorkShopConnect', e=escH;
+      var rows=(q.jobs||[]).map(function(j){
+        var h=parseFloat(j.hours)||0, r='<tr class="job"><td colspan="4">'+e(j.title||'Work')+(j.subtitle?'<div class="sub">'+e(j.subtitle)+'</div>':'')+'</td></tr>';
+        if(h>0) r+='<tr><td>Labour</td><td class="n">'+h+'h</td><td class="n">'+money(t.rate)+'</td><td class="n">'+money(h*t.rate)+'</td></tr>';
+        (j.parts||[]).forEach(function(p){ var q2=Number(p.qty)||0; r+='<tr><td>'+e(p.name||'')+(p.partNo?' <span class="pn">('+e(p.partNo)+')</span>':'')+'</td><td class="n">'+q2+'</td><td class="n">'+money(p.price)+'</td><td class="n">'+money(q2*(Number(p.price)||0))+'</td></tr>'; });
+        return r;
+      }).join('');
+      return '<!doctype html><html><head><meta charset="utf-8"><title>Quote Q-'+q.num+'</title><style>'+
+        '*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;margin:32px;font-size:13px}'+
+        '.head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #1a1a1a;padding-bottom:14px;margin-bottom:18px}.biz{font-size:20px;font-weight:800}.bizsub{font-size:11px;color:#555;margin-top:4px;white-space:pre-line}'+
+        '.meta{text-align:right}.meta .t{font-size:22px;font-weight:800;letter-spacing:1px}.meta .n{font-size:14px;font-weight:700;font-family:"Courier New",monospace;margin-top:4px}.meta .d{font-size:11px;color:#555;margin-top:4px;line-height:1.5}'+
+        '.parties{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:20px}.h{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#777;margin-bottom:4px}.v{line-height:1.5}'+
+        'table{width:100%;border-collapse:collapse;margin-bottom:16px}th,td{padding:7px 10px;border-bottom:1px solid #e3e3e3;font-size:12px;text-align:left}th{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:#777;background:#f6f6f6}.n{text-align:right;white-space:nowrap}'+
+        'tr.job td{background:#fafafa;font-weight:700;font-size:12.5px;border-bottom:1px solid #ccc;padding-top:10px}tr.job .sub{font-weight:400;color:#666;font-size:11px;margin-top:2px}.pn{color:#777}'+
+        '.sum{width:300px;margin-left:auto}.sum div{display:flex;justify-content:space-between;padding:5px 10px}.sum .g{border-top:2px solid #1a1a1a;font-weight:800;font-size:16px;margin-top:4px}'+
+        '.note{margin-top:22px;border:1px solid #ddd;border-left:3px solid #1a1a1a;border-radius:4px;padding:10px 14px;white-space:pre-wrap;line-height:1.5}.foot{margin-top:24px;font-size:11px;color:#555;border-top:1px solid #ccc;padding-top:10px;line-height:1.5}'+
+        '.noprint{text-align:right;margin-bottom:14px}@media print{.noprint{display:none}body{margin:16px}}</style></head><body>'+
+        '<div class="head"><div><div class="biz">'+e(biz)+'</div><div class="bizsub">'+e([s['set-addr'],s['set-phone'],s['set-abn']?'ABN '+s['set-abn']:''].filter(Boolean).join('\n'))+'</div></div>'+
+        '<div class="meta"><div class="t">QUOTE</div><div class="n">Q-'+q.num+'</div><div class="d">Date: '+e(auDate(q.date))+'<br>Valid until: '+e(auDate(q.validUntil))+'</div></div></div>'+
+        '<div class="parties"><div><div class="h">Prepared for</div><div class="v"><b>'+e(q.customer||'—')+'</b>'+(q.phone?'<br>'+e(q.phone):'')+(q.email?'<br>'+e(q.email):'')+'</div></div>'+
+        '<div><div class="h">Vehicle</div><div class="v">'+e(q.vehicle||'—')+(q.rego?'<br>Rego: '+e(q.rego):'')+(q.chassis?'<br>VIN: '+e(q.chassis):'')+(q.odometer?'<br>Odometer: '+e(q.odometer)+' km':'')+'</div></div></div>'+
+        '<table><thead><tr><th>Description</th><th class="n">Qty / hrs</th><th class="n">Unit</th><th class="n">Amount</th></tr></thead><tbody>'+rows+'</tbody></table>'+
+        '<div class="sum"><div><span>Labour ('+t.hours+'h)</span><span>'+money(t.labour)+'</span></div><div><span>Parts</span><span>'+money(t.parts)+'</span></div><div><span>Subtotal</span><span>'+money(t.subtotal)+'</span></div><div><span>GST ('+t.gstRate+'%)</span><span>'+money(t.gst)+'</span></div><div class="g"><span>Total</span><span>'+money(t.total)+'</span></div></div>'+
+        ((q.notes||c.note)?'<div class="note">'+e([q.notes,c.note].filter(Boolean).join('\n\n'))+'</div>':'')+
+        '<div class="foot">This quote is valid until '+e(auDate(q.validUntil))+'. To go ahead, reply to this email or call us'+(s['set-phone']?' on '+e(s['set-phone']):'')+' and quote Q-'+q.num+'.</div></body></html>';
+    }
+    function view(id){ var q=get(id); if(!q) return; var w=window.open('','_blank','width=860,height=1000'); if(!w){ alert('Pop-up blocked — allow pop-ups to view quotes.'); return; }
+      w.document.open(); w.document.write(docHtml(q).replace('<body>','<body><div class="noprint"><button onclick="window.print()" style="padding:8px 18px;font-weight:700;border-radius:4px;border:1px solid #1a1a1a;background:#1a1a1a;color:#fff;cursor:pointer">Print / Save PDF</button> <button onclick="window.close()" style="padding:8px 18px;border-radius:4px;border:1px solid #999;background:#fff;cursor:pointer">Close</button></div>')); w.document.close(); }
+
+    // ── sending ──
+    function send(id){
+      var q=get(id); if(!q) return;
+      var s=sett(), biz=s['set-name']||'WorkShopConnect', t=calc(q);
+      var subject='Quote Q-'+q.num+' from '+biz+(q.vehicle?' — '+q.vehicle:'');
+      var text='Hi '+((q.customer||'').split(' ')[0]||'there')+',\n\nThanks for your enquiry. Please find attached our quote Q-'+q.num+(q.vehicle?' for your '+q.vehicle+(q.rego?' ('+q.rego+')':''):'')+'.\n\nTotal: '+money(t.total)+' incl. GST, valid until '+auDate(q.validUntil)+'.\n\nTo go ahead, just reply to this email or give us a call'+(s['set-phone']?' on '+s['set-phone']:'')+'.\n\nThanks,\n'+biz;
+      var done=function(via){ if(q.status==='draft') q.status='sent'; q.sentAt=q.sentAt||new Date().toISOString(); q.sentVia=via; save(); render(); };
+      if(typeof MAIL!=='undefined' && MAIL.ready && MAIL.ready() && MAIL.composeDoc){
+        MAIL.composeDoc({ title:'Email quote', to:q.email||'', subject:subject, text:text, html:docHtml(q), filename:'Q-'+q.num+'.pdf', onSent:function(r){ q.mail={at:r.sentAt, to:(r.to||[]).join(', ')}; done('email'); } });
+        return;
+      }
+      view(id);
+      if(q.email) window.location.href='mailto:'+encodeURIComponent(q.email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(text+'\n\n(PDF attached)');
+      done('manual');
+    }
+    function setStatus(id, st){ var q=get(id); if(!q) return; q.status=st; q[st+'At']=new Date().toISOString(); save(); render(); }
+
+    // ── quote → work order: New Booking opens with the customer, vehicle, jobs and parts filled in ──
+    function toWorkOrder(id){
+      var q=get(id); if(!q||typeof CAL==='undefined') return;
+      if(q.woId && CAL.getWO(q.woId)){ if(typeof WODETAIL!=='undefined') WODETAIL.open(q.woId); return; }
+      var t=calc(q);
+      var jobs=(q.jobs||[]).map(function(j){ return { title:j.title||'Work', hours:parseFloat(j.hours)||0, subtitle:j.subtitle||'', checklist:[],
+        parts:(j.parts||[]).map(function(p){ return Object.assign({}, p); }) }; });
+      pending={ id:id, before:CAL.getAll().map(function(w){ return w.id; }) };
+      if(typeof HUB!=='undefined') HUB.go('bookings');
+      CAL.openModal(undefined);
+      CAL.setPendingJobs(jobs);
+      setTimeout(function(){
+        var set=function(f,v){ var el=g(f); if(el && v!=null && v!=='') el.value=v; };
+        set('f-customer', q.customer); set('f-phone', q.phone); set('f-email', q.email); set('f-rego', q.rego); set('f-vehicle', q.vehicle); set('f-chassis', q.chassis);
+        var tp=g('f-type'); if(tp && [].some.call(tp.options,function(o){ return o.text==='Other'; })) tp.value='Other';
+        var h=g('f-hours'); if(h){ h.value=t.hours||''; if(typeof h.oninput==='function') h.oninput(); }
+        set('f-notes', 'From quote Q-'+q.num+(q.notes?': '+q.notes:''));
+      }, 200);
+    }
+    function onWOChange(){
+      if(!pending) return;
+      var q=get(pending.id); if(!q){ pending=null; return; }
+      var w=CAL.getAll().find(function(x){ return x && pending.before.indexOf(x.id)<0; });
+      if(w){ if(q.odometer && !w.odometer) CAL.updateWO(w.id,{odometer:q.odometer});
+        q.status='converted'; q.woId=w.id; q.woNum=w.num; q.convertedAt=new Date().toISOString(); pending=null; save(); render(); }
+    }
+
+    // ── editor ──
+    function jobBlock(j, i){
+      return '<div class="q-job" data-i="'+i+'"><div class="q-job-h"><input class="m-input q-title" placeholder="Operation, e.g. Replace front brake pads and rotors" value="'+escH(j.title||'')+'">'+
+        '<input class="m-input q-hours" type="number" min="0" step="0.1" placeholder="Hours" title="Labour hours" value="'+escH(j.hours!=null&&j.hours!==''?j.hours:'')+'">'+
+        '<button type="button" class="co-btn q-del-job" title="Remove this job">Remove</button></div>'+
+        '<input class="m-input q-sub" placeholder="Details for the customer (optional)" value="'+escH(j.subtitle||'')+'"><div class="q-parts"></div></div>';
+    }
+    function mountJobs(jobs){
+      var box=g('q-jobs'); box.innerHTML=jobs.map(jobBlock).join(''); eds=[];
+      box.querySelectorAll('.q-job').forEach(function(el, i){ eds.push(PARTSED.mount(el.querySelector('.q-parts'), jobs[i].parts||[], { hint:false, onChange:recalc })); });
+      recalc();
+    }
+    function readJobs(){
+      var out=[];
+      g('q-jobs').querySelectorAll('.q-job').forEach(function(el, i){
+        var t=el.querySelector('.q-title').value.trim(), h=parseFloat(el.querySelector('.q-hours').value), parts=eds[i]?eds[i].get():[];
+        if(!t && !(h>0) && !parts.length) return;
+        out.push({ title:t||'Work', hours:isNaN(h)?0:r2(h), subtitle:el.querySelector('.q-sub').value.trim(), parts:parts });
+      });
+      return out;
+    }
+    function recalc(){
+      var t=calc({jobs:readJobs()});
+      g('q-tot').innerHTML='<div><span>Labour ('+t.hours+'h @ '+money(t.rate)+')</span><span>'+money(t.labour)+'</span></div><div><span>Parts</span><span>'+money(t.parts)+'</span></div><div><span>GST</span><span>'+money(t.gst)+'</span></div><div class="big"><span>Total</span><span>'+money(t.total)+'</span></div>';
+    }
+    function openEditor(id){
+      var q=id?get(id):{ date:today(), jobs:[{title:'', hours:'', parts:[]}] };
+      editId=id||null;
+      g('q-modal-title').textContent=id?'Edit quote Q-'+q.num:'New quote';
+      ['customer','phone','email','vehicle','rego','chassis','odometer','notes'].forEach(function(k){ var el=g('q-'+k); if(el) el.value=q[k]||''; });
+      g('q-valid').value=id&&q.validUntil?q.validUntil:addDays(today(), cfg().valid);
+      g('q-del').style.display=id?'':'none'; g('q-err').textContent='';
+      mountJobs(q.jobs&&q.jobs.length?q.jobs:[{title:'',hours:'',parts:[]}]);
+      g('q-modal').classList.add('open'); g('q-customer').focus();
+    }
+    function closeEditor(){ g('q-modal').classList.remove('open'); editId=null; }
+    function saveEditor(andSend){
+      var cust=g('q-customer').value.trim(), jobs=readJobs();
+      if(!cust){ g('q-err').textContent='Enter the customer’s name.'; g('q-customer').focus(); return; }
+      if(!jobs.length){ g('q-err').textContent='Add at least one job.'; return; }
+      var q=editId?get(editId):null;
+      if(!q){ q={ id:'q-'+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36), num:nextNum(), date:today(), status:'draft', createdAt:new Date().toISOString() }; quotes.push(q); }
+      ['customer','phone','email','vehicle','rego','chassis','odometer','notes'].forEach(function(k){ var el=g('q-'+k); if(el) q[k]=el.value.trim(); });
+      q.rego=String(q.rego||'').toUpperCase(); q.validUntil=g('q-valid').value||addDays(q.date, cfg().valid); q.jobs=jobs;
+      var t=calc(q); q.total=t.total; q.subtotal=t.subtotal; q.rate=t.rate;
+      save(); closeEditor(); render();
+      if(andSend) send(q.id);
+    }
+    function delQuote(){ var q=get(editId); if(!q) return; if(!confirm('Delete quote Q-'+q.num+'?')) return; quotes=quotes.filter(function(x){ return x.id!==q.id; }); save(); closeEditor(); render(); }
+
+    // ── list page ──
+    function render(){
+      var tb=g('q-tbody'); if(!tb) return;
+      var ym=today().slice(0,7), set=function(id,v){ var el=g(id); if(el) el.textContent=v; };
+      var open=quotes.filter(function(q){ var s=state(q); return s==='draft'||s==='sent'||s==='accepted'; });
+      set('q-stat-open', open.length); set('q-stat-value', money(open.reduce(function(a,q){ return a+calc(q).total; },0)));
+      var decided=quotes.filter(function(q){ return ['accepted','converted','declined'].indexOf(q.status)>=0; }), won=decided.filter(function(q){ return q.status!=='declined'; });
+      set('q-stat-won', quotes.filter(function(q){ return (q.status==='accepted'||q.status==='converted') && String(q.acceptedAt||q.convertedAt||'').slice(0,7)===ym; }).length);
+      set('q-stat-rate', decided.length?Math.round(won.length/decided.length*100)+'%':'—');
+      set('q-sub', quotes.length+' quote'+(quotes.length===1?'':'s'));
+      document.querySelectorAll('#q-range .cwo-chip').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-f')===filter); });
+      var list=quotes.filter(function(q){ var s=state(q); return filter==='all'||(filter==='open'?(s==='draft'||s==='sent'||s==='accepted'):(filter==='closed'?(s==='converted'||s==='declined'||s==='expired'):s===filter)); })
+        .sort(function(a,b){ return (b.num||0)-(a.num||0); });
+      tb.innerHTML=list.length?list.map(function(q){
+        var s=state(q), t=calc(q);
+        var a='<button class="co-btn" data-q-view="'+q.id+'">View</button>';
+        if(s!=='converted') a+=' <button class="co-btn" data-q-edit="'+q.id+'">Edit</button>';
+        if(s==='draft'||s==='expired') a+=' <button class="co-btn" data-q-send="'+q.id+'">Send</button>';
+        if(s==='sent'||s==='expired') a+=' <button class="co-btn" data-q-st="accepted" data-id="'+q.id+'">Accepted</button> <button class="co-btn" data-q-st="declined" data-id="'+q.id+'">Declined</button>';
+        if(s!=='declined') a+=' <button class="co-btn co-btn-close" data-q-wo="'+q.id+'">'+(s==='converted'?'Open WO-'+escH(q.woNum):'Make work order')+'</button>';
+        return '<tr><td class="td-mono">Q-'+q.num+'</td><td>'+escH(auDate(q.date))+'</td><td class="td-primary">'+escH(q.customer||'')+'</td><td>'+escH((q.vehicle||'')+(q.rego?' · '+q.rego:''))+'</td>'+
+          '<td class="td-mono">'+t.hours+'h</td><td class="td-mono">'+money(t.total)+'</td><td>'+escH(auDate(q.validUntil))+'</td>'+
+          '<td><span class="status-pill '+(PILL[s]||'sp-open')+'">'+(LBL[s]||s)+'</span>'+(q.mail?' <span class="xero-chip xero-ok" title="'+escH('Emailed to '+q.mail.to)+'">Emailed</span>':'')+'</td><td class="po-acts">'+a+'</td></tr>';
+      }).join(''):'<tr><td colspan="9">'+(quotes.length?'No quotes here.':'No quotes yet. Click + New Quote.')+'</td></tr>';
+      var hs=g('hubst-quotes'); if(hs) hs.textContent=open.length?open.length+' open · '+money(open.reduce(function(a,q){ return a+calc(q).total; },0)):'No open quotes';
+    }
+    function init(){
+      load();
+      var page=g('page-quotes');
+      if(page) page.addEventListener('click', function(e){
+        var b=e.target.closest('button'); if(!b) return; var id;
+        if((id=b.getAttribute('data-q-view'))) view(id);
+        else if((id=b.getAttribute('data-q-edit'))) openEditor(id);
+        else if((id=b.getAttribute('data-q-send'))) send(id);
+        else if(b.hasAttribute('data-q-st')) setStatus(b.getAttribute('data-id'), b.getAttribute('data-q-st'));
+        else if((id=b.getAttribute('data-q-wo'))) toWorkOrder(id);
+        else if(b.id==='q-new-btn') openEditor(null);
+        else if(b.classList.contains('cwo-chip')){ filter=b.getAttribute('data-f'); render(); }
+      });
+      var on=function(id,fn){ var el=g(id); if(el) el.addEventListener('click', fn); };
+      on('q-modal-close', closeEditor); on('q-cancel', closeEditor); on('q-save', function(){ saveEditor(false); }); on('q-save-send', function(){ saveEditor(true); }); on('q-del', delQuote);
+      on('q-add-job', function(){ var jobs=readJobs(); jobs.push({title:'',hours:'',parts:[]}); mountJobs(jobs); var ts=g('q-jobs').querySelectorAll('.q-title'); ts[ts.length-1].focus(); });
+      var jb=g('q-jobs');
+      if(jb){ jb.addEventListener('input', function(e){ if(e.target.classList.contains('q-hours')) recalc(); });
+        jb.addEventListener('click', function(e){ var d=e.target.closest('.q-del-job'); if(!d) return; var i=+d.closest('.q-job').getAttribute('data-i'), jobs=readJobsAll(); jobs.splice(i,1); mountJobs(jobs.length?jobs:[{title:'',hours:'',parts:[]}]); }); }
+      if(typeof CAL!=='undefined' && CAL.onChange) CAL.onChange(onWOChange);
+      // Settings → Quotes
+      var v=g('q-set-valid'), n=g('q-set-note');
+      if(v){ v.value=cfg().valid; v.addEventListener('change', function(){ setCfg({valid:Math.max(1,parseInt(v.value,10)||30)}); }); }
+      if(n){ n.value=cfg().note; n.addEventListener('change', function(){ setCfg({note:n.value.trim()}); }); }
+      render();
+    }
+    // like readJobs but keeps empty jobs (used when removing one so the others' rows stay put)
+    function readJobsAll(){
+      var out=[]; g('q-jobs').querySelectorAll('.q-job').forEach(function(el, i){ out.push({ title:el.querySelector('.q-title').value, hours:el.querySelector('.q-hours').value, subtitle:el.querySelector('.q-sub').value, parts:eds[i]?eds[i].get():[] }); }); return out;
+    }
+    return { init:init, render:render, list:function(){ return quotes; }, get:get, docHtml:docHtml, toWorkOrder:toWorkOrder, _calc:calc };
+  })();
+  window.QUOTES = QUOTES;
+
   var XERO = (function(){
     var KEY='wsc_xero_v1', st=null, cache={accounts:null, taxRates:null, bank:null}, syncing=false;
     var bridge=function(){ return (typeof window!=='undefined' && window.wscXero) || null; };
@@ -10291,25 +10542,31 @@ window.AI = AI;
     }
     function byNo(v){ v=String(v||'').trim().toLowerCase(); return v?inv().find(function(p){ return p.num && String(p.num).toLowerCase()===v; })||null:null; }
     function byName(v){ v=String(v||'').trim().toLowerCase(); return v?inv().find(function(p){ return String(p.desc||p.name||'').toLowerCase()===v; })||null:null; }
+    function markup(){ return (typeof partMarkupPct==='function')?partMarkupPct():30; }
+    function costOf(p){ var c=Number(p&&p.cost)||0; return c>0?c:0; }
+    // Our cost is internal: shown to managers and service advisors, never to workshop controllers or customers.
+    function showCost(){ try{ return (localStorage.getItem('wsc_role_v1')||'manager')!=='controller'; }catch(e){ return true; } }
     function sellOf(p){ var pr=Number(p.price)||0; if(pr>0) return pr; var c=Number(p.cost)||0; return c>0?r2(c*(1+(typeof partMarkupPct==='function'?partMarkupPct():30)/100)):0; }
     function row(x, o){
       x=x||{}; o=o||{};
       var hintNo=!x.partNo&&o.partNoFor&&x.name?(o.partNoFor(x)||''):'';
       var price=(x.price!=null&&x.price!=='')?x.price:(o.priceFor&&x.name?o.priceFor(x):'');
-      var extra={}; Object.keys(x).forEach(function(k){ if(['name','partNo','qty','price','partId'].indexOf(k)<0) extra[k]=x[k]; });
+      var extra={}; Object.keys(x).forEach(function(k){ if(['name','partNo','qty','price','partId','cost'].indexOf(k)<0) extra[k]=x[k]; });
+      var cost=(x.cost!=null&&x.cost!=='')?x.cost:(o.costFor&&x.name?(o.costFor(x)||''):'');
       return '<tr class="pe-row" data-extra="'+escH(JSON.stringify(extra))+'">'+
         '<td class="pe-c-no"><input class="m-input pe-no" list="'+DLN+'" value="'+escH(x.partNo||'')+'" placeholder="'+escH(hintNo?hintNo.split(' — ')[0]:'Part no.')+'" title="'+escH(hintNo||'Part number')+'" aria-label="Part number"></td>'+
         '<td class="pe-c-name"><input class="m-input pe-part" list="'+DL+'" value="'+escH(x.name||'')+'" placeholder="Description" aria-label="Description">'+(extra.spec?'<div class="pe-spec">'+escH(extra.spec)+'</div>':'')+'</td>'+
         '<td class="pe-c-qty"><input class="m-input pe-qty" type="number" min="0" step="1" aria-label="Quantity" title="Quantity" value="'+escH(x.qty!=null&&x.qty!==''?x.qty:1)+'"></td>'+
+        '<td class="pe-c-cost"><input class="m-input pe-cost" type="number" min="0" step="0.01" aria-label="Our cost each (ex GST)" title="What the part costs the workshop, ex GST (internal only)" value="'+escH(cost===''?'':Number(cost))+'" placeholder="Our cost"></td>'+
         '<td class="pe-c-price"><input class="m-input pe-price" type="number" min="0" step="0.01" aria-label="Charge each (ex GST)" title="Charge each (ex GST)" value="'+escH(price===''?'':Number(price))+'" placeholder="Charge each $"></td>'+
-        '<td class="pe-amt"></td><td class="pe-c-del"><button type="button" class="co-btn pe-del" title="Remove part" aria-label="Remove part">×</button></td></tr>';
+        '<td class="pe-amt"><span class="pe-amt-v"></span><span class="pe-mu"></span></td><td class="pe-c-del"><button type="button" class="co-btn pe-del" title="Remove part" aria-label="Remove part">×</button></td></tr>';
     }
     // mount(box, parts, {onChange, priceFor, partNoFor, hint, addLabel}) → { get(), set(parts), disable(bool) }
     function mount(box, parts, opts){
       opts=opts||{}; ensureList();
-      box.classList.add('pe');
+      box.classList.add('pe'); box.classList.toggle('pe-nocost', !showCost());
       var hint=opts.hint===false?'':'<span class="pe-hint">Prices are what the customer pays, ex GST. Stocked parts fill in from Parts.</span>';
-      box.innerHTML='<table class="pe-tbl"><thead><tr><th style="width:120px">Part no.</th><th>Description</th><th style="width:70px">Qty</th><th style="width:112px">Charge each</th><th style="width:92px;text-align:right">Total</th><th style="width:36px"></th></tr></thead><tbody></tbody></table>'+
+      box.innerHTML='<table class="pe-tbl"><thead><tr><th style="width:120px">Part no.</th><th>Description</th><th style="width:64px">Qty</th><th class="pe-h-cost" style="width:104px">Our cost</th><th style="width:108px">Charge each</th><th style="width:92px;text-align:right">Total</th><th style="width:36px"></th></tr></thead><tbody></tbody></table>'+
         '<div class="pe-foot"><button type="button" class="co-btn pe-add">'+(opts.addLabel||'+ Add part')+'</button>'+hint+'<span class="pe-tot"></span></div>';
       var tb=box.querySelector('tbody'), disabled=false, timer=null;
       function fill(tr, from){
@@ -10318,14 +10575,24 @@ window.AI = AI;
         if(!p) return;
         if(!noEl.value.trim() && p.num) noEl.value=p.num;
         if(!nmEl.value.trim()) nmEl.value=p.desc||p.name||'';
+        var co=tr.querySelector('.pe-cost'); if(co && co.value==='' && costOf(p)>0) co.value=costOf(p).toFixed(2);
         if(pr.value==='' && sellOf(p)>0) pr.value=sellOf(p).toFixed(2);
+      }
+      // Cost entered and no price of our own yet: price = cost + default markup (Settings).
+      function priceFromCost(tr){
+        var co=tr.querySelector('.pe-cost'), pr=tr.querySelector('.pe-price'), c=parseFloat(co.value);
+        if(!(c>0)) return;
+        if(pr.value==='' || pr.getAttribute('data-auto')==='1'){ pr.value=r2(c*(1+markup()/100)).toFixed(2); pr.setAttribute('data-auto','1'); }
       }
       function recalc(){
         var sum=0, any=false;
         tb.querySelectorAll('.pe-row').forEach(function(tr){
           any=true;
-          var a=r2((parseFloat(tr.querySelector('.pe-qty').value)||0)*(parseFloat(tr.querySelector('.pe-price').value)||0)); sum+=a;
-          tr.querySelector('.pe-amt').textContent=money(a);
+          var up=parseFloat(tr.querySelector('.pe-price').value)||0, a=r2((parseFloat(tr.querySelector('.pe-qty').value)||0)*up); sum+=a;
+          tr.querySelector('.pe-amt-v').textContent=money(a);
+          var c=parseFloat(tr.querySelector('.pe-cost').value), mu=tr.querySelector('.pe-mu');
+          if(showCost() && c>0 && up>0){ var pct=Math.round((up-c)/c*100); mu.textContent=(pct>=0?'+':'')+pct+'%'; mu.title='Markup on our cost \u00b7 margin '+money((up-c)*(parseFloat(tr.querySelector('.pe-qty').value)||0)); mu.className='pe-mu'+(pct<0?' pe-mu-bad':''); }
+          else { mu.textContent=''; mu.title=''; }
         });
         box.querySelector('.pe-tot').textContent=any?'Total '+money(sum):'';
         box.querySelector('.pe-tbl').style.display=any?'':'none';
@@ -10339,11 +10606,17 @@ window.AI = AI;
           var p=byNo(no)||byName(nm), q=parseFloat(tr.querySelector('.pe-qty').value), pr=parseFloat(tr.querySelector('.pe-price').value);
           if(!(q>=0) || tr.querySelector('.pe-qty').value==='') q=1;
           var extra={}; try{ extra=JSON.parse(tr.getAttribute('data-extra')||'{}')||{}; }catch(err){ extra={}; }
-          out.push(Object.assign(extra, { name:nm||(p?(p.desc||p.name||''):no), partNo:no||(p&&p.num)||'', qty:q, price:isNaN(pr)?(p?sellOf(p):0):r2(pr), partId:p?p.id:null }));
+          var co=parseFloat(tr.querySelector('.pe-cost').value);
+          var item=Object.assign(extra, { name:nm||(p?(p.desc||p.name||''):no), partNo:no||(p&&p.num)||'', qty:q, price:isNaN(pr)?(p?sellOf(p):0):r2(pr), partId:p?p.id:null });
+          if(co>0) item.cost=r2(co); else delete item.cost;
+          out.push(item);
         });
         return out;
       }
-      box.addEventListener('input', function(e){ var tr=e.target.closest('.pe-row'); if(!tr) return; changed(); });
+      box.addEventListener('input', function(e){ var tr=e.target.closest('.pe-row'); if(!tr) return;
+        if(e.target.classList.contains('pe-price')) e.target.removeAttribute('data-auto');
+        if(e.target.classList.contains('pe-cost')) priceFromCost(tr);
+        changed(); });
       box.addEventListener('change', function(e){ var tr=e.target.closest('.pe-row'); if(!tr) return;
         if(e.target.classList.contains('pe-no')) fill(tr,'no'); else if(e.target.classList.contains('pe-part')) fill(tr,'name'); changed(); });
       box.addEventListener('click', function(e){
@@ -10373,11 +10646,15 @@ window.AI = AI;
     // Parts not tied to a job sit under "Other parts". Changes save straight away.
     var partEds=[];
     function defaultPrice(x){ return (typeof partPriceFor==='function'&&x&&x.name)?(partPriceFor(x.name)||0):0; }
+    function defaultCost(x){ var r=(typeof partInvRecord==='function'&&x&&x.name)?partInvRecord(x.name):null; return r&&Number(r.cost)>0?Number(r.cost):''; }
     function defaultNo(x){ return (typeof partNoFor==='function'&&x&&x.name)?partNoFor(x.name):''; }
     function savedTick(){ var t=gE('wod-parts-saved'); if(t){ t.textContent='Saved ✓'; clearTimeout(t._t); t._t=setTimeout(function(){ t.textContent=''; },2000); } }
     function partsTotal(){
       var sum=partEds.reduce(function(a,e){ return a+PARTSED.total(e.ed.get()); },0), el=gE('wod-parts-total');
-      if(el) el.innerHTML=sum>0?'<span>All parts</span><b>$'+sum.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2})+'</b><span class="wod-pt-note">ex GST · charged on the invoice</span>':'';
+      var m2=function(n){ return '$'+n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2}); };
+      var cost=0, sold=0, missing=0; partEds.forEach(function(e){ e.ed.get().forEach(function(x){ var c=parseFloat(x.cost), q=Number(x.qty)||0; if(c>0){ cost+=c*q; sold+=(Number(x.price)||0)*q; } else if(Number(x.price)>0) missing++; }); });
+      var internal=(sold>0 && cost>0 && (localStorage.getItem('wsc_role_v1')||'manager')!=='controller')?'<div class="wod-pt-cost">Our cost '+m2(cost)+' \u00b7 margin '+m2(sold-cost)+' ('+Math.round((sold-cost)/sold*100)+'%)'+(missing?' on parts with a cost \u00b7 '+missing+' without':'')+' \u00b7 internal only</div>':'';
+      if(el) el.innerHTML=sum>0?'<span>All parts</span><b>'+m2(sum)+'</b><span class="wod-pt-note">ex GST \u00b7 charged on the invoice</span>'+internal:'';
     }
     function saveParts(which, list){
       if(!curId) return; var w=CAL.getWO(curId); if(!w||w.status==='closed') return;
@@ -10390,23 +10667,67 @@ window.AI = AI;
       }
       savedTick(); partsTotal();
     }
+    // Jobs added or removed after the work order was made. Booked hours follow the jobs, so the
+    // invoice labour stays right (a draft invoice updates itself).
+    function setJobs(w, jobs, msg){
+      var hrs=Math.round(jobs.reduce(function(a,j){ return a+(parseFloat(j.hours)||0); },0)*100)/100;
+      CAL.updateWO(w.id, {jobs:jobs, hours:hrs});
+      setV('wod-hours', hrs);
+      var fresh=CAL.getWO(w.id); if(fresh){ renderJobs(fresh); partEds.forEach(function(e){ e.ed.disable(fresh.status==='closed'); }); }
+      flash(msg);
+    }
+    function bindJobEdits(w){
+      var box=gE('wod-jobs'); if(!box) return;
+      box.querySelectorAll('[data-del-job]').forEach(function(b){ b.addEventListener('click', function(){
+        if(!PERM.canEditJobs()){ flash('You don\u2019t have permission to change jobs.'); return; }
+        var cur=CAL.getWO(curId); if(!cur) return; var i=parseInt(b.getAttribute('data-del-job'),10), j=(cur.jobs||[])[i]; if(!j) return;
+        var np=(j.parts||[]).length;
+        if(!confirm('Remove Job '+(i+1)+': '+(j.title||'')+(np?' and its '+np+' part'+(np===1?'':'s'):'')+'?\n\nIts '+(parseFloat(j.hours)||0)+'h comes off the booked hours.')) return;
+        setJobs(cur, cur.jobs.filter(function(x,k){ return k!==i; }), 'Job removed \u2713');
+      }); });
+      var form=gE('wod-addjob-form'), btn=gE('wod-addjob-btn');
+      if(btn) btn.addEventListener('click', function(){ form.hidden=false; btn.hidden=true; gE('wod-nj-title').focus(); });
+      var cancel=gE('wod-nj-cancel'); if(cancel) cancel.addEventListener('click', function(){ form.hidden=true; btn.hidden=false; });
+      var save=gE('wod-nj-save'); if(save) save.addEventListener('click', function(){
+        if(!PERM.canEditJobs()){ flash('You don\u2019t have permission to change jobs.'); return; }
+        var t=getV('wod-nj-title').trim(), h=parseFloat(getV('wod-nj-hours'));
+        if(!t){ gE('wod-nj-title').focus(); return; }
+        if(!(h>=0) || getV('wod-nj-hours')===''){ gE('wod-nj-hours').focus(); return; }
+        var cur=CAL.getWO(curId); if(!cur) return;
+        var jobs=(cur.jobs||[]).slice();
+        // A work order made without job lines: its existing booked hours become Job 1 so its labour is kept
+        if(!jobs.length && (parseFloat(cur.hours)||0)>0) jobs.push({title:cur.type||'Workshop', hours:parseFloat(cur.hours)||0, subtitle:'', parts:[], checklist:[]});
+        jobs.push({title:t, hours:Math.round(h*100)/100, subtitle:getV('wod-nj-ins').trim(), parts:[], checklist:[]});
+        setJobs(cur, jobs, 'Job added \u2713');
+      });
+    }
     function renderJobs(w){
       var box=gE('wod-jobs'); if(!box) return;
       var hasJobs=!!(w.jobs&&w.jobs.length);
+      var canJobs=w.status!=='closed' && typeof PERM!=='undefined' && PERM.canEditJobs();
       var html=hasJobs?w.jobs.map(function(j,i){
         var checks=(j.checklist||[]).length? '<ul class="wod-checks">'+(j.checklist||[]).map(function(c){ return '<li>'+escH(c)+'</li>'; }).join('')+'</ul>' : '';
-        return '<div class="wod-job"><div class="wod-job-h">Job '+(i+1)+': '+escH(j.title||('Job '+(i+1)))+(j.hours?' <span class="wod-job-hrs">'+escH(j.hours)+'h</span>':'')+'</div>'+
+        return '<div class="wod-job"><div class="wod-job-h">Job '+(i+1)+': '+escH(j.title||('Job '+(i+1)))+(j.hours?' <span class="wod-job-hrs">'+escH(j.hours)+'h</span>':'')+
+          (canJobs?'<button type="button" class="co-btn wod-job-del" data-del-job="'+i+'" title="Remove this job">Remove job</button>':'')+'</div>'+
           (j.subtitle?'<div class="wod-job-sub">'+escH(j.subtitle)+'</div>':'')+
           '<div class="wod-job-parts" data-job="'+i+'"></div>'+
           (checks?'<details class="wod-job-checks"><summary>Checks ('+j.checklist.length+')</summary>'+checks+'</details>':'')+'</div>';
       }).join(''):'';
+      if(canJobs) html+='<div class="wod-addjob" id="wod-addjob"><button type="button" class="btn" id="wod-addjob-btn">+ Add job</button>'+
+        '<div class="wod-addjob-form" id="wod-addjob-form" hidden>'+
+          '<div class="wod-addjob-grid"><div><label class="m-label" for="wod-nj-title">Operation</label><input class="m-input" id="wod-nj-title" placeholder="e.g. Replace rear brake pads"></div>'+
+          '<div><label class="m-label" for="wod-nj-hours">Hours</label><input class="m-input" id="wod-nj-hours" type="number" min="0" step="0.1" placeholder="1.0"></div></div>'+
+          '<div class="m-row"><label class="m-label" for="wod-nj-ins">Instructions for the technician (optional)</label><input class="m-input" id="wod-nj-ins"></div>'+
+          '<div class="wod-addjob-acts"><button type="button" class="btn primary" id="wod-nj-save">Add job</button> <button type="button" class="btn" id="wod-nj-cancel">Cancel</button></div>'+
+        '</div></div>';
       html+='<div class="wod-job wod-job-other"><div class="wod-job-h">'+(hasJobs?'Other parts':'Parts')+'</div><div class="wod-job-parts" data-job="other"></div></div>';
       box.innerHTML=html;
+      if(canJobs) bindJobEdits(w);
       partEds=[];
       box.querySelectorAll('.wod-job-parts').forEach(function(el){
         var k=el.getAttribute('data-job'), idx=k==='other'?'other':parseInt(k,10);
         var list=idx==='other'?(hasJobs?(w.extraParts||[]):(w.parts||[]).concat(w.extraParts||[])):((w.jobs[idx].parts)||[]);
-        var ed=PARTSED.mount(el, list, { hint:false, priceFor:defaultPrice, partNoFor:defaultNo, onChange:function(l){ saveParts(idx, l); } });
+        var ed=PARTSED.mount(el, list, { hint:false, priceFor:defaultPrice, partNoFor:defaultNo, costFor:defaultCost, onChange:function(l){ saveParts(idx, l); } });
         partEds.push({idx:idx, ed:ed});
       });
       partsTotal();
@@ -10558,7 +10879,6 @@ window.AI = AI;
 
 
   STAFF.init();
-  TODAY.init();
   TECH.init();
   PARTS.init();
   FIN.init();
@@ -10579,6 +10899,7 @@ window.AI = AI;
   MAIL.init();
   DASH.init();
   PO.init();
+  try{ QUOTES.init(); }catch(e){ console.error(e); }
   ENQ.init();
   HUB.init();
   (function(){   // show the workshop's name in the top bar
